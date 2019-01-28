@@ -1,0 +1,4 @@
+#Mon Jan 28 15:14:09 CST 2019
+base.0=D\:\\code\\workspace\\jichuangsi\\school\\front\\app4t\\branches\\p0\\school-app\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\37
+path.0=classes.dex
+renamed.0=classes.dex

@@ -1,0 +1,67 @@
+{
+  "_from": "git+ssh://git@gitlab.com/tangway/handwrittenboard.git",
+  "_id": "handwritten-board@1.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/handwritten-board",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "git+ssh://git@gitlab.com:tangway/handwrittenboard.git",
+    "rawSpec": "git+ssh://git@gitlab.com:tangway/handwrittenboard.git",
+    "saveSpec": "git+ssh://git@gitlab.com/tangway/handwrittenboard.git",
+    "fetchSpec": "ssh://git@gitlab.com/tangway/handwrittenboard.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+ssh://git@gitlab.com/tangway/handwrittenboard.git#2ae4ec24ebc9a487dd31b6e9492b8ad7ddd2bed7",
+  "_spec": "git+ssh://git@gitlab.com:tangway/handwrittenboard.git",
+  "_where": "/Users/you/Desktop/gcharms",
+  "author": {
+    "name": "Kelvin"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/tangway/handwrittenboard/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "handwritten-board",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "handwritten.board",
+  "directories": {
+    "lib": "lib"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "0.0.0": {
+        "cordova-android": ">=4.0.0"
+      },
+      "2.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "homepage": "https://gitlab.com/tangway/handwrittenboard#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "BSD",
+  "main": "www/HandwrittenBoard.js",
+  "name": "handwritten-board",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/tangway/handwrittenboard.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

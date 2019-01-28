@@ -1,0 +1,47 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-bluetoothle": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "handwritten-board": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-file-opener2": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    }
+  },
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    }
+  }
+}
