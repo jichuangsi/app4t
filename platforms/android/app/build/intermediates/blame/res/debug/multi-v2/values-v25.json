@@ -15,6 +15,22 @@
                     }
                 }
             ]
+        },
+        {
+            "outputFile": "D:\\code\\workspace\\jichuangsi\\school\\front\\app4t\\branches\\p1\\app4t\\platforms\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v25\\values-v25.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\keyman\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\965743d1f0b7902f160beda56e18f8cd\\res\\values-v25\\values-v25.xml",
+                    "from": {
+                        "startLines": "2,3,4,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,126,209,308",
+                        "endLines": "2,3,5,7",
+                        "endColumns": "70,82,12,12",
+                        "endOffsets": "121,204,303,414"
+                    }
+                }
+            ]
         }
     ]
 }

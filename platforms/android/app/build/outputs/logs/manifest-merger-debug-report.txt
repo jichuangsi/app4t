@@ -1,22 +1,22 @@
 -- Merging decision tree log ---
 provider#io.github.pwlin.cordova.plugins.fileopener2.FileProvider
-INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:18:9-20:20
+INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:18:9-20:20
 	android:grantUriPermissions
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:18:99-133
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:18:99-133
 	android:authorities
-		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:18:19-73
+		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:18:19-73
 	android:exported
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:18:74-98
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:18:74-98
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:18:134-205
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:18:134-205
 manifest
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
 MERGED from [com.android.support:support-v4:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\06be2e02115fbd2f75888bd8d4e90c9a\AndroidManifest.xml:17:1-22:12
-MERGED from [:CordovaLib] D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:20:1-27:12
+MERGED from [:CordovaLib] D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:20:1-27:12
 MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\965743d1f0b7902f160beda56e18f8cd\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\342eee4579a60cb5266302a05bc912b9\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-fragment:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\support-fragment-27.1.1.aar\197cffc25214d6f15cd26024a673e695\AndroidManifest.xml:17:1-22:12
@@ -29,101 +29,101 @@ MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Users\keyman\.gradle\cache
 MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.0.aar\fe834b8f2ec83e449235d3d236dc697e\AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.0.aar\305eeea59b54ee01fb0c5db4bb012a2c\AndroidManifest.xml:17:1-22:12
 MERGED from [android.arch.core:runtime:1.1.0] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\ee0dbe8fc42c4ca54b27086ccf28972f\AndroidManifest.xml:17:1-22:12
-INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:1-31:12
 	package
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:102-141
-		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml
-		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:102-141
+		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:74-101
-		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml
-		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:74-101
+		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml
 	android:hardwareAccelerated
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
 	xmlns:android
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:142-200
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:142-200
 	android:versionCode
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:2:46-73
-		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml
-		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:2:46-73
+		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml
 supports-screens
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:3:5-191
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:3:5-191
 	android:largeScreens
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:3:49-76
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:3:49-76
 	android:smallScreens
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:3:132-159
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:3:132-159
 	android:normalScreens
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:3:77-105
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:3:77-105
 	android:xlargeScreens
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:3:160-188
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:3:160-188
 	android:resizeable
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:3:106-131
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:3:106-131
 	android:anyDensity
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:3:23-48
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:3:23-48
 uses-permission#android.permission.INTERNET
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:4:5-67
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:4:5-67
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:4:22-64
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:4:22-64
 application
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:5:5-21:19
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:5:5-21:19
 	android:supportsRtl
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:5:114-140
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:5:114-140
 	android:label
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:5:81-113
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:5:81-113
 	android:hardwareAccelerated
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
 	android:icon
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:5:53-80
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:5:53-80
 activity#com.jichuangsi.school.teacher.MainActivity
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
 	android:label
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:6:97-134
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:6:97-134
 	android:launchMode
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:6:135-165
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:6:135-165
 	android:windowSoftInputMode
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:6:238-280
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:6:238-280
 	android:configChanges
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:6:19-96
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:6:19-96
 	android:theme
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:6:194-237
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:6:194-237
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:6:166-193
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:6:166-193
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:7:13-10:29
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:7:13-10:29
 	android:label
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:7:28-65
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:7:28-65
 action#android.intent.action.MAIN
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:8:17-69
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:8:17-69
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:8:25-66
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:8:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:9:17-77
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:9:17-77
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
 activity#com.jichuangsi.school.teacher.DrawActivity
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:12:9-119
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:12:9-119
 	android:screenOrientation
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:12:48-84
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:12:48-84
 	android:theme
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:12:85-116
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:12:85-116
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:12:19-47
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:12:19-47
 activity#com.jichuangsi.school.teacher.RouteDeliverActivity
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:13:9-17:20
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:13:9-17:20
 	android:screenOrientation
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:13:56-92
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:13:56-92
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:13:19-55
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:13:19-55
 intent-filter#android.intent.action.MAIN
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:14:13-16:29
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:14:13-16:29
 uses-sdk
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:22:5-74
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:22:5-74
 MERGED from [com.android.support:support-v4:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\06be2e02115fbd2f75888bd8d4e90c9a\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-v4:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\06be2e02115fbd2f75888bd8d4e90c9a\AndroidManifest.xml:20:5-44
-MERGED from [:CordovaLib] D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
-MERGED from [:CordovaLib] D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
+MERGED from [:CordovaLib] D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
+MERGED from [:CordovaLib] D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
 MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\965743d1f0b7902f160beda56e18f8cd\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\965743d1f0b7902f160beda56e18f8cd\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\342eee4579a60cb5266302a05bc912b9\AndroidManifest.xml:20:5-44
@@ -149,44 +149,44 @@ MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\keyman\.gradle\cac
 MERGED from [android.arch.core:runtime:1.1.0] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\ee0dbe8fc42c4ca54b27086ccf28972f\AndroidManifest.xml:20:5-44
 MERGED from [android.arch.core:runtime:1.1.0] C:\Users\keyman\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\ee0dbe8fc42c4ca54b27086ccf28972f\AndroidManifest.xml:20:5-44
 	android:targetSdkVersion
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:22:42-71
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:22:42-71
 	android:minSdkVersion
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:22:15-41
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:22:15-41
 uses-permission#android.permission.BLUETOOTH
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:23:5-68
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:23:5-68
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:23:22-65
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:23:22-65
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:24:5-74
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:24:5-74
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:24:22-71
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:24:22-71
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:25:5-81
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:25:5-81
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:25:22-78
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:25:22-78
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:26:5-81
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:26:5-81
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:26:22-78
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:26:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:27:5-80
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:27:5-80
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:27:22-77
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:27:22-77
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:28:5-79
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:28:5-79
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:28:22-76
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:28:22-76
 uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:29:5-89
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:29:5-89
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:29:22-86
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:29:22-86
 uses-permission#android.permission.REQUEST_INSTALL_PACKAGES
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:30:5-83
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:30:5-83
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:30:22-80
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:30:22-80
 meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:19:13-114
+ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:19:13-114
 	android:resource
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:19:75-111
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:19:75-111
 	android:name
-		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p0\school-app\platforms\android\app\src\main\AndroidManifest.xml:19:24-74
+		ADDED from D:\code\workspace\jichuangsi\school\front\app4t\branches\p1\app4t\platforms\android\app\src\main\AndroidManifest.xml:19:24-74
