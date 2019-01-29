@@ -61,7 +61,7 @@ async function upgradeForAndroid( releasePath,packageName) {
  * 检测升级方法
  */
 export function checkUpgrade(platformType, pkName) {
-    console.log("设备类型：" + platformType + "app报名：" + pkName);
+    console.log("设备类型：" + platformType + ",app包名：" + pkName);
     var appName = pkName;
     var appType = platformType;
     /**

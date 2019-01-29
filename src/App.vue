@@ -55,10 +55,10 @@
                 //找到to.path和from.path在routerDeep数组中的下标
                 this.pageUrl = this.$route.path;
                 console.log("当前路由:" + this.$route.path);
-                if(this.$route.path=='/studentenquiry' /*需要调整为老师页面*/
-                    ||this.$route.path=='/studentIndex'
-                    ||this.$route.path=='/mistakescollection'
-                    ||this.$route.path=='/myShow'){
+                if(this.$route.path=='/assistant' /*需要调整为老师页面*/
+                    ||this.$route.path=='/teacherIndex'
+                    ||this.$route.path=='/teacherenquiry'
+                    ||this.$route.path=='/teacherInformation'){
                 if(!(localStorage.getItem('token'))){
                     let route = this.$route.path
                         this.$router.push({ path: "/", name: "login" })
@@ -80,7 +80,7 @@
             }
         },
         created() {
-            console.log("created-userroute:"+this.$store.state.userroute);
+            /*console.log("created-userroute:"+this.$store.state.userroute);
             console.log("created-path:"+this.$route.path);
                 setTimeout(function () {
                     try{
@@ -89,12 +89,21 @@
                     }catch (e) {
                         console.log(e);
                     }
-                }, 500);
+                }, 500);*/
         },
         mounted() {
             let exitAppTicker = 0;
             let _this = this;
             document.addEventListener("deviceready", function () {
+
+                setTimeout(function () {
+                    try{
+                        //initialize();//教师端去掉启动蓝牙检测
+                        navigator.splashscreen.hide();
+                    }catch (e) {
+                        console.log(e);
+                    }
+                }, 500);
 
                 cordova.getAppVersion.getPackageName().then(function(packageName) {
                     checkUpgrade('android', packageName);
