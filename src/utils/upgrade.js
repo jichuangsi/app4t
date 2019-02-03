@@ -1,7 +1,8 @@
 import {getAppInfo} from '@/api/common';
+import store from '@/store'
 
 //检测新版本升级
-async function upgradeForAndroid( releasePath,packageName) {
+export async function upgradeForAndroid( releasePath,packageName) {
 
     //AlertModule.show({title: '已经下载：0%'})
     let uri = encodeURI(releasePath);    //apk所在的服务器路径
@@ -76,6 +77,8 @@ export function checkUpgrade(platformType, pkName) {
             let packageName = response.data.data.packageName;
             let releasePath = response.data.data.downloadPath + "/" + response.data.data.packageName;
             let serverVersion = response.data.data.appVersion;
+            let remark = response.data.data.remark;
+            let mandatory = response.data.data.mandatory;
             let _this = this;
             //获取本地App版本;
             cordova.getAppVersion.getVersionNumber().then(function (version) {
@@ -83,7 +86,9 @@ export function checkUpgrade(platformType, pkName) {
                 console.log("本地版本：" + localVersion);
                 console.log("服务器版本：" + serverVersion);
                 if (localVersion < serverVersion) {
-                    upgradeForAndroid(releasePath,packageName);
+                    store.commit('SET_POPUP_UPGRADE', true);
+                    store.commit('SET_UPGRADE_INFO', {releasePath:releasePath,packageName:packageName,remark:remark,mandatory:mandatory});
+                    //upgradeForAndroid(releasePath,packageName);
                     /*//$rootScope.$state.isLogin = false;
                     localStorage.setItem("appUpgrade", "0");
                     localStorage.removeItem("password");

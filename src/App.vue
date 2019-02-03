@@ -1,5 +1,15 @@
 <template>
     <div id="app">
+        
+        <div class="black" v-show="cancelshow">
+            <div class="black_box">
+                <div class="cancel" v-show="!mandatory" @click="cancelbtn">x</div>
+                <img class="img" src="../src/assets/升级.png" alt="">
+                <div class="black_text">检查到新版本</div>
+                <div class="black_text1" v-for="(item,index) in remark.split(';')" :key="index"><span><img src="../src/assets/升级菱形.png" alt=""></span>{{item}}</div>
+                <div class="black_text2" @click="upgradeclick">立即升级</div>
+            </div>
+        </div>
         <keep-alive>
             <!--<transition :name="transitionName">-->
             <router-view v-if="$route.meta.keepAlive"/>
@@ -22,14 +32,19 @@
     import Preview from '../src/components/board/Preview'
     import initialize from '@/utils/board'
     import {mapGetters} from 'vuex'
-    import {checkUpgrade} from '@/utils/upgrade'
+    import {checkUpgrade,upgradeForAndroid} from '@/utils/upgrade'
 
     export default {
         name: 'App',
         data() {
             return {
                 transitionName: 'fold-left',
-                pageUrl: ''
+                pageUrl: '',
+                cancelshow:false,
+                releasePath:'',
+                packageName:'',
+                remark:'',
+                mandatory:false
             }
         },
         components: {
@@ -40,7 +55,9 @@
         computed: {
             //vuex 调用
             ...mapGetters([
-                'blueToothList'
+                'blueToothList',
+                'isPopupUpgrade',
+                'upgradeInfo'
             ])
         },
         // vue监听路由对象$route的方法
@@ -75,8 +92,17 @@
                 this.transitionName = toDepth > fromDepth ? 'fold-left' : 'fold-right';
             },
             blueToothList(val) {
-                // console.log("我是蓝牙设备");
-                // console.log(val);
+                //console.log("我是蓝牙设备");
+                //console.log(val);
+            },
+            isPopupUpgrade(state){
+                this.cancelshow = state;
+            },
+            upgradeInfo(obj){
+                this.releasePath = obj.releasePath;
+                this.packageName = obj.packageName;
+                this.remark = obj.remark;
+                this.mandatory = obj.mandatory;
             }
         },
         created() {
@@ -84,7 +110,7 @@
             console.log("created-path:"+this.$route.path);
                 setTimeout(function () {
                     try{
-                        //initialize();//教师端去掉启动蓝牙检测
+                        initialize();//教师端去掉启动蓝牙检测
                         navigator.splashscreen.hide();
                     }catch (e) {
                         console.log(e);
@@ -95,7 +121,6 @@
             let exitAppTicker = 0;
             let _this = this;
             document.addEventListener("deviceready", function () {
-
                 setTimeout(function () {
                     try{
                         //initialize();//教师端去掉启动蓝牙检测
@@ -158,6 +183,17 @@
                     }
                 }, false);
             }, false);
+        },
+        methods:{
+            //取消升级页面
+           cancelbtn () {
+               this.cancelshow = false
+           },
+           //升级
+           upgradeclick() {
+               upgradeForAndroid(this.releasePath,this.packageName);
+               this.cancelshow = false
+           }
         }
     }
 </script>
@@ -168,7 +204,73 @@
         width: 100%;
         height: 100%;
     }
-
+    .black {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background-color:rgba(0,0,0,0.2)
+    }
+    .black_box {
+        width: 42rem;
+        // height: 56rem;
+        background-color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -21rem;
+        margin-top: -23rem;
+        border-radius: 2rem;
+        .img {
+            width: 100%;
+            margin-top: -5rem;
+        }
+    }
+    .cancel {
+        width: 2rem;
+        height: 2rem;
+        line-height: 1.6rem;
+        text-align: center;
+        font-size: 2rem;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        color: #fff;
+        position: absolute;
+        right: 1.4rem;
+        top: 0.4rem;
+    }
+    .black_text {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 3.2rem;
+    }
+    .black_text1 {
+        margin-top: 1.2rem;
+        font-size: 1.4rem;
+        text-indent: 10px;
+        margin-left: 12rem;
+        span {
+            display: inline-block;
+                vertical-align: middle;
+            img {
+                margin-right: 10px;
+            }
+        }
+    }
+    .black_text2 {
+        width: 19.9rem;
+        height: 5.1rem;
+        line-height: 5.1rem;
+        background: url('../src/assets/升级按钮.png') no-repeat;
+        background-size: 100% 100%;
+        margin: 5rem auto;
+        text-align: center;
+        color:#fff;
+        font-size: 1.4rem;
+        text-indent: 10px;
+    }
     .fold-left-enter-active {
         animation-name: fold-left-in;
         animation-duration: .3s;

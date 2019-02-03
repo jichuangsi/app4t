@@ -11,7 +11,11 @@ const app = {
         //手写板图片
         boardImg: '',
         //手写板点
-        boardPoint: {}
+        boardPoint: {},
+        //是否升级弹窗
+        isPopupUpgrade: false,
+        //升级资讯
+        upgradeInfo: {}
     },
 
     mutations: {
@@ -32,7 +36,13 @@ const app = {
         },
         SET_BOARD_POINT: (state, obj) => {
             state.boardPoint = obj
-        }
+        },
+        SET_POPUP_UPGRADE: (state, states) => {
+            state.isPopupUpgrade = states
+        },
+        SET_UPGRADE_INFO: (state, obj) => {
+            state.upgradeInfo = obj
+        },
     },
 
     actions: {}

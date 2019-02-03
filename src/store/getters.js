@@ -30,6 +30,8 @@ const getters = {
     blueToothList: state => state.app.blueToothList,
     isPopupBoard: state => state.app.isPopupBoard,
     boardPoint: state => state.app.boardPoint,
-    bluetoothValue: state => state.bluetooth.bluetoothValue
+    bluetoothValue: state => state.bluetooth.bluetoothValue,
+    isPopupUpgrade: state => state.app.isPopupUpgrade,
+    upgradeInfo: state => state.app.upgradeInfo,
 };
 export default getters
