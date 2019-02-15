@@ -26,12 +26,16 @@
 
             </swiper-slide>
             <swiper-slide v-if="pageShow">
-                <scroll-content class="homeWork_content" ref="myscrollfulls" @load="loadDatas" @reload="reloadDatas"
+                <scroll-content class="homeWork_content" ref="myscrollfulls" @load="loadDatas" @reload="reloadDatas" :mescrollValue="mescrollValue"
                                 :tips="tipss">
                     <div slot="empty">无任何数据</div>
-                    <input class="search searchHomeWork " type="text" placeholder="搜索作业">
-                    <div class="PublicHomeWork">
-                        <!--待批改-->
+                    <input class="search searchHomeWork " type="text"  v-model="inputValues" placeholder="搜索习题">
+                    <homework-list v-for="item in filtersHWTextChange" :key="item.index"
+                                  :teacherHomework="item" @reloadDatas="reloadDatas"/>
+                    <div class="history" v-if="homeworkState">上拉查看历史信息</div>
+
+                    <!--<div class="PublicHomeWork">
+                        &lt;!&ndash;待批改&ndash;&gt;
                         <div class="task_content" v-for="item in pendingList"
                              :key="item.index">
                             <h1 class="title pendingTitle">{{item.date}}</h1>
@@ -51,7 +55,7 @@
                                 </router-link>
                             </div>
                         </div>
-                        <!--今天的作业-->
+                        &lt;!&ndash;今天的作业&ndash;&gt;
                         <div class="task_content" v-for="item in nowTeacherWork"
                              :key="item.index">
                             <h1 class="title">{{item.date}}</h1>
@@ -72,7 +76,7 @@
                             </div>
                         </div>
                         <div class="history" v-if="!teacherWork.length">上拉查看历史信息</div>
-                        <!--历史作业-->
+                        &lt;!&ndash;历史作业&ndash;&gt;
                         <div class="task_content" v-for="item in teacherWork"
                              :key="item.index">
                             <h1 class="title">{{item.date}}</h1>
@@ -92,7 +96,7 @@
                                 </router-link>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </scroll-content>
             </swiper-slide>
         </swiper>
@@ -103,27 +107,35 @@
 <script>
     import ScrollContent from '../public/ScrollContent'
     import courseList from '../teacherClassroom/courseList'
+    import homeworkList from '../teacherClassroom/homeworkList'
     import Loading from '../public/Loading'
     import {mapGetters} from 'vuex'
     import store from '@/store'
     import {getHistory} from "../../api/teacher/classroom"
+    import {getHomeworkHistory} from "../../api/teacher/homework"
 
     export default {
         name: 'TeacherIndex',
         components: {
             ScrollContent,
             courseList,
+            homeworkList,
             Loading
         },
         data() {
             return {
                 //input输入的值
                 inputValue: '',
+                inputValues: '',
                 mescrollValue: {up: true, down: true},
                 //课堂总页码
                 classPageNum: 100,
                 //判断课堂是否还有
                 classState: true,
+                //习题总页码
+                homeworkPageNum: 100,
+                //判断课堂是否还有
+                homeworkState: true,
                 //导航样式
                 navStyle: '',
                 //导航
@@ -134,68 +146,17 @@
                     },
                     {
                         id: 2,
-                        text: '作业'
+                        text: '习题'
                     }
                 ],
                 loading: true,    //加载状态
                 pageShow: false,  //内容加载状态
                 tips: '没有更多课堂列表',    //课堂加载到最后的提示
-                tipss: '没有更多作业',      //作业加载到最后的提示
+                tipss: '没有更多习题',      //作业加载到最后的提示
                 //课堂今天要上的课
                 teacherClassroom: [],
-                nowTeacherWork: [
-                    {
-                        date: '8月15日',
-                        content: [{
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 1
-                        }, {
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 2
-                        }, {
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 3
-                        }, {
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 2
-                        }]
-                    }
-                ],       //今天的作业
-                teacherWork: [],          //历史作业
-                pendingList: [            //待批改作业
-                    {
-                        date: '待批改',
-                        content: [{
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 3
-                        }, {
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 3
-                        }, {
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 3
-                        }, {
-                            title: '一课一练',
-                            class: '初一(1)',
-                            submitter: '10',
-                            state: 3
-                        }]
-                    }
-                ]
+                //作业列表
+                teacherHomework: []
             }
         },
         computed: {
@@ -221,6 +182,25 @@
                         }*/
                         if(_this.teacherClassroom[i].courseName.indexOf(_this.inputValue) > -1){
                             arr.push(_this.teacherClassroom[i]);
+                        }
+                    }
+                    return arr;
+                }
+            },
+            filtersHWTextChange() {
+                let _this = this;
+                let arr = [];
+                if (_this.inputValues === '') {
+                    _this.teacherHomework = _this.homeworkList;
+                    return _this.teacherHomework;
+                } else {
+                    for (let i = 0; i < _this.teacherHomework.length; i++) {
+                        /*console.log(_this.teacherClassroom[i].courseName + ", " + _this.inputValue);*/
+                        /*if (_this.teacherClassroom[i].courseName === _this.inputValue) {
+                            arr.push(_this.teacherClassroom[i]);
+                        }*/
+                        if(_this.teacherHomework[i].homeworkName.indexOf(_this.inputValues) > -1){
+                            arr.push(_this.teacherHomework[i]);
                         }
                     }
                     return arr;
@@ -261,6 +241,20 @@
                 }).catch((err) => {
                     console.log("err", err);
                 });
+                this.$store.dispatch('getTeacherHomework').then(() => {
+                    _this.teacherHomework = _this.homeworkList;
+                    this.swiper.on('slideChangeTransitionEnd', function () {
+                        for (let i = 0; i < _this.tabs.length; i++) {
+                            if (i === this.activeIndex) {
+                                _this.navStyle = 'transition: left .2s;left:113.08px;';
+                            } else {
+                                _this.navStyle = 'transition: left .2s;left:30.06px;';
+                            }
+                        }
+                    })
+                }).catch((err) => {
+                    console.log("err", err);
+                });
             },
             //课堂上拉加载的的api
             loadData(pageIndex) {
@@ -285,16 +279,21 @@
             //作业上拉加载的api
             loadDatas(pageIndex) {
                 setTimeout(() => {
-                    let _this = this;
-                    this.api.getTeacherWork()
-                        .then(function (res) {
-                            _this.teacherWork = res.data.teacherWork;
-                            _this.$refs.myscrollfulls.endByPage(1, 2);
+                    console.log(this.homeworkPageNum, pageIndex);
+                    getHomeworkHistory(pageIndex)
+                        .then(res => {
+                            store.commit('SET_HOMEWORKHISTORY', res.data.data.content);
+                            this.teacherHomework = this.homeworkList;
+                            this.homeworkPageNum = res.data.data.pageCount;
+                            if (this.homeworkPageNum === pageIndex) {
+                                this.homeworkState = false;
+                                console.log('执行了');
+                            }
+                            this.$refs.myscrollfulls.endByPage(res.data.data.pageSize, res.data.data.pageCount);
                         })
-                        .catch(function (err) {
-                            console.log('err' + err);
+                        .catch(err => {
+                            console.log(err);
                         });
-                    //第一个参数：当前页获取的数据总数；第二个参数：列表总页数
                 }, 2000)
             },
             //课堂下拉刷新
@@ -313,8 +312,12 @@
             reloadDatas() {
                 let _this = this;
                 setTimeout(function () {
-                    console.log("作业数据刷新成功");
-                    _this.$refs.myscrollfulls.endSuccess();
+                    _this.$store.dispatch('getTeacherHomework').then(() => {
+                        _this.teacherHomework = _this.homeworkList;
+                        _this.$refs.myscrollfulls.endSuccess();
+                    }).catch((err) => {
+                        console.log("err", err);
+                    });
                 }, 1000);
             }
         }
@@ -416,103 +419,6 @@
 
                 .searchHomeWork {
                     background-color: #f8f8f8;
-                }
-                .PublicHomeWork {
-                    .task_content {
-                        padding-bottom: 2.29rem;
-                        .title {
-                            font-size: 24px;
-                            padding-bottom: .57rem;
-                            color: rgba(128, 213, 156, 1);
-                        }
-                        .pendingTitle {
-                            color: rgba(238, 199, 32, 1);
-                        }
-                        .task_warp {
-                            position: relative;
-                            padding: 2.29rem 1.14rem;
-                            background-color: white;
-                            border-radius: 18px;
-                            .task {
-                                position: relative;
-                                box-sizing: border-box;
-                                width: 100%;
-                                display: flex;
-                                justify-content: space-between;
-                                padding: .64rem 1.14rem .64rem 1.14rem;
-                                margin-bottom: 1.14rem;
-                                height: 3.14rem;
-                                line-height: 1.86rem;
-                                font-size: 16px;
-                                border-radius: 16px;
-                                .task_name {
-                                    max-width: 30%;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                    color: rgba(53, 53, 53, 1);
-                                }
-                                .class {
-                                    max-width: 30%;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                    color: rgba(136, 136, 136, 1);
-                                }
-                                .submitter {
-                                    max-width: 30%;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                }
-                                .state {
-                                    max-width: 20%;
-                                    width: 20%;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    white-space: nowrap;
-                                    position: relative;
-                                    text-align: center;
-                                }
-                            }
-                            .violet {
-                                background-color: rgba(241, 238, 254, 1);
-                                .state {
-                                    line-height: 1.86rem;
-                                    border-radius: 1.86rem;
-                                    background-color: rgba(142, 120, 240, 1);
-                                    color: white;
-                                }
-                            }
-                            .green {
-                                background-color: rgba(222, 255, 225, 1);
-                                .state {
-                                    color: rgba(101, 179, 127, 1);
-                                }
-                            }
-                            .yellow {
-                                background-color: rgba(255, 248, 220, 1);
-                                .state {
-                                    color: rgba(162, 162, 162, 1);
-                                    &:before {
-                                        content: "";
-                                        display: inline-block;
-                                        height: .57rem;
-                                        width: .57rem;
-                                        background-color: rgba(255, 82, 82, 1);
-                                        border-radius: 50%;
-                                        position: absolute;
-                                        top: .4rem;
-                                        right: -.64rem;
-                                        font-size: 0;
-                                    }
-                                }
-                            }
-                            .task:last-child {
-                                margin-bottom: 0;
-                            }
-                        }
-                    }
                 }
             }
             .homeWork_content {

@@ -5,6 +5,18 @@ const getters = {
     userMobile: state => state.login.userMobile,
     //老师端课堂数据
     classList: state => state.teacher.classList,
+    //老师端习题数据
+    homeworkList: state => state.teacher.homeworkList,
+    //老师习题id
+    homeworkId: state => state.teacher.homeworkId,
+    //老师习题Name
+    homeworkName: state => state.teacher.homeworkName,
+    //老师习题初始slide
+    homeworkInitSlide: state => state.teacher.homeworkInitSlide,
+    //老师习题学生列表
+    homeworkStudents: state => state.teacher.homeworkStudents,
+    //老师习题问题列表
+    homeworkQuestions: state => state.teacher.homeworkQuestions,
     //老师端课堂名字
     courseName: state => state.teacher.courseName,
     //老师端老师id

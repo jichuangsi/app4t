@@ -1,31 +1,49 @@
 import axios from '../../utils/axios'
 
-let apiUrl = '/homeworkForteacher/';
+let apiUrl = 'http://school.jichuangsi.com:81/HOMEWORKSERVICE/teacher/';
 
-//作业列表
-export function getWorkList() {
+//习题列表
+export function getHomeworkList() {
   return axios({
-    method: 'get',
-    url: `${apiUrl}getList`,
+      method: 'GET',
+      url: `${apiUrl}getList`,
+      headers: {'accessToken': localStorage.getItem('token')}
   });
 }
 
-//历史作业列表
-export function getHistory() {
+//历史习题列表
+export function getHomeworkHistory(pageIndex, pageSize) {
   return axios({
-    method: 'get',
-    url: `${apiUrl}getHistory`,
+      method: 'POST',
+      url: `${apiUrl}getHistory`,
+      data: {
+          pageIndex,
+          pageSize
+      },
+      headers: {'accessToken': localStorage.getItem('token')}
   });
 }
+
+//习题状态更新
+export function updateHomeworkStatus(homeworkId, homeworkStatus) {
+    return axios({
+        method: 'POST',
+        url: `${apiUrl}updateHomeworkStatus`,
+        data: {
+            homeworkId,
+            homeworkStatus
+        },
+        headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+
 
 //学生作业情况列表
-export function getStudentList(homeworkId) {
+export function getHomework(homeworkId) {
   return axios({
     method: 'get',
-    url: `${apiUrl}getStudentList`,
-    data: {
-      homeworkId
-    }
+    url: `${apiUrl}getHomework/${homeworkId}`,
+      headers: {'accessToken': localStorage.getItem('token')}
   });
 }
 

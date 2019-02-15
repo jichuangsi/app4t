@@ -1,10 +1,17 @@
 import {getList} from '../../../api/teacher/classroom'
+import {getHomeworkList} from '../../../api/teacher/homework'
 
 const teacher = {
     state: {
         classList: [],
         classListHistory: [],
         homeworkList: [],
+        homeworkListHistory: [],
+        homeworkId: '',
+        homeworkName: '',
+        homeworkStudents: [],
+        homeworkQuestions: [],
+        homeworkInitSlide: 0,
         courseId: '',
         courseName: '',
         teacherName: '',
@@ -22,6 +29,26 @@ const teacher = {
         },
         SET_HOME: (state, homeworkList) => {
             state.homeworkList = homeworkList;
+            state.homeworkList = state.homeworkList.concat(state.homeworkListHistory);
+        },
+        SET_HOMEWORKHISTORY: (state, homeworkListHistory) => {
+            state.homeworkListHistory = homeworkListHistory;
+            state.homeworkList = state.homeworkList.concat(homeworkListHistory);
+        },
+        SET_HOMEWORKID: (state, homeworkId) => {
+            state.homeworkId = homeworkId;
+        },
+        SET_HOMEWORKNAME: (state, homeworkName) => {
+            state.homeworkName = homeworkName;
+        },
+        SET_HOMEWORKSTUDENTS: (state, homeworkStudents) => {
+            state.homeworkStudents = homeworkStudents;
+        },
+        SET_HOMEWORKQUESTIONS: (state, homeworkQuestions) => {
+            state.homeworkQuestions = homeworkQuestions;
+        },
+        SET_HOMEWORKINITSLIDE: (state, homeworkInitSlide) => {
+            state.homeworkInitSlide = homeworkInitSlide;
         },
         SET_COURSEID: (state, courseId) => {
             state.courseId = courseId;
@@ -42,6 +69,18 @@ const teacher = {
                 getList()
                     .then(function (res) {
                         commit('SET_CLASS', res.data.data);
+                        resolve()
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    })
+            })
+        },
+        getTeacherHomework({commit}) {
+            return new Promise((resolve, reject) => {
+                getHomeworkList()
+                    .then(function (res) {
+                        commit('SET_HOME', res.data.data);
                         resolve()
                     })
                     .catch(function (error) {

@@ -183,6 +183,14 @@ export default new Router({
                 isBack: false
             }
         }, {
+            path: '/TQuestions',
+            name: 'TQuestions',
+            component: () => import('@/pages/teacher/homeWork/show-questions'), //老师端作业列表
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        },{
             path: '/teacherInformation',
             name: 'teacherInformation',
             component: () => import('@/pages/teacher/teacherInformation'), //老师端我的详情

@@ -1,17 +1,22 @@
 <template>
   <div class="TStudentList">
-    <teacher-header :header="header"/>
-    <scroll-content ref="myscrollfull" @load="loadData" :mescrollValue="mescrollValue" v-if="pageShow">
-      <input class="search" type="text" placeholder="搜索学生">
+    <teacher-header :header="header" :jump="jump"/>
+    <scroll-content ref="myscrollfull" @reload="reloadData" :mescrollValue="mescrollValue" v-if="pageShow">
+      <input class="search" type="text" v-model="inputValue" placeholder="搜索学生">
       <div class="student_list">
-        <div class="item" v-for="item in list" :key="item.index">
+        <div class="mainTitle">
+          <span class="icon"></span>
+          <span class="title">学生列表</span>
+        </div>
+        <div class="item" v-for="item in filtersTextChange" :key="item.index">
           <div class="left">
-            <div class="avatar"><img :src="item.avatar" alt=""></div>
-            <div class="name">{{item.name}}</div>
+            <!--<div class="avatar"><img :src="item.avatar" alt=""></div>-->
+            <div class="name">{{item.studentName}}<span class="account">({{item.studentAccount}})</span></div>
           </div>
-          <router-link tag="div" to="/TObjective" class="correction" v-if="item.state==1">批改</router-link>
-          <router-link tag="div" to="/TObjective" class="view" v-if="item.state==2">查看</router-link>
-          <div class="notSubmitted" v-if="item.state==3">未提交</div>
+          <!--<router-link tag="div" to="/TObjective" class="correction" v-if="item.completedTime==1">批改</router-link>
+          <router-link tag="div" to="/TObjective" class="view" v-if="item.completedTime==2">查看</router-link>-->
+          <div class="correction" v-if="item.completedTime>0">已提交</div>
+          <div class="notSubmitted" v-if="item.completedTime===0">未提交</div>
         </div>
       </div>
     </scroll-content>
@@ -25,7 +30,9 @@
   import teacherHeader from '../../../components/public/PublicHeader'
   import ScrollContent from '../../../components/public/ScrollContent'
   import Loading from '../../../components/public/Loading'
-
+  import {mapGetters} from 'vuex'
+  import store from '@/store'
+  import {getHomework} from "@/api/teacher/homework"
 
   export default {
     components: {
@@ -35,82 +42,69 @@
     },
     data() {
       return {
-        loading: true,                                   //页面加载状态
-        pageShow: false,                                 //页面内容加载状态
-        mescrollValue: {up: false, down: false},         //页面是否需要上拉下拉
-        header: {                                        //头部标题
-          url: '/teacherIndex',
-          title: '一课一练'
-        },
-        list: [{                                         //学生列表
-          id: 1,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 1,
-        }, {
-          id: 2,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 2,
-        }, {
-          id: 3,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 3,
-        }, {
-          id: 4,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 2,
-        }, {
-          id: 5,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 1,
-        }, {
-          id: 6,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 3,
-        }, {
-          id: 7,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 1,
-        }, {
-          id: 8,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 1,
-        }, {
-          id: 9,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 1,
-        }, {
-          id: 10,
-          avatar: 'http://pd0qnho0l.bkt.clouddn.com/Bitmap.png',
-          name: '韩梅梅',
-          state: 1,
-        },]
-      }
-    },
-    mounted() {
-      this.getStudentList();
+          inputValue: '',
+          loading: true,                                   //页面加载状态
+          pageShow: false,                                 //页面内容加载状态
+          mescrollValue: {up: false, down: true},         //页面是否需要上拉下拉
+          jump: {name: '开始批改', url: '/TQuestions'},//添加主观题按钮
+          header: {                                        //头部标题
+            url: '/teacherIndex',
+            title: ''
+          }
+        }
+      },
+      computed: {
+          //vuex 调用
+          ...mapGetters([
+              'homeworkId',
+              'homeworkStudents',
+              'homeworkQuestions'
+          ]),
+          //查找数据
+          filtersTextChange() {
+              let _this = this;
+              let arr = [];
+              if (_this.inputValue === '') {
+                  return _this.homeworkStudents;
+              } else {
+                  for (let i = 0; i < _this.homeworkStudents.length; i++) {
+                      if(_this.homeworkStudents[i].studentName.indexOf(_this.inputValue) > -1 ||
+                          _this.homeworkStudents[i].studentAccount.indexOf(_this.inputValue) > -1){
+                          arr.push(_this.homeworkStudents[i]);
+                      }
+                  }
+                  return arr;
+              }
+          },
+      },
+    created() {
+      this.getHomeworkDetail();
     },
     methods: {
-      getStudentList() {
-        this.pageShow = true;
-        this.loading = false;
-      },
-      loadData(pageIndex) {
-        setTimeout(() => {
-          this.$refs.myscrollfull.endByPage(1, 1);
-          //第一个参数：当前页获取的数据总数；第二个参数：列表总页数
-        }, 2000)
+        getHomeworkDetail() {
+            getHomework(this.homeworkId).then(res=>{
+                //console.log(res.data.data);
+                this.pageShow = true;
+                this.loading = false;
+                store.commit('SET_HOMEWORKSTUDENTS', res.data.data.students);
+                store.commit('SET_HOMEWORKQUESTIONS', res.data.data.questions);
+                store.commit('SET_HOMEWORKNAME', res.data.data.homeworkName);
+                store.commit('SET_HOMEWORKINITSLIDE', 0);
+                this.header.title = res.data.data.homeworkName;
+            }).catch(err=>{
+                //console.log(err);
+            })
+        },
+        //课堂下拉刷新
+        reloadData() {
+            let _this = this;
+            setTimeout(() => {
+                _this.getHomeworkDetail();
+                _this.$refs.myscrollfull.endSuccess();
+            }, 1000);
+        },
       }
     }
-  }
 </script>
 
 <style lang="scss">
@@ -140,6 +134,26 @@
         background-color: rgba(247, 247, 247, 1);
       }
       .student_list {
+        .mainTitle {
+          height: 2rem;
+          position: relative;
+          //margin: 1.43rem 0 2.29rem;
+          .icon {
+            display: inline-block;
+            width: .57rem;
+            height: 1.43rem;
+            margin-top: .285rem;
+            background-color: rgba(128, 213, 156, 1);
+          }
+          .title {
+            position: absolute;
+            top: 50%;
+            margin-left: .57rem;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: rgba(53, 53, 53, 1);
+          }
+        }
         .item {
           height: 4.25rem;
           line-height: 4.25rem;
@@ -158,8 +172,11 @@
               }
             }
             .name {
-              padding-left: 2.29rem;
+              //padding-left: 2.29rem;
               color: rgba(53, 53, 53, 1);
+              .account{
+                font-size: 16px;
+              }
             }
           }
           .correction {
