@@ -1,6 +1,7 @@
 import axios from '../utils/axios'
 
-const apiUrl = 'http://school.jichuangsi.com:81/USERSERVICE/';
+// const apiUrl = 'http://school.jichuangsi.com:81/USERSERVICE/';
+const apiUrl = 'http://192.168.31.108:8888/USERSERVICE/'
 
 //从服务器获取应用的版本信息，和本地应用版本对比
 export function getAppInfo(appName,appType) {

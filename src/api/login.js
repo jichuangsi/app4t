@@ -1,7 +1,8 @@
 /* eslint-disable no-unreachable */
 import axios from '../utils/axios'
 
-const apiUrl = 'http://school.jichuangsi.com:81/api/auth/login';
+// const apiUrl = 'http://school.jichuangsi.com:81/api/auth/login';
+const apiUrl = 'http://192.168.31.108:8888/api/auth/login'
 
 export async function login(userAccount, userPwd ) {
     let res = await axios({

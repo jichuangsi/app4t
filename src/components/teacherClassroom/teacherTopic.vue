@@ -21,13 +21,15 @@
                 </div>
             </div>
             <router-link tag="div" to="/subjectiveDetails" class="button view" v-if="topic.questionStatus == 'FINISH' ">
-                查看
+                <img :src="imgsrc" @touchstart.prevent="touchin()" @touchend.prevent="cleartime()" alt="">                
             </router-link>
             <div class="button termination" v-if="topic.questionStatus == 'PROGRESS'"
-                 @click.stop="terminationTips(topic.questionId)">终止作答
+                 @click.stop="terminationTips(topic.questionId)">
+                <img :src="imgsrc1" @touchstart.prevent="touchin1()" @touchend.prevent="cleartime1(topic.questionId)" alt="">
             </div>
             <div class="button release" v-if="topic.questionStatus == 'NOTSTART'"
-                 @click.stop="releaseTips(topic.questionId)">发布
+                 @click.stop="releaseTips(topic.questionId)">
+                <img :src="imgsrc2" @touchstart.prevent="touchin2()" @touchend.prevent="cleartime2(topic.questionId)" alt="">                 
             </div>
         </div>
     </div>
@@ -75,6 +77,9 @@
         },
         data() {
             return {
+                imgsrc:require('../../assets/查看_未选中.png'),
+                imgsrc1:require('../../assets/终止作答_未选中.png'),
+                imgsrc2:require('../../assets/发布_未选中.png')
                 /*bigimg:'',
                 dsadsa: false*/
             }
@@ -157,6 +162,70 @@
                     //     position: 'bottom'
                     // });
                 }
+            },
+            //长按
+            touchin(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc = require('../../assets/查看_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime() {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc = require('../../assets/查看_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                this.$router.push({path:'/subjectiveDetails'})
+                }
+                return false;
+            },
+            touchin1(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc1 = require('../../assets/终止作答_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime1(questionid) {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc1 = require('../../assets/终止作答_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.terminationTips(questionid)
+                }
+                return false;
+            },
+            touchin2(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc2 = require('../../assets/发布_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime2(questionid) {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc2 = require('../../assets/发布_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.releaseTips(questionid)
+                }
+                return false;
             }
         }
     }
@@ -249,7 +318,7 @@
                 height: 36px;
                 line-height: 36px;
                 border-radius: 36px;
-                padding: 0 1.86rem;
+                // padding: 0 1.86rem;
                 color: white;
                 font-size: 18px;
                 box-sizing: border-box;
@@ -258,24 +327,24 @@
                 white-space: nowrap; /*强制不换行*/
             }
             .view {
-                background-color: #5AA5EF;
+                // background-color: #5AA5EF;
             }
             .view:active {
-                box-shadow: 0 2px 6px 3px #5AA5EF;
+                // box-shadow: 0 2px 6px 3px #5AA5EF;
             }
             .termination {
-                background-color: #FE5454;
+                // background-color: #FE5454;
             }
             .termination:active {
-                background-color: #e74f4f;
-                box-shadow: 0 2px 6px 3px #e74f4f;
+                // background-color: #e74f4f;
+                // box-shadow: 0 2px 6px 3px #e74f4f;
             }
             .release {
-                background-color: #69B482;
+                // background-color: #69B482;
             }
             .release:active {
-                background-color: #54956a;
-                box-shadow: 0 2px 6px 3px #54956a;
+                // background-color: #54956a;
+                // box-shadow: 0 2px 6px 3px #54956a;
             }
         }
         .release_warp {

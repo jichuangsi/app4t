@@ -644,7 +644,8 @@ export default {
     width: 100%;
     height: 4.7rem;
     line-height: 4.7rem;
-    background-color: #80d59c;
+    background: url('../../../assets/上方导航栏.png') no-repeat;
+    background-size: 100% 110%;
     color: #ffffff;
     font-size: 2rem;
     padding-left: 2rem;
@@ -667,7 +668,9 @@ export default {
           height: 4.7rem;
         }
         .color {
-          border-bottom: 4px solid #347cf9;
+          background: url('../../../assets/下标识.png') no-repeat;
+          background-size: 100% 10%;
+          background-position-y: 4.2rem;
         }
       }
       :nth-child(1) {
@@ -685,7 +688,8 @@ export default {
       font-size: 3.8rem;
       text-align: center;
       margin-top: 5rem;
-      margin-left: -2rem;
+      margin-left: -1rem;
+      color:#fff;
     }
   }
 }

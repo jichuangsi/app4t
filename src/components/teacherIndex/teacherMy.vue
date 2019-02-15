@@ -121,6 +121,7 @@ export default {
     text-align: center;
     font-size: 3.8rem;
     padding-top: 6.8rem;
+    color:#fff;
   }
   .fr {
     float: right;

@@ -26,13 +26,14 @@
                 </div>
                 <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div>
                 <div class="right started" @click.stop.passive="updateState"
-                     v-if="classMsg.courseStatus === 'NOTSTART'">上课
+                     v-if="classMsg.courseStatus === 'NOTSTART'">
+                     <img :src="imgsrc1" @touchstart.prevent="touchin()" @touchend.prevent="cleartime()" alt="">
                 </div>
                 <div class="right class" @click.stop.passive="updateState" v-if="classMsg.courseStatus === 'PROGRESS'">
-                    上课中
+                     <img :src="imgsrc2" @touchstart.prevent="touchin1()" @touchend.prevent="cleartime1()" alt="">
                 </div>
                 <div class="right view" @click.stop.passive="updateState" v-if="classMsg.courseStatus === 'FINISH'">
-                    已结束
+                    <img src="../../../assets/课堂已结束.png" alt="">
                 </div>
             </div>
             <div class="subjectTitle">
@@ -89,6 +90,8 @@
         },
         data() {
             return {
+                imgsrc1:require('../../../assets/开始上课_未选中.png'),
+                imgsrc2:require('../../../assets/上课中_未选中.png'),
                 img:"",
                 onestudentname:"",
                 students:[],
@@ -655,6 +658,49 @@
                         }
                     });
                 }
+            },
+            //长按
+            touchin(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc1 = require('../../../assets/开始上课_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime() {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc1 = require('../../../assets/开始上课_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.updateState()
+                }
+                return false;
+            },
+            touchin1(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc2 = require('../../../assets/上课中_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime1() {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc2 = require('../../../assets/上课中_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.updateState()
+                }
+                return false;
             }
         }
     }
@@ -743,28 +789,28 @@
                 .right {
                     width: 8.57rem;
                     height: 3rem;
-                    background-color: rgba(128, 213, 156, 1);
+                    // background-color: rgba(128, 213, 156, 1);
                     border-radius: 100px;
                     text-align: center;
                     line-height: 3rem;
                     color: rgba(255, 255, 255, 1);
                 }
                 .class {
-                    background-color: #8E78F0;
+                    // background-color: #8E78F0;
                 }
                 .class:active {
-                    background-color: #7262c2;
-                    box-shadow: 0 2px 6px 3px #7262c2;
+                    // background-color: #7262c2;
+                    // box-shadow: 0 2px 6px 3px #7262c2;
                 }
                 .view {
-                    background-color: #888888;
+                    // background-color: #888888;
                 }
                 .started {
-                    background-color: #69B482;
+                    // background-color: #69B482;
                 }
                 .started:active {
-                    background-color: #4a9460;
-                    box-shadow: 0 2px 6px 3px #4a9460;
+                    // background-color: #4a9460;
+                    // box-shadow: 0 2px 6px 3px #4a9460;
                 }
                 &:before {
                     content: "";

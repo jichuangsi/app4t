@@ -232,7 +232,7 @@
                     this.swiper.on('slideChangeTransitionEnd', function () {
                         for (let i = 0; i < _this.tabs.length; i++) {
                             if (i === this.activeIndex) {
-                                _this.navStyle = 'transition: left .2s;left:113.08px;';
+                                _this.navStyle = 'transition: left .2s;left:108.08px;';
                             } else {
                                 _this.navStyle = 'transition: left .2s;left:30.06px;';
                             }
@@ -246,7 +246,7 @@
                     this.swiper.on('slideChangeTransitionEnd', function () {
                         for (let i = 0; i < _this.tabs.length; i++) {
                             if (i === this.activeIndex) {
-                                _this.navStyle = 'transition: left .2s;left:113.08px;';
+                                _this.navStyle = 'transition: left .2s;left:108.08px;';
                             } else {
                                 _this.navStyle = 'transition: left .2s;left:30.06px;';
                             }
@@ -337,7 +337,9 @@
             line-height: 3.15rem;
             position: fixed;
             z-index: 10;
-            background-color: rgba(145, 220, 169, 1);
+            // background-color: rgba(145, 220, 169, 1);
+            background: url('../../assets/上方导航栏.png') no-repeat;
+            background-size: 100% 110%;
             .title_warp {
                 width: 100%;
                 display: flex;
@@ -359,6 +361,8 @@
                     height: 3px;
                     border-radius: 3px;
                     background-color: #FFFFFF;
+                    background: url('../../assets/作业--课堂下标识.png') no-repeat;
+                    background-size: 100%;
                 }
                 .bar_left {
                     /*animation: toLeft .3s forwards;*/

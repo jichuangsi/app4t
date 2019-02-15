@@ -1,12 +1,14 @@
 import axios from '../../utils/axios'
 
-let apiUrl = 'http://school.jichuangsi.com:81/COURSESERVICE/teacher/';
+// let apiUrl = 'http://school.jichuangsi.com:81/COURSESERVICE/teacher/';
 //公司用的token
 // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg';
 //调试用的token
 // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySW5mbyI6IntcImNsYXNzSWRcIjpcIjc3N1wiLFwidGltZVN0YW1wXCI6MTUzOTMxNzIzMTE2NCxcInVzZXJJZFwiOlwiMTIzXCIsXCJ1c2VyTmFtZVwiOlwi5byg5LiJXCIsXCJ1c2VyTnVtXCI6XCI0NTZcIn0ifQ.BXQaa-JsFEBCB0tECtY1fjWhxxEbzlPwADsRRN2rvo-sW_n6OvRrEKvmpsdq75zkxeSvdeiYXfzX9SG_6yERKg'
 // const apiUrl = 'http://192.168.54.101:8888/COURSESERVICE/teacher/';
-const host = 'http://school.jichuangsi.com:81/COURSESTATISTICS/';
+// const host = 'http://school.jichuangsi.com:81/COURSESTATISTICS/';
+const apiUrl = 'http://192.168.31.108:8888/COURSESERVICE/teacher/'
+const host = 'http://192.168.31.108:8888/COURSESTATISTICS/'
 
 
 export function getList() {

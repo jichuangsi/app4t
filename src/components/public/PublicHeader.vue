@@ -47,8 +47,10 @@
         line-height: 3.15rem;
         padding: 0 1.14rem;
         box-sizing: border-box;
-        background-color: rgba(128, 213, 156, 1);
-        box-shadow: 0 .14rem .57rem 0 rgba(0, 0, 0, 0.21);
+        // background-color: rgba(128, 213, 156, 1);
+        // box-shadow: 0 .14rem .57rem 0 rgba(0, 0, 0, 0.21);
+        background: url('../../assets/上方导航栏.png') no-repeat;
+        background-size: 100% 110%;
         border: 1px solid transparent;
         .item {
             padding-top: 1px;

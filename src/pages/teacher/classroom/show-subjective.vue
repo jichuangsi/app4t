@@ -6,9 +6,12 @@
         <subjective :subjectiveTopic="subjectiveMsg" @subjectiveId="subjectiveId" />
         <div class="button_warp">
           <!-- @click="modifyAnswer(subjectiveMsg.questionId)" -->
-          <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">批改答案
+          <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">
+            <img :src="imgsrc" @touchstart.prevent="touchin()" @touchend.prevent="cleartime(subjectiveMsg.questionId)" alt="">
           </div>
-          <div class="subjective_submit_box" v-if="cover_box==1" @click="qq">确认批改</div>
+          <div class="subjective_submit_box" v-if="cover_box==1" @click="qq">
+            <img :src="imgsrc1" @touchstart.prevent="touchin1()" @touchend.prevent="cleartime1()" alt="">
+          </div>
         </div>
         <board :id="this.topicId" :subjectiveAnswer="subjectiveAnswer" />
         <!-- <div id="div" class="ass"></div> -->
@@ -37,8 +40,12 @@
           </div>
         </mt-popup>
       </div>
-      <div class="share" @click="share" v-show="sharebtn">共享</div>
-      <div class="submit" @click="submited" v-show="buttonSate">提交</div>
+      <div class="share" @click="share" v-show="sharebtn">
+        <img :src="imgsrc2" @touchstart.prevent="touchin2()" @touchend.prevent="cleartime2()" alt="">
+      </div>
+      <div class="submit" @click="submited" v-show="buttonSate">
+        <img :src="imgsrc3" @touchstart.prevent="touchin3()" @touchend.prevent="cleartime3()" alt="">
+      </div>
     </div>
     <loading v-if="loading" />
   </div>
@@ -72,6 +79,10 @@ export default {
   },
   data() {
     return {
+      imgsrc:require('../../../assets/批改答案_未选中.png'),
+      imgsrc1:require('../../../assets/确认批改_未选中.png'),
+      imgsrc2:require('../../../assets/共享_未选中.png'),
+      imgsrc3:require('../../../assets/提交_未选中.png'),
       correction: false,
       sharebtn: "",
       imgawer:'',
@@ -418,7 +429,92 @@ export default {
           position: "bottom"
         });
       }
-    }
+    },
+    //长按
+            touchin(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc = require('../../../assets/批改答案_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime(val) {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc = require('../../../assets/批改答案_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.zz(val)
+                }
+                return false;
+            },
+            touchin1(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc1 = require('../../../assets/确认批改_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime1() {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc1 = require('../../../assets/确认批改_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.qq()
+                }
+                return false;
+            },
+            touchin2(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc2 = require('../../../assets/共享_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime2() {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc2 = require('../../../assets/共享_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.share()
+                }
+                return false;
+            },
+            touchin3(){
+                var that=this;
+                this.Loop = setTimeout(function() {
+                that.Loop = 0;
+                //执行长按要执行的内容，如弹出菜单
+                that.imgsrc3 = require('../../../assets/提交_选中.png')
+                }, 500);
+                return false;
+
+            },
+            cleartime3() {
+                let that = this
+                clearTimeout(this.Loop);
+                that.imgsrc3 = require('../../../assets/提交_未选中.png')
+                if(that.Loop!=0){
+                //   //这里写要执行的内容（尤如onclick事件）
+                //   that.previewPicture(index)
+                that.submited()
+                }
+                return false;
+            }
   }
 };
 </script>
@@ -454,9 +550,9 @@ export default {
         .subjective_submit {
           position: absolute;
           right: 3.71rem;
-          padding: 0 20px;
+          // padding: 0 20px;
           height: 2.29rem;
-          border: 2px solid #9a84ff;
+          // border: 2px solid #9a84ff;
           line-height: 2.29rem;
           text-align: center;
           border-radius: 1.145rem;
@@ -467,10 +563,10 @@ export default {
         .subjective_submit_box {
           position: absolute;
           right: 3.71rem;
-          padding: 0 20px;
+          // padding: 0 20px;
           height: 2.29rem;
-          background-color: #fff;
-          border: 2px solid #9a84ff;
+          // background-color: #fff;
+          // border: 2px solid #9a84ff;
           line-height: 2.29rem;
           text-align: center;
           border-radius: 1.145rem;
@@ -481,9 +577,9 @@ export default {
         .subjective_submit_box_box {
           position: absolute;
           right: 3.71rem;
-          padding: 0 20px;
+          // padding: 0 20px;
           height: 2.29rem;
-          border: 2px solid #9a84ff;
+          // border: 2px solid #9a84ff;
           line-height: 2.29rem;
           text-align: center;
           border-radius: 1.145rem;
@@ -492,7 +588,7 @@ export default {
           z-index: 102;
         }
         .subjective_submit:active {
-          background-color: #b4b4b4;
+          // background-color: #b4b4b4;
         }
       }
     }
@@ -591,19 +687,19 @@ export default {
       // position: absolute;
       // right: 42%;
       font-size: 18px;
-      padding: 0.57rem 3.14rem;
-      background-color: #9a84ff;
+      // padding: 0.57rem 3.14rem;
+      // background-color: #9a84ff;
       border-radius: 100px;
     }
     .submit {
       font-size: 18px;
-      padding: 0.57rem 3.14rem;
-      background-color: #9a84ff;
+      // padding: 0.57rem 3.14rem;
+      // background-color: #9a84ff;
       border-radius: 100px;
     }
     .submit:active {
-      box-shadow: 0 2px 6px 3px #7c6fd1;
-      background-color: #7c6fd1;
+      // box-shadow: 0 2px 6px 3px #7c6fd1;
+      // background-color: #7c6fd1;
     }
   }
 }
