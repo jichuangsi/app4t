@@ -1426,8 +1426,8 @@ export default {
 .top {
   .nav {
     width: 100%;
-    height: 4.7rem;
-    line-height: 4.7rem;
+    height: 3.15rem;
+    line-height: 3.15rem;
     // background-color: #80d59c;
     background: url('../../../../assets/上方导航栏.png') no-repeat;
     background-size: 100% 110%;
@@ -1442,7 +1442,7 @@ export default {
     }
     ul {
       flex: 1;
-      height: 4.7rem;
+      height: 3.15rem;
       overflow: hidden;
       li {
         display: inline-block;
@@ -1450,7 +1450,7 @@ export default {
         margin-left: 3rem;
         span {
           display: inline-block;
-          height: 4.7rem;
+          height: 3.15rem;
           padding: 0 1rem;
         }
         .color {
@@ -1458,7 +1458,7 @@ export default {
           // background-color: #347cf9;
           background: url('../../../../assets/下标识.png') no-repeat;
           background-size: 100%;
-          background-position-y: 4.2rem;
+          background-position-y: 2.9rem;
         }
       }
       :nth-child(1) {
@@ -1473,9 +1473,9 @@ export default {
     background-size: 100% 100%;
     overflow: hidden;
     h2 {
-      font-size: 3.8rem;
+      font-size: 3rem;
       text-align: center;
-      margin-top: 5rem;
+      margin-top: 5.6rem;
       margin-left: -.8rem;
       color:#fff;
     }

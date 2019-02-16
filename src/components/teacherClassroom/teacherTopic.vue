@@ -322,9 +322,9 @@
                 color: white;
                 font-size: 18px;
                 box-sizing: border-box;
-                overflow: hidden; /*自动隐藏文字*/
-                text-overflow: ellipsis; /*文字隐藏后添加省略号*/
-                white-space: nowrap; /*强制不换行*/
+                // overflow: hidden; /*自动隐藏文字*/
+                // text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+                // white-space: nowrap; /*强制不换行*/
             }
             .view {
                 // background-color: #5AA5EF;

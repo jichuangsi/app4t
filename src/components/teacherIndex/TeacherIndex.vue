@@ -215,9 +215,9 @@
             changeTabs(index) {
                 for (let i = 0; i < this.tabs.length; i++) {
                     if (i === index) {
-                        this.navStyle = 'transition: left .2s;left:113.08px;';
+                        this.navStyle = 'transition: left .2s;left:94.08px;';
                     } else {
-                        this.navStyle = 'transition: left .2s;left:30.06px;';
+                        this.navStyle = 'transition: left .2s;left:23.06px;';
                     }
                 }
                 this.swiper.slideTo(index, 500, false);
@@ -232,9 +232,9 @@
                     this.swiper.on('slideChangeTransitionEnd', function () {
                         for (let i = 0; i < _this.tabs.length; i++) {
                             if (i === this.activeIndex) {
-                                _this.navStyle = 'transition: left .2s;left:108.08px;';
+                                _this.navStyle = 'transition: left .2s;left:94.08px;';
                             } else {
-                                _this.navStyle = 'transition: left .2s;left:30.06px;';
+                                _this.navStyle = 'transition: left .2s;left:23.06px;';
                             }
                         }
                     })
@@ -348,6 +348,7 @@
                 box-sizing: border-box;
                 .title {
                     height: 100%;
+                    font-size: 2rem;
                     color: white;
                     position: relative;
                     box-sizing: border-box;
@@ -356,9 +357,9 @@
                 .bar {
                     position: absolute;
                     width: 53px;
-                    left: 30.06px;
+                    left: 23.06px;
                     bottom: -.5px;
-                    height: 3px;
+                    height: 4px;
                     border-radius: 3px;
                     background-color: #FFFFFF;
                     background: url('../../assets/作业--课堂下标识.png') no-repeat;
