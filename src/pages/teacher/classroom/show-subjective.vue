@@ -353,8 +353,11 @@ export default {
     bse() {
       let self = this;
       let datapair = $(".answer").jSignature("getData");
-      getSubjectPic(self.picForSubjective).then(res=>{
-        this.imgawer = res.data.data.content
+      // getSubjectPic(self.picForSubjective).then(res=>{
+        // console.log(res)
+      // })
+        // this.imgawer = res.data.data.content
+       this.imgawer =  self.subjectiveAnswer[0].answer
         var canvas = document.createElement("canvas");
         var ctx = canvas.getContext("2d");
         var imgObj = new Image();
@@ -400,7 +403,6 @@ export default {
             }
           };
         };
-      })
 
     },
     //共享
