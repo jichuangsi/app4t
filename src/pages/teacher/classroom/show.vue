@@ -118,7 +118,7 @@
                 classMsg: {},
                 showTopicList: [],
                 //ws地址
-                wsUrl: 'http://school.jichuangsi.com:81',
+                wsUrl: this.apiHost(), //'http://api.jichuangsi.com',
                 //保存ws的对象
                 stompClient: null,
                 subscription: null,

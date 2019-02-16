@@ -1,6 +1,7 @@
 import axios from '../../utils/axios'
 
-let apiUrl = 'http://school.jichuangsi.com:81/HOMEWORKSERVICE/teacher/';
+//let apiUrl = 'http://api.jichuangsi.com/HOMEWORKSERVICE/teacher/';
+let apiUrl = '/HOMEWORKSERVICE/teacher/';
 
 //习题列表
 export function getHomeworkList() {

@@ -133,7 +133,7 @@ export default {
       hours: 0,
       //分
       minutes: 0,
-      wsUrl: "http://school.jichuangsi.com:81",
+      wsUrl: this.apiHost(), //'http://api.jichuangsi.com',
       stompClient: null,
       subscription: null,
       token: localStorage.getItem("token")

@@ -85,21 +85,23 @@ export default {
   },
   methods: {
     getTeacherMy() {
-      let _this = this;
-      let user = JSON.parse(localStorage.getItem('user'))
-      if(user.userSex=="FEMALE"){
-        this.userimg = require('../../assets/女老师.png')
-      }else{
-        this.userimg = require('../../assets/男老师.png')
-      }
-      this.username = user.userName
-      this.api
+          let _this = this;
+          let user = JSON.parse(localStorage.getItem('user'))
+          if(user.userSex=="FEMALE"){
+            this.userimg = require('../../assets/女老师.png')
+          }else{
+            this.userimg = require('../../assets/男老师.png')
+          }
+          this.username = user.userName
+        this.pageShow = true;
+        this.loading = false;
+      /*this.api
         .getMy()
         .then(function(res) {
           _this.pageShow = true;
           _this.loading = false;
         })
-        .catch(function(err) {});
+        .catch(function(err) {});*/
     },
     loginout() {
       localStorage.removeItem('token')

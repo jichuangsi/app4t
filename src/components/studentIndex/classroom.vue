@@ -78,7 +78,7 @@
                     title: '课堂列表'
                 },
                 tips: '没有更多课堂列表',                             //页面加载到最后提示文字
-                wsUrl: 'http://school.jichuangsi.com:81',
+                wsUrl: this.apiHost(), //'http://api.jichuangsi.com',
                 stompClient: null,
                 subscription: null,
                 token: localStorage.getItem("token"),

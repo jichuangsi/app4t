@@ -1,9 +1,10 @@
 import axios from '../../utils/axios'
 
-const apiUrl = 'http://school.jichuangsi.com:81/COURSESERVICE/student/';
-const host = 'http://school.jichuangsi.com:81/CLASSINTERACTION/';
-// const apiUrl = 'http://192.168.54.101:8888/COURSESERVICE/student/';
-// const host = 'http://192.168.54.101:8888/';
+//const apiUrl = 'http://api.jichuangsi.com/COURSESERVICE/student/';
+//const host = 'http://api.jichuangsi.com/CLASSINTERACTION/';
+const apiUrl = '/COURSESERVICE/student/';
+const host = '/CLASSINTERACTION/';
+
 //课程列表
 export function getList() {
     return axios({

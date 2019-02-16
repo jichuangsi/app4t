@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Mint from 'mint-ui';
-import api from './api/api'
+//import api from './api/api'
+import config from './lib/config/config'
 import VueCorvova from 'vue-cordova'
 import echarts from 'echarts'
 import '@/assets/styles/reset.css'
@@ -16,15 +17,15 @@ import "@/assets/jquery-2.2.2.min.js";
 import "@/assets/jSignature.js";
 
 /* eslint-disable no-unused-vars */
-//import vConsole from './utils/log'
+import vConsole from './utils/log'
 import Print from 'vue-print-nb'
 Vue.use(Print) //注册打印功能
 Vue.use(VueAwesomeSwiper);
 Vue.prototype.$echarts = echarts
 Vue.use(VueCorvova);
 Vue.use(Mint);
-Vue.prototype.api = api;
-
+//Vue.prototype.api = api;
+Vue.use(config);
 Vue.config.productionTip = false;
 
 new Vue({
