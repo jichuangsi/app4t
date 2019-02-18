@@ -260,16 +260,20 @@
         }
     }
     .black_text2 {
-        width: 19.9rem;
-        height: 5.1rem;
-        line-height: 5.1rem;
-        background: url('../src/assets/升级按钮.png') no-repeat;
-        background-size: 100% 100%;
+        width: 412px;
+        height: 116px;
+        line-height: 116px;
+        background: url('../src/assets/按钮.png') no-repeat;
+        background-position: -7px -1000px;
         margin: 5rem auto;
         text-align: center;
         color:#fff;
         font-size: 1.4rem;
         text-indent: 10px;
+    }
+    .black_text2:active{
+        background: url('../src/assets/按钮.png') no-repeat;
+        background-position: -446px -1000px;
     }
     .fold-left-enter-active {
         animation-name: fold-left-in;

@@ -27,10 +27,8 @@
                 <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div>
                 <div class="right started" @click.stop.passive="updateState"
                      v-if="classMsg.courseStatus === 'NOTSTART'">
-                     <img :src="imgsrc1" @touchstart.prevent="touchin()" @touchend.prevent="cleartime()" alt="">
                 </div>
                 <div class="right class" @click.stop.passive="updateState" v-if="classMsg.courseStatus === 'PROGRESS'">
-                     <img :src="imgsrc2" @touchstart.prevent="touchin1()" @touchend.prevent="cleartime1()" alt="">
                 </div>
                 <div class="right view" @click.stop.passive="updateState" v-if="classMsg.courseStatus === 'FINISH'">
                     <img src="../../../assets/课堂已结束.png" alt="">
@@ -90,8 +88,6 @@
         },
         data() {
             return {
-                imgsrc1:require('../../../assets/开始上课_未选中.png'),
-                imgsrc2:require('../../../assets/上课中_未选中.png'),
                 img:"",
                 onestudentname:"",
                 students:[],
@@ -658,49 +654,6 @@
                         }
                     });
                 }
-            },
-            //长按
-            touchin(){
-                var that=this;
-                this.Loop = setTimeout(function() {
-                that.Loop = 0;
-                //执行长按要执行的内容，如弹出菜单
-                that.imgsrc1 = require('../../../assets/开始上课_选中.png')
-                }, 500);
-                return false;
-
-            },
-            cleartime() {
-                let that = this
-                clearTimeout(this.Loop);
-                that.imgsrc1 = require('../../../assets/开始上课_未选中.png')
-                if(that.Loop!=0){
-                //   //这里写要执行的内容（尤如onclick事件）
-                //   that.previewPicture(index)
-                that.updateState()
-                }
-                return false;
-            },
-            touchin1(){
-                var that=this;
-                this.Loop = setTimeout(function() {
-                that.Loop = 0;
-                //执行长按要执行的内容，如弹出菜单
-                that.imgsrc2 = require('../../../assets/上课中_选中.png')
-                }, 500);
-                return false;
-
-            },
-            cleartime1() {
-                let that = this
-                clearTimeout(this.Loop);
-                that.imgsrc2 = require('../../../assets/上课中_未选中.png')
-                if(that.Loop!=0){
-                //   //这里写要执行的内容（尤如onclick事件）
-                //   that.previewPicture(index)
-                that.updateState()
-                }
-                return false;
             }
         }
     }
@@ -796,9 +749,18 @@
                     color: rgba(255, 255, 255, 1);
                 }
                 .class {
+                    width: 126px;
+                    height: 48px;
+                    background: url('../../../assets/按钮.png') no-repeat;
+                    background-position: -150px -226px;
+                    // background-size: 100% 100%;
                     // background-color: #8E78F0;
                 }
                 .class:active {
+                    width: 126px;
+                    height: 48px;
+                    background: url('../../../assets/按钮.png') no-repeat;
+                    background-position: -589px -226px;
                     // background-color: #7262c2;
                     // box-shadow: 0 2px 6px 3px #7262c2;
                 }
@@ -806,9 +768,17 @@
                     // background-color: #888888;
                 }
                 .started {
+                    width: 126px;
+                    height: 48px;
+                    background: url('../../../assets/按钮.png') no-repeat;
+                    background-position: -150px -102px;
                     // background-color: #69B482;
                 }
                 .started:active {
+                    width: 126px;
+                    height: 48px;
+                    background: url('../../../assets/按钮.png') no-repeat;
+                    background-position: -589px -102px;
                     // background-color: #4a9460;
                     // box-shadow: 0 2px 6px 3px #4a9460;
                 }
