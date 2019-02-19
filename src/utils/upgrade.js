@@ -2,7 +2,7 @@ import {getAppInfo} from '@/api/common';
 import store from '@/store'
 
 //检测新版本升级
-export function upgradeForAndroid( releasePath,packageName) {
+export async function upgradeForAndroid( releasePath,packageName) {
 
     //AlertModule.show({title: '已经下载：0%'})
     let uri = encodeURI(releasePath);    //apk所在的服务器路径
@@ -12,7 +12,7 @@ export function upgradeForAndroid( releasePath,packageName) {
     console.log("uri:" + uri);
     console.log("targetPah:" + targetPath);
     console.log("trustHost:" + trustHosts);
-    downLoadApp();
+    await downLoadApp();
 
     function downLoadApp() {
     // 初始化FileTransfer对象

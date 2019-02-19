@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <mt-spinner :size="60" color="rgba(128,213,156,1)" type="fading-circle"></mt-spinner>
+    <mt-spinner :size="60" color="rgba(61,114,254,1)" type="fading-circle"></mt-spinner>
   </div>
 </template>
 

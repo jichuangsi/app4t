@@ -12,6 +12,7 @@
                      :style="navStyle"></div>
             </div>
         </div>
+        <Upgrade/>
         <swiper ref="mySwiper">
             <swiper-slide v-if="pageShow">
 
@@ -113,6 +114,7 @@
     import store from '@/store'
     import {getHistory} from "../../api/teacher/classroom"
     import {getHomeworkHistory} from "../../api/teacher/homework"
+    import Upgrade from '../public/Upgrade'
 
     export default {
         name: 'TeacherIndex',
@@ -120,7 +122,8 @@
             ScrollContent,
             courseList,
             homeworkList,
-            Loading
+            Loading,
+            Upgrade
         },
         data() {
             return {
