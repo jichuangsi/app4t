@@ -1,46 +1,51 @@
 <template>
     <div class="subjectiveShow">
         <classroom-header :header="header"/>
-        <div class="content" v-if="pageShow">
-            <div class="subjective_warp">
-                <subjective :subjectiveTopic="subjectiveMsg" @subjectiveId="subjectiveId" />
-                <div class="button_warp">
-                    <!-- @click="modifyAnswer(subjectiveMsg.questionId)" -->
-                    <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">批改答案
+        <scroll-content ref="myscrollfull" :mescrollValue="mescrollValue">
+            <div class="content" v-if="pageShow">
+                <div class="subjective_warp">
+                    <div class="topic_warp">
+                        <div class="topic" v-html="subjectiveMsg.questionContent">
+                            {{subjectiveMsg.questionContent}}
+                        </div>
                     </div>
-                    <div class="subjective_submit_box" v-if="cover_box==1" @click="qq">确认批改</div>
+                    <PopupPic :questionPic="subjectiveMsg.questionPic"/>
+                    <div class="button_warp">
+                        <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">批改答案
+                        </div>
+                        <div class="subjective_submit_box" v-if="cover_box==1" @click="qq">确认批改</div>
+                    </div>
+                    <board :id="this.topicId" :subjectiveAnswer="subjectiveAnswer" />
                 </div>
-                <board :id="this.topicId" :subjectiveAnswer="subjectiveAnswer" />
-                <!-- <div id="div" class="ass"></div> -->
             </div>
-        </div>
-        <div class="footer" v-if="pageShow">
-            <div class="score">
-                得分:&nbsp;{{scores}}&nbsp;
-                <span class="iconfont edit" @click="score">&#xe60c;</span>
-                <mt-popup v-model="popupVisible">
-                    <div class="popup_warp" v-if="inputState">
-                        <div class="title">请输入分数</div>
-                        <input class="inputScore" type="text" v-model="fraction" />
-                        <div class="operation">
-                            <div @click="determine">是</div>
-                            <div @click="signOut">否</div>
+        </scroll-content>
+            <div class="footer" v-if="pageShow">
+                <div class="score">
+                    得分:&nbsp;{{scores}}&nbsp;
+                    <span class="iconfont edit" @click="score">&#xe60c;</span>
+                    <mt-popup v-model="popupVisible">
+                        <div class="popup_warp" v-if="inputState">
+                            <div class="title">请输入分数</div>
+                            <input class="inputScore" type="text" v-model="fraction" />
+                            <div class="operation">
+                                <div @click="determine">是</div>
+                                <div @click="signOut">否</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="warning_warp" v-if="warningState">
-                        <div class="img_warp">
-                            <img src="../../../../public/images/warning.png">
+                        <div class="warning_warp" v-if="warningState">
+                            <div class="img_warp">
+                                <img src="../../../../public/images/warning.png">
+                            </div>
+                            <div class="title">警告</div>
+                            <div class="text">您输入的分数有误</div>
+                            <div class="close" @click="upperLevel">知道了</div>
                         </div>
-                        <div class="title">警告</div>
-                        <div class="text">您输入的分数有误</div>
-                        <div class="close" @click="upperLevel">知道了</div>
-                    </div>
-                </mt-popup>
+                    </mt-popup>
+                </div>
+                <div class="next" @click="next" v-show="buttonSate">下一个</div>
+                <div class="submit" @click="submited" v-show="buttonSate">提交</div>
             </div>
-            <div class="share" @click="share" v-show="sharebtn">共享</div>
-            <div class="submit" @click="submited" v-show="buttonSate">提交</div>
-        </div>
-        <loading v-if="loading" />
+            <loading v-if="loading" />
     </div>
 </template>
 
@@ -48,32 +53,32 @@
 
 <script>
     import ClassroomHeader from "../../../components/public/PublicHeader";
+    import ScrollContent from '../../../components/public/ScrollContent'
     import subjective from "../../../components/topicList/subjective";
+    import PopupPic from "../../../components/teacherClassroom/PopupPicInHomework";
     import board from "../../../components/board/Board";
     import Loading from "../../../components/public/Loading";
     import {
-        getQuestion,
-        getSubjectPic,
-        sendAnswer,
-        shareAnswer,
-        sendSubjectPicByString
-    } from "@/api/teacher/classroom";
+        getPicByString,
+        sendPicByString,
+        sendAnswer
+    } from "@/api/teacher/homework";
     import { Toast } from "mint-ui";
     import { mapGetters } from "vuex";
     import store from "@/store";
-    // import html2canvas from "html2canvas";
 
     export default {
         components: {
             ClassroomHeader,
             subjective,
             board,
-            Loading
+            Loading,
+            PopupPic,
+            ScrollContent
         },
         data() {
             return {
                 correction: false,
-                sharebtn: "",
                 imgawer:'',
                 cover_box: 0,
                 //图片URL
@@ -81,9 +86,10 @@
                 subjectiveId: "",
                 loading: true, //加载状态
                 pageShow: false, //内容状态
+                mescrollValue: {up: false, down: false},        //是否需要下拉上拉加载数据
                 header: {
                     //页面头部
-                    title: this.teacherName,
+                    title: '',
                     url: "/TQuestions"
                 },
                 subjectiveTopic: [
@@ -105,7 +111,8 @@
                 fraction: "", //输入框的分数
                 answerId: "", //问题答案id
                 picForSubjective: "", //图片上传到服务器的地址
-                buttonSate: false //控制button显示
+                buttonSate: false, //控制button显示
+                topicId: ''
             };
         },
         watch: {
@@ -136,22 +143,16 @@
             }
         },
         mounted() {
-            // this.getSubjectiveShow();
             this.pageShow = true;
             this.loading = false;
-            this.getCourseId();
-            //this.getSubjectPic();
+            this.getSubjectPic();
         },
         computed: {
             //vuex 调用
             ...mapGetters([
-                "isBoard",
-                "boardImg",
-                "topicId",
-                "title",
-                "teacherName",
-                "teacherId",
-                "studentId"
+                "studentId",
+                'homeworkQuestions',
+                'homeworkInitSlide'
             ])
         },
         methods: {
@@ -172,79 +173,62 @@
                     lineWidth: 1
                 });
                 $(".answer").jSignature("enable");
-                // console.log(Boolean(this.sharebtn))
-            },
-            //获取课堂列表穿过来的数据
-            getCourseId() {
-                this.stubForSubjective = this.$route.query.url;
             },
             getSubjectPic() {
                 //获取题目基本信息
-                // console.log(this.topicId)
-                getQuestion(this.topicId)
-                    .then(res => {
-                        console.log(res);
-                        this.subjectiveMsg = res.data.data;
-                        this.subjectiveMsg.title = this.title;
-                        for (let i = 0; i < this.subjectiveMsg.answerForStudent.length; i++) {
-                            if (
-                                this.subjectiveMsg.answerForStudent[i].studentId ===
-                                this.studentId
-                            ) {
-                                this.sharebtn = this.subjectiveMsg.answerForStudent[i].result;
-                                if (this.subjectiveMsg.answerForStudent[i].result) {
-                                    this.picForSubjective = this.subjectiveMsg.answerForStudent[
-                                        i
-                                        ].reviseForSubjective;
-                                }
-                            }
-                        }
-                        this.getImg();
-                        this.pageShow = true;
-                        this.loading = false;
-                        // console.log(this.subjectiveMsg);
-                        // console.log(this.subjectiveAnswer);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+                this.subjectiveMsg = this.homeworkQuestions[this.homeworkInitSlide];
+                this.topicId = this.subjectiveMsg.questionId;
+                console.log(this.subjectiveMsg);
+                this.getImg();
+                this.pageShow = true;
+                this.loading = false;
             },
             //根据api的链接那图片路径
             async getImg() {
                 let self = this;
                 let stubForSubjective = undefined;
-                if (self.subjectiveMsg.answerForTeacher) {
+                if (self.subjectiveMsg.answerModelForStudent) {
                     stubForSubjective =
-                        self.subjectiveMsg.answerForTeacher[
-                            self.subjectiveMsg.answerForTeacher.findIndex(x => {
-                                return x.studentId == self.studentId;
-                            })
-                            ];
-                } else {
-                    stubForSubjective =
-                        self.subjectiveMsg.answerForStudent[
-                            self.subjectiveMsg.answerForStudent.findIndex(x => {
+                        self.subjectiveMsg.answerModelForStudent[
+                            self.subjectiveMsg.answerModelForStudent.findIndex(x => {
                                 return x.studentId == self.studentId;
                             })
                             ];
                 }
-                try {
-                    let res = await getSubjectPic(
-                        stubForSubjective.result === "PASS"
-                            ? stubForSubjective.reviseForSubjective
-                            : stubForSubjective.stubForSubjective
-                    );
-                    self.answerId = stubForSubjective.answerId;
-                    console.log(res.data.data);
-                    self.picForSubjective = res.data.data.name;
-                    if (res.data.data) {
-                        self.picUrl = res.data.data.content;
-                        self.subjectiveAnswer.push({ id: self.topicId, answer: self.picUrl });
-                        self.buttonSate = true;
+                if(stubForSubjective)
+                    this.header.title = stubForSubjective.studentName;
+                    if(stubForSubjective.subjectiveScore) this.fraction = stubForSubjective.subjectiveScore;
+                    try {
+                        let res = await getPicByString(
+                            stubForSubjective.result === "PASS"
+                                ? stubForSubjective.reviseForSubjective
+                                : stubForSubjective.stubForSubjective
+                        );
+                        self.answerId = stubForSubjective.answerId;
+                        if(res.data.code==='0050'){
+                            Toast({
+                                message: res.data.msg,
+                                position: "bottom"
+                            });
+                            return;
+                        }
+                        console.log(res.data.data);
+                        self.picForSubjective = res.data.data.name;
+                        if (res.data.data) {
+                            self.picUrl = res.data.data.content;
+                            self.subjectiveAnswer.push({ id: self.topicId, answer: self.picUrl });
+                            self.buttonSate = true;
+                            //console.log($(".topic_warp").outerHeight(true))
+                            //console.log($(".button_warp").outerHeight(true))
+                            $(".content").height(
+                                ($(".topic_warp").outerHeight()
+                                    +$(".button_warp").outerHeight(true)
+                                    +$("#answer").height()+200)+"px");
+                            //console.log($(".content").height())
+                        }
+                    } catch (e) {
+                        console.log(e);
                     }
-                } catch (e) {
-                    console.log(e);
-                }
             },
             //触发弹出层
             score() {
@@ -274,59 +258,32 @@
                 this.inputState = true;
                 this.warningState = false;
             },
-            //修改答案
-            modifyAnswer(id) {
-                this.subjectiveId = id;
-                let answer = "";
-                for (let i = 0; i < this.subjectiveAnswer.length; i++) {
-                    if (id === this.subjectiveAnswer[i].id) {
-                        answer = this.subjectiveAnswer[i].answer;
-                    }
-                }
-                window.HandwrittenBoard.isConnect(
-                    function(res) {
-                        console.log(res);
-                    },
-                    function(res) {
-                        console.log(res);
-                        switch (res.data.status) {
-                            case 0:
-                                store.commit("SET_BLUETOOTH", true);
-                                window.HandwrittenBoard.exploration();
-                                console.log("第一个");
-                                break;
-                            case 2:
-                                window.HandwrittenBoard.getBase64img(answer);
-                                console.log("第二个");
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                );
-            },
             //提交
             submited() {
                 let self = this;
-                // console.log(self.picForSubjective)
-                if (self.correction) {
+                console.log(self.picForSubjective)
+                if (self.correction || self.scores) {
                     try {
                         sendAnswer(
                             self.topicId,
                             self.answerId,
-                            null,
                             self.scores,
                             self.picForSubjective,
-                            self.teacherId,
-                            self.teacherName
-                        );
-                        Toast({
-                            message: "提交成功",
-                            position: "bottom"
+                        ).then(res => {
+                            if(res.data.code==='0010'){
+                                Toast({
+                                    message: "提交成功",
+                                    position: "bottom"
+                                });
+                                self.updateQuestionsInPage();
+                            }else{
+                                console.log(res.data.msg);
+                                Toast({
+                                    message: "提交失敗",
+                                    position: "bottom"
+                                });
+                            }
                         });
-
-                        // sessionStorage.setItem("sharebtn", "共享");
-                        self.sharebtn = "共享"
                     } catch (e) {
                         Toast({
                             message: "提交失敗",
@@ -335,7 +292,7 @@
                     }
                 } else {
                     Toast({
-                        message: "请确认批改后再提交",
+                        message: "请确认批改或调整分数后再提交",
                         position: "bottom"
                     });
                 }
@@ -344,83 +301,149 @@
             bse() {
                 let self = this;
                 let datapair = $(".answer").jSignature("getData");
-                getSubjectPic(self.picForSubjective).then(res=>{
-                    this.imgawer = res.data.data.content
-                    var canvas = document.createElement("canvas");
-                    var ctx = canvas.getContext("2d");
-                    var imgObj = new Image();
-                    imgObj.setAttribute("crossOrigin", "anonymous");
-                    imgObj.src = "data:image/png;base64,"+self.imgawer
-                    imgObj.onload = function() {
-                        canvas.width = this.width;
-                        canvas.height = this.height;
-                        console.log(this.width,this.height)
-                        ctx.drawImage(this, 0, 0);
-                        var imgq = new Image();
-                        imgq.setAttribute("crossOrigin", "anonymous");
-                        imgq.src = datapair;
-                        imgq.onload = function() {
+                console.log(this.subjectiveAnswer);
+                for (let i = 0; i < this.subjectiveAnswer.length; i++) {
+                    if (this.subjectiveAnswer[i].id === this.topicId && this.subjectiveAnswer[i].answer) {
+                        this.imgawer = this.subjectiveAnswer[i].answer;
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        var imgObj = new Image();
+                        imgObj.setAttribute("crossOrigin", "anonymous");
+                        imgObj.src = "data:image/png;base64,"+self.imgawer
+                        imgObj.onload = function() {
+                            canvas.width = this.width;
+                            canvas.height = this.height;
                             console.log(this.width,this.height)
-                            ctx.drawImage(this, 0, 0,772,1000);
-                            var imgq = canvas.toDataURL("image/png", 0.5);
-                            let img = imgq.split("data:image/png;base64,")[1];
-                            for (let i = 0; i < self.subjectiveAnswer.length; i++) {
-                                if (self.subjectiveAnswer[i].id === self.subjectiveId) {
-                                    // console.log(self.bseimg);
-                                    sendSubjectPicByString(img)
-                                        .then(res => {
-                                            self.picForSubjective = res.data.data.stubForSubjective;
-                                            console.log("成功");
-                                            self.correction = true;
-                                            self.cover_box = 0
-                                            Toast({
-                                                message: "储存图片成功",
-                                                position: "bottom"
-                                            });
-                                            self.buttonSate = true;
-                                        })
-                                        .catch(err => {
-                                            console.log(err);
-                                            Toast({
-                                                message: "储存图片失败",
-                                                position: "bottom"
-                                            });
-                                            self.buttonSate = true;
+                            ctx.drawImage(this, 0, 0);
+                            var imgq = new Image();
+                            imgq.setAttribute("crossOrigin", "anonymous");
+                            imgq.src = datapair;
+                            imgq.onload = function() {
+                                console.log(this.width,this.height)
+                                ctx.drawImage(this, 0, 0,772,1000);
+                                var imgq = canvas.toDataURL("image/png", 0.5);
+                                let img = imgq.split("data:image/png;base64,")[1];
+                                sendPicByString(img)
+                                    .then(res => {
+                                        self.picForSubjective = res.data.data;
+                                        console.log("成功");
+                                        self.correction = true;
+                                        self.cover_box = 0
+                                        Toast({
+                                            message: "储存图片成功",
+                                            position: "bottom"
                                         });
+                                        self.buttonSate = true;
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                        Toast({
+                                            message: "储存图片失败",
+                                            position: "bottom"
+                                        });
+                                        self.buttonSate = true;
+                                    });
+                            };
+                        }
+                        break;
+                    }
+                }
+                /*
+                    getSubjectPic(self.picForSubjective).then(res=>{
+                        this.imgawer = res.data.data.content
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        var imgObj = new Image();
+                        imgObj.setAttribute("crossOrigin", "anonymous");
+                        imgObj.src = "data:image/png;base64,"+self.imgawer
+                        imgObj.onload = function() {
+                            canvas.width = this.width;
+                            canvas.height = this.height;
+                            console.log(this.width,this.height)
+                            ctx.drawImage(this, 0, 0);
+                            var imgq = new Image();
+                            imgq.setAttribute("crossOrigin", "anonymous");
+                            imgq.src = datapair;
+                            imgq.onload = function() {
+                                console.log(this.width,this.height)
+                                ctx.drawImage(this, 0, 0,772,1000);
+                                var imgq = canvas.toDataURL("image/png", 0.5);
+                                let img = imgq.split("data:image/png;base64,")[1];
+                                for (let i = 0; i < self.subjectiveAnswer.length; i++) {
+                                    if (self.subjectiveAnswer[i].id === self.subjectiveId) {
+                                        // console.log(self.bseimg);
+                                        sendSubjectPicByString(img)
+                                            .then(res => {
+                                                self.picForSubjective = res.data.data.stubForSubjective;
+                                                console.log("成功");
+                                                self.correction = true;
+                                                self.cover_box = 0
+                                                Toast({
+                                                    message: "储存图片成功",
+                                                    position: "bottom"
+                                                });
+                                                self.buttonSate = true;
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                                Toast({
+                                                    message: "储存图片失败",
+                                                    position: "bottom"
+                                                });
+                                                self.buttonSate = true;
+                                            });
+                                    }
                                 }
-                            }
+                            };
                         };
-                    };
-                })
-
+                    })
+                */
             },
-            //共享
-            share() {
+            next(){
                 let self = this;
-                // console.log(self.topicId, self.answerId);
-                // console.log(self.scores,self.teacherId, self.teacherName)
-                // console.log(self.picForSubjective);
-                try {
-                    shareAnswer(
-                        self.topicId,
-                        self.answerId,
-                        null,
-                        self.scores,
-                        self.picForSubjective,
-                        self.teacherId,
-                        self.teacherName
-                    );
+                let stubForSubjective = undefined;
+                if (self.subjectiveMsg.answerModelForStudent) {
+                    stubForSubjective =
+                        self.subjectiveMsg.answerModelForStudent[
+                            self.subjectiveMsg.answerModelForStudent.findIndex(x => {
+                                return x.studentId != self.studentId&&!x.reviseForSubjective&&x.result!="PASS";
+                            })
+                            ];
+                }
+                console.log(stubForSubjective);
+                if(stubForSubjective){
+                    store.commit('SET_STUDENTID', stubForSubjective.studentId);
+                    this.cover_box = 0;
+                    this.getSubjectPic();
+                    if(this.subjectiveId) $(".answer").jSignature("reset");
+                }else{
                     Toast({
-                        message: "共享成功",
-                        position: "bottom"
-                    });
-                } catch (e) {
-                    Toast({
-                        message: "共享失敗",
+                        message: "最后一个",
                         position: "bottom"
                     });
                 }
             },
+            updateQuestionsInPage(){
+                console.log(this.homeworkQuestions);
+                for(let i = 0; i < this.homeworkQuestions.length; i++){
+                    let stop = false;
+                    if(this.homeworkQuestions[i].questionId===this.topicId){
+                        for(let j = 0; j < this.homeworkQuestions[i].answerModelForStudent.length; j++){
+                            if(this.homeworkQuestions[i].answerModelForStudent[j].studentId===this.studentId){
+                                this.homeworkQuestions[i].answerModelForStudent[j].reviseForSubjective = this.picForSubjective;
+                                this.homeworkQuestions[i].answerModelForStudent[j].subjectiveScore = this.scores;
+                                this.homeworkQuestions[i].answerModelForStudent[j].result = 'PASS';
+                                console.log(this.homeworkQuestions[i].answerModelForStudent[j])
+                                store.commit('SET_HOMEWORKQUESTIONS', this.homeworkQuestions);
+                                stop = true;
+                                break;
+                            }
+                        }
+                        if(stop) break;
+                    }
+                }
+
+            }
         }
     };
 </script>
@@ -436,65 +459,83 @@
         .jSignature {
             transform: rotate(30deg)
         }
-        .content {
+        .mescroll {
+            box-sizing: border-box;
             position: absolute;
             top: 0;
-            bottom: 6rem;
-            width: 100%;
-            box-sizing: border-box;
-            .subjective_warp {
+            bottom: 0;
+            //padding: 3.5rem 4.86rem 3.14rem;
+            height: auto !important;
+            background-color: rgba(255, 255, 255, 1);
+            .content {
+                position: absolute;
+                top: 0;
+                bottom: 6rem;
                 width: 100%;
-                height: 100%;
-                padding: 4.19rem 1.14rem 1.14rem;
-                margin-bottom: 13px;
-                background-color: white;
                 box-sizing: border-box;
-                .button_warp {
-                    padding-bottom: 20px;
-                    position: relative;
-                    height: 2.7rem;
-                    .subjective_submit {
-                        position: absolute;
-                        right: 3.71rem;
-                        padding: 0 20px;
-                        height: 2.29rem;
-                        border: 2px solid #9a84ff;
-                        line-height: 2.29rem;
-                        text-align: center;
-                        border-radius: 1.145rem;
-                        color: #9a84ff;
-                        font-size: 18px;
-                        z-index: 100;
+                .subjective_warp {
+                    width: 100%;
+                    height: 100%;
+                    padding: 4.19rem 1.14rem 1.14rem;
+                    margin-bottom: 13px;
+                    background-color: white;
+                    box-sizing: border-box;
+                    .topic_warp {
+                        position: relative;
+                        .topic {
+                            color: #353535;
+                            font-size: 18px;
+                            line-height: 34px;
+                            padding: 0 2.57rem;
+                        }
                     }
-                    .subjective_submit_box {
-                        position: absolute;
-                        right: 3.71rem;
-                        padding: 0 20px;
-                        height: 2.29rem;
-                        background-color: #fff;
-                        border: 2px solid #9a84ff;
-                        line-height: 2.29rem;
-                        text-align: center;
-                        border-radius: 1.145rem;
-                        color: #9a84ff;
-                        font-size: 18px;
-                        z-index: 101;
-                    }
-                    .subjective_submit_box_box {
-                        position: absolute;
-                        right: 3.71rem;
-                        padding: 0 20px;
-                        height: 2.29rem;
-                        border: 2px solid #9a84ff;
-                        line-height: 2.29rem;
-                        text-align: center;
-                        border-radius: 1.145rem;
-                        color: #9a84ff;
-                        font-size: 18px;
-                        z-index: 102;
-                    }
-                    .subjective_submit:active {
-                        background-color: #b4b4b4;
+                    .button_warp {
+                        padding-bottom: 20px;
+                        position: relative;
+                        height: 2.7rem;
+                        .subjective_submit {
+                            position: absolute;
+                            right: 3.71rem;
+                            padding: 0 20px;
+                            height: 2.29rem;
+                            border: 2px solid #9a84ff;
+                            line-height: 2.29rem;
+                            text-align: center;
+                            border-radius: 1.145rem;
+                            color: #9a84ff;
+                            font-size: 18px;
+                            z-index: 100;
+                        }
+                        .subjective_submit_box {
+                            position: absolute;
+                            right: 3.71rem;
+                            padding: 0 20px;
+                            height: 2.29rem;
+                            background-color: #fff;
+                            border: 2px solid #9a84ff;
+                            line-height: 2.29rem;
+                            text-align: center;
+                            border-radius: 1.145rem;
+                            color: #9a84ff;
+                            font-size: 18px;
+                            z-index: 101;
+                        }
+                        .subjective_submit_box_box {
+                            position: absolute;
+                            right: 3.71rem;
+                            padding: 0 20px;
+                            height: 2.29rem;
+                            border: 2px solid #9a84ff;
+                            line-height: 2.29rem;
+                            text-align: center;
+                            border-radius: 1.145rem;
+                            color: #9a84ff;
+                            font-size: 18px;
+                            z-index: 102;
+                        }
+                        .subjective_submit:active {
+                            background-color: #b4b4b4;
+                        }
                     }
                 }
             }
@@ -589,9 +630,7 @@
                     }
                 }
             }
-            .share {
-                // position: absolute;
-                // right: 42%;
+            .next{
                 font-size: 18px;
                 padding: 0.57rem 3.14rem;
                 background-color: #9a84ff;

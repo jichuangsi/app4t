@@ -17,6 +17,11 @@
                     <div class="btn" @click.stop="picimgshow">x</div>
                     <img :src="bigimg" alt="">
                 </div>-->
+                <div class="anwers">
+                    此题答案为:<span v-html="objective.answer.split('|').join(',')"></span>
+                </div>
+                <div class="remind" v-html="objective.parse">
+                </div>
                 <PopupPic :questionPic="objective.questionPic"/>
             </div>
             <div class="tips">
@@ -318,6 +323,19 @@
                         //color: rgba(53, 53, 53, 1);
                         // float: left;
                     }
+                }
+                .anwers{
+                    font-size: 18px;
+                    padding: 15px;
+                    line-height: 24px;
+                    span {
+                        color: red;
+                    }
+                }
+                .remind {
+                    font-size: 18px;
+                    line-height: 24px;
+                    padding: 15px;
                 }
                 /*.bigimg {
                     position: fixed;

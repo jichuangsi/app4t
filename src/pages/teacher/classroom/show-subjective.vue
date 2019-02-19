@@ -1,20 +1,22 @@
 <template>
   <div class="subjectiveShow">
     <classroom-header :header="header" />
-    <div class="content" v-if="pageShow">
-      <div class="subjective_warp">
-        <subjective :subjectiveTopic="subjectiveMsg" @subjectiveId="subjectiveId" />
-        <div class="button_warp">
-          <!-- @click="modifyAnswer(subjectiveMsg.questionId)" -->
-          <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">
+    <scroll-content ref="myscrollfull" :mescrollValue="mescrollValue">
+      <div class="content" v-if="pageShow">
+        <div class="subjective_warp">
+          <subjective :subjectiveTopic="subjectiveMsg" @subjectiveId="subjectiveId" />
+          <div class="button_warp">
+            <!-- @click="modifyAnswer(subjectiveMsg.questionId)" -->
+            <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">
+            </div>
+            <div class="subjective_submit_box" v-if="cover_box==1" @click="qq">
+            </div>
           </div>
-          <div class="subjective_submit_box" v-if="cover_box==1" @click="qq">
-          </div>
+          <board :id="this.topicId" :subjectiveAnswer="subjectiveAnswer" />
+          <!-- <div id="div" class="ass"></div> -->
         </div>
-        <board :id="this.topicId" :subjectiveAnswer="subjectiveAnswer" />
-        <!-- <div id="div" class="ass"></div> -->
       </div>
-    </div>
+    </scroll-content>
     <div class="footer" v-if="pageShow">
       <div class="score">
         得分:&nbsp;{{scores}}&nbsp;
@@ -51,6 +53,7 @@
 
 <script>
 import ClassroomHeader from "../../../components/public/PublicHeader";
+import ScrollContent from '../../../components/public/ScrollContent'
 import subjective from "../../../components/topicList/subjective";
 import board from "../../../components/board/Board";
 import Loading from "../../../components/public/Loading";
@@ -71,7 +74,8 @@ export default {
     ClassroomHeader,
     subjective,
     board,
-    Loading
+    Loading,
+      ScrollContent
   },
   data() {
     return {
@@ -79,6 +83,7 @@ export default {
       sharebtn: "",
       imgawer:'',
       cover_box: 0,
+        mescrollValue: {up: false, down: false},        //是否需要下拉上拉加载数据
       //图片URL
       picUrl: "",
       subjectiveId: "",
@@ -242,6 +247,13 @@ export default {
           self.picUrl = res.data.data.content;
           self.subjectiveAnswer.push({ id: self.topicId, answer: self.picUrl });
           self.buttonSate = true;
+            //console.log($(".topic_warp").outerHeight(true))
+            //console.log($(".button_warp").outerHeight(true))
+            $(".content").height(
+                ($(".topic_warp").outerHeight()
+                    +$(".button_warp").outerHeight(true)
+                    +$("#answer").height()+200)+"px");
+            //console.log($(".content").height())
         }
       } catch (e) {
         console.log(e);
@@ -439,68 +451,77 @@ export default {
   .jSignature {
     transform: rotate(30deg)
   }
-  .content {
+  .mescroll {
+    box-sizing: border-box;
     position: absolute;
     top: 0;
-    bottom: 6rem;
-    width: 100%;
-    box-sizing: border-box;
-    .subjective_warp {
+    bottom: 0;
+    //padding: 3.5rem 4.86rem 3.14rem;
+    height: auto !important;
+    background-color: rgba(255, 255, 255, 1);
+    .content {
+      position: absolute;
+      top: 0;
+      bottom: 6rem;
       width: 100%;
-      height: 100%;
-      padding: 4.19rem 1.14rem 1.14rem;
-      margin-bottom: 13px;
-      background-color: white;
       box-sizing: border-box;
-      .button_warp {
-        padding-bottom: 20px;
-        position: relative;
-        height: 2.7rem;
-        .subjective_submit {
-          position: absolute;
-          right: 3.71rem;
-          width: 128px;
-          height: 38px;
-          border-radius: 1.145rem;
-          font-size: 18px;
-          z-index: 100;
-          background: url('../../../assets/按钮.png') no-repeat;
-          background-position: -149px -616px;
-        }
-        .subjective_submit:active {
-          background: url('../../../assets/按钮.png') no-repeat;
-          background-position: -588px -616px;
+      .subjective_warp {
+        width: 100%;
+        height: 100%;
+        padding: 4.19rem 1.14rem 1.14rem;
+        margin-bottom: 13px;
+        background-color: white;
+        box-sizing: border-box;
+        .button_warp {
+          padding-bottom: 20px;
+          position: relative;
+          height: 2.7rem;
+          .subjective_submit {
+            position: absolute;
+            right: 3.71rem;
+            width: 128px;
+            height: 38px;
+            border-radius: 1.145rem;
+            font-size: 18px;
+            z-index: 100;
+            background: url('../../../assets/按钮.png') no-repeat;
+            background-position: -149px -616px;
           }
-        .subjective_submit_box {
-          position: absolute;
-          right: 3.71rem;
-          width: 128px;
-          height: 38px;
-          border-radius: 1.145rem;
-          font-size: 18px;
-          z-index: 101;
-          background: url('../../../assets/按钮.png') no-repeat;
-          background-position: -149px -563px;
-        }
-        .subjective_submit_box:active {
-          background: url('../../../assets/按钮.png') no-repeat;
-          background-position: -588px -563px;
+          .subjective_submit:active {
+            background: url('../../../assets/按钮.png') no-repeat;
+            background-position: -588px -616px;
+            }
+          .subjective_submit_box {
+            position: absolute;
+            right: 3.71rem;
+            width: 128px;
+            height: 38px;
+            border-radius: 1.145rem;
+            font-size: 18px;
+            z-index: 101;
+            background: url('../../../assets/按钮.png') no-repeat;
+            background-position: -149px -563px;
           }
-        .subjective_submit_box_box {
-          position: absolute;
-          right: 3.71rem;
-          // padding: 0 20px;
-          height: 2.29rem;
-          // border: 2px solid #9a84ff;
-          line-height: 2.29rem;
-          text-align: center;
-          border-radius: 1.145rem;
-          color: #9a84ff;
-          font-size: 18px;
-          z-index: 102;
-        }
-        .subjective_submit:active {
-          // background-color: #b4b4b4;
+          .subjective_submit_box:active {
+            background: url('../../../assets/按钮.png') no-repeat;
+            background-position: -588px -563px;
+            }
+          .subjective_submit_box_box {
+            position: absolute;
+            right: 3.71rem;
+            // padding: 0 20px;
+            height: 2.29rem;
+            // border: 2px solid #9a84ff;
+            line-height: 2.29rem;
+            text-align: center;
+            border-radius: 1.145rem;
+            color: #9a84ff;
+            font-size: 18px;
+            z-index: 102;
+          }
+          .subjective_submit:active {
+            // background-color: #b4b4b4;
+          }
         }
       }
     }

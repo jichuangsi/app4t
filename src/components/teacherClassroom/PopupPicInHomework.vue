@@ -86,7 +86,7 @@ export default {
 <style lang="scss" scoped>
 .popupPic {
   .bigimg {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     height: 100%;
@@ -94,13 +94,13 @@ export default {
     background-color: #fff;
     z-index: 101;
     .btn {
-      padding: 3rem 1rem;
+      padding: 1rem 2rem;
       float: right;
       font-size: 2.5rem;
       color: yellowgreen;
     }
     .img{
-      margin-top: 50%;
+      margin-top: 30%;
     }
     .imgwidth {
       transform: rotate(90deg);

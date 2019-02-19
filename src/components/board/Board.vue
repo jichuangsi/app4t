@@ -322,8 +322,10 @@
 
 <style lang="scss" scoped>
     .Board {
-            width: 586px;
-            height: 700px;
+            //width: 586px;
+            //height: 700px;
+            width: 700px;
+            height: 833px;
             margin: 0 auto;
             position: relative;
         #demo-test-gallery {

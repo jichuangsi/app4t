@@ -53,7 +53,7 @@
         background-size: 110% 110%;
         .item {
             padding-top: 1px;
-            font-size: 18px;
+            font-size: 1.5rem;//18px;
             color: #ffffff;
         }
         .previous_page {

@@ -2,6 +2,7 @@ import axios from '../../utils/axios'
 
 //let apiUrl = 'http://api.jichuangsi.com/HOMEWORKSERVICE/teacher/';
 let apiUrl = '/HOMEWORKSERVICE/teacher/';
+let fileUrl = '/HOMEWORKSERVICE/file/';
 
 //习题列表
 export function getHomeworkList() {
@@ -46,6 +47,48 @@ export function getHomework(homeworkId) {
     url: `${apiUrl}getHomework/${homeworkId}`,
       headers: {'accessToken': localStorage.getItem('token')}
   });
+}
+
+//课堂主观题图片
+export function getPicByString(sub) {
+    return axios({
+        method: 'POST',
+        url: `${fileUrl}getByString`,
+        data: {
+            sub
+        },
+        headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+
+//课堂主观题批改图片存根
+export function sendPicByString(content) {
+    let contentType = 'image/jpeg';
+    let name = 'pic.jpg';
+    return axios({
+        method: 'post',
+        url: `${fileUrl}sendByString`,
+        data: {
+            content,
+            contentType,
+            name
+        },
+        headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+
+//课堂主观题批改提交
+export function sendAnswer(questionId, studentAnswerId, score, stubForSubjective) {
+    let picForSubjective = null;
+    return axios({
+        method: 'post',
+        url: `${apiUrl}sendAnswer/${questionId}/${studentAnswerId}`,
+        data: {
+            score,
+            stubForSubjective
+        },
+        headers: {'accessToken': localStorage.getItem('token')}
+    });
 }
 
 //学生作业详情

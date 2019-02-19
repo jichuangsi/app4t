@@ -40,7 +40,7 @@
     import subjective from "../../../components/topicList/subjective"
     import board from "../../../components/board/Board"
     import Loading from '../../../components/public/Loading'
-    import PopupPic from '../../../components/teacherClassroom/PopupPic'
+    import PopupPic from '../../../components/teacherClassroom/PopupPicInHomework'
     import {mapGetters} from 'vuex'
     import store from '@/store'
     import StudentList from '../../../components/teacherClassroom/studentListInHomework'
