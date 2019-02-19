@@ -260,20 +260,21 @@
         }
     }
     .black_text2 {
-        width: 412px;
-        height: 116px;
-        line-height: 116px;
-        background: url('../src/assets/按钮.png') no-repeat;
-        background-position: -7px -1000px;
+        width: 19.9rem;
+        height: 4.29rem;
+        line-height: 4.29rem;
         margin: 5rem auto;
+        font-size: 24px;
+        color: white;
+        box-sizing: border-box;
+        background: linear-gradient(to right, #08EBD0, #28A1EC);
+        border-radius: 4.29rem;
         text-align: center;
-        color:#fff;
-        font-size: 1.4rem;
-        text-indent: 10px;
+        padding-bottom: 10px;
     }
     .black_text2:active{
-        background: url('../src/assets/按钮.png') no-repeat;
-        background-position: -446px -1000px;
+        background-image: linear-gradient(-166deg, invalid gradient);
+        box-shadow: 0 2px 6px 3px #62D8EF, 0 2px 23px 8px rgba(103,217,255,0.89);
     }
     .fold-left-enter-active {
         animation-name: fold-left-in;

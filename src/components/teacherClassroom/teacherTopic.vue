@@ -260,7 +260,7 @@
                 width: 94px;
                 height: 42px;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -166px -148px;
+                background-position: -166px -164px;
                 // background-color: #5AA5EF;
             }
             .view:active {
