@@ -49,20 +49,25 @@
         },
         mounted() {
             this.login()
-            console.log(123)
-            console.log(this.userMobile)
         },
         methods: {
             userroute:function(val){
                 console.log(val)
             },
             login(){
-                let a = localStorage.getItem('account')
-                let b = localStorage.getItem('password')
-                if(a&&b){
-                    this.account = a
-                    this.password = b
-                    this.boolean = true
+                if(localStorage.getItem('token')){
+                    this.$router.push({
+                        path: '/teacherIndex',
+                        name: 'teacherIndex'
+                    })
+                }else{
+                    let a = localStorage.getItem('account')
+                    let b = localStorage.getItem('password')
+                    if(a&&b){
+                        this.account = a
+                        this.password = b
+                        this.boolean = true
+                    }
                 }
             },
             selection () {

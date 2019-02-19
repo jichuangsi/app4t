@@ -7,7 +7,7 @@ service.interceptors.request.use(function (config) {
     if(config.url.indexOf(apiHost) == -1){
       config.url = apiHost.concat(config.url);
     }
-    if(!config.headers.accessToken){
+    if(!config.headers.accessToken&&localStorage.getItem('token')){
         config.headers.accessToken = localStorage.getItem('token');
     }
     //console.log(config);
