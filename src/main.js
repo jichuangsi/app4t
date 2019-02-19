@@ -17,7 +17,7 @@ import "@/assets/jquery-2.2.2.min.js";
 import "@/assets/jSignature.js";
 
 /* eslint-disable no-unused-vars */
-import vConsole from './utils/log'
+//import vConsole from './utils/log'
 import Print from 'vue-print-nb'
 Vue.use(Print) //注册打印功能
 Vue.use(VueAwesomeSwiper);

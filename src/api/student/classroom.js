@@ -10,7 +10,7 @@ export function getList() {
     return axios({
         method: 'get',
         url: `${apiUrl}getList`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -22,7 +22,7 @@ export function getHistory(pageNum) {
         data: {
             pageNum
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -31,7 +31,7 @@ export function goCLassroom(courseId) {
     return axios({
         method: 'post',
         url: `${host}addToCourse/${courseId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -44,7 +44,7 @@ export function getCourse(courseId) {
         data: {
             courseId
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -67,7 +67,7 @@ export function getSubjectPic(stubForSubjective) {
         data: {
             stubForSubjective
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -79,7 +79,7 @@ export function getQuestionPic(stubForSubjective) {
         data: {
             stubForSubjective
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -101,7 +101,7 @@ export function sendObjectiveAnswer(courseId, questionId, studentId, studentName
             studentName,
             answerForObjective
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -115,7 +115,7 @@ export function sendSubjectiveAnswer(courseId, questionId, studentId, studentNam
             studentName,
             stubForSubjective
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -131,7 +131,7 @@ export function sendSubjectPicByString(content) {
             contentType,
             name
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -143,7 +143,7 @@ export function addFavorQuestion(questionId) {
         data: {
             questionId
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -152,7 +152,7 @@ export function removeFavorQuestion(questionId) {
     return axios({
         method: 'DELETE',
         url: `${apiUrl}removeFavorQuestion/${questionId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -161,7 +161,7 @@ export function listFavorQuestions() {
     return axios({
         method: 'get',
         url: `${apiUrl}listFavorQuestions`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -175,7 +175,7 @@ export function listIncorrectQuestions(subjectId, knowledgeId) {
             subjectId,
             knowledgeId
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -190,6 +190,6 @@ export function aiPushQuestions(knowledgeId, qtypeId, diff) {
             qtypeId,
             diff
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }

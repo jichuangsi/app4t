@@ -9,7 +9,7 @@ export function getHomeworkList() {
   return axios({
       method: 'GET',
       url: `${apiUrl}getList`,
-      headers: {'accessToken': localStorage.getItem('token')}
+      //headers: {'accessToken': localStorage.getItem('token')}
   });
 }
 
@@ -22,7 +22,7 @@ export function getHomeworkHistory(pageIndex, pageSize) {
           pageIndex,
           pageSize
       },
-      headers: {'accessToken': localStorage.getItem('token')}
+      //headers: {'accessToken': localStorage.getItem('token')}
   });
 }
 
@@ -35,7 +35,7 @@ export function updateHomeworkStatus(homeworkId, homeworkStatus) {
             homeworkId,
             homeworkStatus
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -45,7 +45,7 @@ export function getHomework(homeworkId) {
   return axios({
     method: 'get',
     url: `${apiUrl}getHomework/${homeworkId}`,
-      headers: {'accessToken': localStorage.getItem('token')}
+      //headers: {'accessToken': localStorage.getItem('token')}
   });
 }
 
@@ -57,7 +57,7 @@ export function getPicByString(sub) {
         data: {
             sub
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -73,7 +73,7 @@ export function sendPicByString(content) {
             contentType,
             name
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -87,7 +87,7 @@ export function sendAnswer(questionId, studentAnswerId, score, stubForSubjective
             score,
             stubForSubjective
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 

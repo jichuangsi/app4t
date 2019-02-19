@@ -7,7 +7,10 @@ service.interceptors.request.use(function (config) {
     if(config.url.indexOf(apiHost) == -1){
       config.url = apiHost.concat(config.url);
     }
-    console.log(config.url);
+    if(!config.headers.accessToken){
+        config.headers.accessToken = localStorage.getItem('token');
+    }
+    //console.log(config);
     // 在发送请求之前做些什么
     return config;
 }, function (error) {

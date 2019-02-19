@@ -9,7 +9,7 @@ export function getList() {
     return axios({
         method: 'GET',
         url: `${apiUrl}getList`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -21,7 +21,7 @@ export function getHistory(pageNum) {
         data: {
             pageNum
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -30,7 +30,7 @@ export function courseStart(courseId) {
     return axios({
         method: 'POST',
         url: `${apiUrl}courseStart/${courseId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -39,7 +39,7 @@ export function courseEnd(courseId) {
     return axios({
         method: 'POST',
         url: `${apiUrl}courseEnd/${courseId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -48,7 +48,7 @@ export function getCourse(courseId) {
     return axios({
         method: 'get',
         url: `${apiUrl}getCourse/${courseId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -57,7 +57,7 @@ export function getCourseStatistics(courseId) {
     return axios({
         method: 'get',
         url: `${host}getCourseStatistics/${courseId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -66,7 +66,7 @@ export function getQuestionStatisticsList(courseId) {
     return axios({
         method: 'get',
         url: `${host}getQuestionStatisticsList/${courseId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -75,7 +75,7 @@ export function getQuestion(questionId) {
     return axios({
         method: 'get',
         url: `${apiUrl}getQuestion/${questionId}`,
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -87,7 +87,7 @@ export function questionPublish(courseId, questionId) {
         data: {
             questionId
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -99,7 +99,7 @@ export function questionTerminate(courseId, questionId) {
         data: {
             questionId
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -111,7 +111,7 @@ export function getSubjectPic(stubForSubjective) {
         data: {
             stubForSubjective
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -125,7 +125,7 @@ export function getAttachment(sub) {
             sub
         },
         responseType:'blob',
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -137,7 +137,7 @@ export function getQuestionPic(stubForSubjective) {
         data: {
             stubForSubjective
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -150,7 +150,7 @@ export function changeCourseStatus(courseId, courseStatus) {
             courseId,
             courseStatus
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -160,7 +160,7 @@ export function changeQuestionStatus() {
         method: 'POST',
         url: `${apiUrl}changeCourseStatus`,
         data: {},
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -172,7 +172,7 @@ export function getQuery(courseName) {
         data: {
             courseName
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -184,7 +184,7 @@ export function getQuestionsForstudent(courseId) {
         data: {
             courseId
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -197,7 +197,7 @@ export function getAnsFromstudent(courseId, questionId) {
             courseId,
             questionId
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -213,7 +213,7 @@ export function sendSubjectPicByString(content) {
             contentType,
             name
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 
@@ -231,7 +231,7 @@ export function sendAnswer(questionId, studentAnswerId, answerId, score, stubFor
             teacherId,
             teacherName
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
 //课堂主观题共享
@@ -248,6 +248,6 @@ export function shareAnswer(questionId, studentAnswerId, answerId, score, stubFo
             teacherId,
             teacherName
         },
-        headers: {'accessToken': localStorage.getItem('token')}
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
