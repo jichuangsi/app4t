@@ -71,6 +71,7 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2.29rem;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.18);
         .courseLeft {
             .course {
                 color: rgba(53, 53, 53, 1);

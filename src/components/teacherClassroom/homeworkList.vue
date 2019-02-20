@@ -102,7 +102,7 @@
 <style lang="scss">
     .homeworkList {
         .task_content {
-            padding-bottom: 0rem;
+            padding-bottom: 2.29rem;
             .title {
                 font-size: 24px;
                 padding-bottom: .57rem;
@@ -128,6 +128,7 @@
                     line-height: 1.86rem;
                     font-size: 16px;
                     border-radius: 16px;
+                    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.18);
                     .homeworkInfo{
                         width: 100%;
                         .homeworkInfo1{
