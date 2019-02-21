@@ -84,13 +84,13 @@
         getHomeworkDetail() {
             getHomework(this.homeworkId).then(res=>{
                 //console.log(res.data.data);
-                this.pageShow = true;
-                this.loading = false;
                 store.commit('SET_HOMEWORKSTUDENTS', res.data.data.students);
                 store.commit('SET_HOMEWORKQUESTIONS', res.data.data.questions);
                 store.commit('SET_HOMEWORKNAME', res.data.data.homeworkName);
                 store.commit('SET_HOMEWORKINITSLIDE', 0);
                 this.header.title = res.data.data.homeworkName;
+                this.pageShow = true;
+                this.loading = false;
             }).catch(err=>{
                 //console.log(err);
             })

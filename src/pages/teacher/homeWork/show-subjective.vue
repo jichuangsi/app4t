@@ -143,8 +143,8 @@
             }
         },
         mounted() {
-            this.pageShow = true;
-            this.loading = false;
+            /*this.pageShow = true;
+            this.loading = false;*/
             this.getSubjectPic();
         },
         computed: {
