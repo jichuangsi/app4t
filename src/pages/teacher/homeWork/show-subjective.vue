@@ -11,9 +11,9 @@
                     </div>
                     <PopupPic :questionPic="subjectiveMsg.questionPic"/>
                     <div class="button_warp">
-                        <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">批改答案
+                        <div class="subjective_submit" @click="zz(subjectiveMsg.questionId)">
                         </div>
-                        <div class="subjective_submit_box" v-if="cover_box==1" @click="qq">确认批改</div>
+                        <div class="subjective_submit_box" v-if="cover_box==1" @click="qq"></div>
                     </div>
                     <board :id="this.topicId" :subjectiveAnswer="subjectiveAnswer" />
                 </div>
@@ -42,8 +42,8 @@
                         </div>
                     </mt-popup>
                 </div>
-                <div class="next" @click="next" v-show="buttonSate">下一个</div>
-                <div class="submit" @click="submited" v-show="buttonSate">提交</div>
+                <div class="next" @click="next" v-show="buttonSate"></div>
+                <div class="submit" @click="submited" v-show="buttonSate"></div>
             </div>
             <loading v-if="loading" />
     </div>
@@ -496,46 +496,33 @@
                         .subjective_submit {
                             position: absolute;
                             right: 3.71rem;
-                            padding: 0 20px;
-                            height: 2.29rem;
-                            border: 2px solid #9a84ff;
-                            line-height: 2.29rem;
-                            text-align: center;
+                            width: 128px;
+                            height: 38px;
                             border-radius: 1.145rem;
-                            color: #9a84ff;
                             font-size: 18px;
                             z-index: 100;
+                            background: url('../../../assets/按钮.png') no-repeat;
+                            background-position: -149px -616px;
                         }
+                        .subjective_submit:active {
+                            background: url('../../../assets/按钮.png') no-repeat;
+                            background-position: -588px -616px;
+                            }
                         .subjective_submit_box {
                             position: absolute;
                             right: 3.71rem;
-                            padding: 0 20px;
-                            height: 2.29rem;
-                            background-color: #fff;
-                            border: 2px solid #9a84ff;
-                            line-height: 2.29rem;
-                            text-align: center;
+                            width: 128px;
+                            height: 38px;
                             border-radius: 1.145rem;
-                            color: #9a84ff;
                             font-size: 18px;
                             z-index: 101;
+                            background: url('../../../assets/按钮.png') no-repeat;
+                            background-position: -149px -563px;
                         }
-                        .subjective_submit_box_box {
-                            position: absolute;
-                            right: 3.71rem;
-                            padding: 0 20px;
-                            height: 2.29rem;
-                            border: 2px solid #9a84ff;
-                            line-height: 2.29rem;
-                            text-align: center;
-                            border-radius: 1.145rem;
-                            color: #9a84ff;
-                            font-size: 18px;
-                            z-index: 102;
-                        }
-                        .subjective_submit:active {
-                            background-color: #b4b4b4;
-                        }
+                        .subjective_submit_box:active {
+                            background: url('../../../assets/按钮.png') no-repeat;
+                            background-position: -588px -563px;
+                            }
                     }
                 }
             }
@@ -632,19 +619,31 @@
             }
             .next{
                 font-size: 18px;
-                padding: 0.57rem 3.14rem;
-                background-color: #9a84ff;
+                // padding: 0.57rem 3.14rem;
+                // background-color: #9a84ff;
                 border-radius: 100px;
+                width: 156px;
+                height: 42px;
+                background: url('../../../assets/按钮.png') no-repeat;
+                background-position: -135px -1426px;
+            }
+            .next:active {
+                background: url('../../../assets/按钮.png') no-repeat;
+                background-position: -578px -1426px;
             }
             .submit {
-                font-size: 18px;
-                padding: 0.57rem 3.14rem;
-                background-color: #9a84ff;
-                border-radius: 100px;
+            font-size: 18px;
+            border-radius: 100px;
+            width: 136px;
+            height: 42px;
+            background: url('../../../assets/按钮.png') no-repeat;
+            background-position: -145px -670px;
             }
             .submit:active {
-                box-shadow: 0 2px 6px 3px #7c6fd1;
-                background-color: #7c6fd1;
+            // box-shadow: 0 2px 6px 3px #7c6fd1;
+            // background-color: #7c6fd1;
+            background: url('../../../assets/按钮.png') no-repeat;
+            background-position: -584px -670px;
             }
         }
     }

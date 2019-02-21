@@ -20,10 +20,10 @@
                         </div>
                     </div>
 
-                    <div class="state" v-if="teacherHomework.homeworkStatus==='NOTSTART'" @click.stop.passive="updateStatus(teacherHomework.homeworkId, 'PROGRESS')">发布习题</div>
-                    <div class="state" v-if="teacherHomework.homeworkStatus==='PROGRESS'"  @click.stop.passive="updateStatus(teacherHomework.homeworkId, 'FINISH')">停止提交</div>
-                    <div class="state" v-if="teacherHomework.homeworkStatus==='FINISH'"  @click.stop.passive="updateStatus(teacherHomework.homeworkId, 'PROGRESS')">重新发布</div>
-                    <div class="state" v-if="teacherHomework.homeworkStatus==='COMPLETED'">已结束</div>
+                    <div class="state" v-if="teacherHomework.homeworkStatus==='NOTSTART'" @click.stop.passive="updateStatus(teacherHomework.homeworkId, 'PROGRESS')"></div>
+                    <div class="state" v-if="teacherHomework.homeworkStatus==='PROGRESS'"  @click.stop.passive="updateStatus(teacherHomework.homeworkId, 'FINISH')"></div>
+                    <div class="state" v-if="teacherHomework.homeworkStatus==='FINISH'"  @click.stop.passive="updateStatus(teacherHomework.homeworkId, 'PROGRESS')"></div>
+                    <div class="state" v-if="teacherHomework.homeworkStatus==='COMPLETED'"></div>
                 </div>
             </div>
         </div>
@@ -180,9 +180,9 @@
                         white-space: nowrap;
                         position: relative;
                         text-align: center;*/
-                        width: 8.57rem;
-                        height: 3rem;
-                        line-height: 3rem;
+                        // width: 8.57rem;
+                        // height: 3rem;
+                        // line-height: 3rem;
                         text-align: center;
                         font-size: 16px;
                         color: white;
@@ -195,41 +195,51 @@
                     .state {
                         //line-height: 1.86rem;
                         //border-radius: 1.86rem;
-                        background-color: rgba(142, 120, 240, 1);
-                        color: white;
+                        // background-color: rgba(142, 120, 240, 1);
+                        // color: white;
+                        width:136px;
+                        height:50px;
+                        background: url('../../assets/按钮.png') no-repeat;
+                        background-position: -135px -1136px;
+                    }
+                    .state:active {
+                        background: url('../../assets/按钮.png') no-repeat;
+                        background-position: -578px -1136px;
                     }
                 }
                 .green {
                     background-color: rgba(222, 255, 225, 1);
                     .state {
-                        background-color: rgba(101, 179, 127, 1);
-                        color: white;
+                        width:136px;
+                        height:50px;
+                        background: url('../../assets/按钮.png') no-repeat;
+                        background-position: -135px -1211px;
+                    }
+                    .state:active {
+                        background: url('../../assets/按钮.png') no-repeat;
+                        background-position: -578px -1211px;
                     }
                 }
                 .yellow {
                     background-color: rgb(255, 252, 225);
                     .state {
-                        background-color: rgb(255, 249, 142);
-                        color: gray;
-                        /*&:before {
-                            content: "";
-                            display: inline-block;
-                            height: .57rem;
-                            width: .57rem;
-                            background-color: rgba(255, 82, 82, 1);
-                            border-radius: 50%;
-                            position: absolute;
-                            top: .4rem;
-                            right: -.64rem;
-                            font-size: 0;
-                        }*/
+                        width:136px;
+                        height:50px;
+                        background: url('../../assets/按钮.png') no-repeat;
+                        background-position: -135px -1280px;
+                    }
+                    .state:active {
+                        background: url('../../assets/按钮.png') no-repeat;
+                        background-position: -578px -1280px;
                     }
                 }
                 .gray {
                     background-color: rgba(230, 230, 230, 1);
                     .state {
-                        background-color: rgba(162, 162, 162, 1);
-                        color: white;
+                        width:136px;
+                        height:50px;
+                        background: url('../../assets/按钮.png') no-repeat;
+                        background-position: -578px -1356px;
                     }
                 }
                 .task:last-child {
