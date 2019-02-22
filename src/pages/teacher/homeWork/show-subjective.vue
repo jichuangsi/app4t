@@ -63,7 +63,7 @@
         sendPicByString,
         sendAnswer
     } from "@/api/teacher/homework";
-    import { Toast } from "mint-ui";
+    import { Toast, Indicator } from "mint-ui";
     import { mapGetters } from "vuex";
     import store from "@/store";
 
@@ -299,6 +299,10 @@
             },
             // bse
             bse() {
+                Indicator.open({
+                    text: '答案提交中...',
+                    spinnerType: 'fading-circle'
+                });
                 let self = this;
                 let datapair = $(".answer").jSignature("getData");
                 console.log(this.subjectiveAnswer);
@@ -320,7 +324,8 @@
                             imgq.src = datapair;
                             imgq.onload = function() {
                                 console.log(this.width,this.height)
-                                ctx.drawImage(this, 0, 0,772,1000);
+                                //ctx.drawImage(this, 0, 0,772,1000);
+                                ctx.drawImage(this, 0, 0,1200,1652);
                                 var imgq = canvas.toDataURL("image/png", 0.5);
                                 let img = imgq.split("data:image/png;base64,")[1];
                                 sendPicByString(img)
@@ -334,6 +339,7 @@
                                             position: "bottom"
                                         });
                                         self.buttonSate = true;
+                                        Indicator.close();
                                     })
                                     .catch(err => {
                                         console.log(err);
@@ -342,6 +348,7 @@
                                             position: "bottom"
                                         });
                                         self.buttonSate = true;
+                                        Indicator.close();
                                     });
                             };
                         }

@@ -1,6 +1,6 @@
 <template>
     <div class="studentList">
-        <div class="studentList_warp" v-for="(item,index) in question.answerModelForStudent" :key="index">
+        <div class="studentList_warp" v-for="(item,index) in filtersCommittStudent" :key="index">
             <div class="left">
                 <div class="studentName">{{item.studentName}}</div>
             </div>
@@ -32,6 +32,7 @@
 
 <script>
     import store from '@/store'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "studentList",
@@ -53,6 +54,43 @@
                 selected: [],
                 allState: false
             }
+        },
+        computed: {
+            //vuex 调用
+            ...mapGetters([
+                'homeworkStudents',
+            ]),
+            //查找数据
+            filtersCommittStudent() {
+                let _this = this;
+                let arr = [];
+                if(!_this.question.answerModelForStudent||_this.question.answerModelForStudent.length==0){
+                    return arr;
+                }else{
+                    _this.homeworkStudents.forEach((s, index) => {
+                        //console.log(s);
+                        let i = _this.question.answerModelForStudent.findIndex(x => {
+                            //console.log(x);
+                            return x.studentId == s.studentId&&s.completedTime!=0;
+                        });
+                        if(i!=-1) arr.push(_this.question.answerModelForStudent[i]);
+                    });
+                    //console.log(arr);
+                    return arr;
+                }
+
+                /*if (_this.inputValue === '') {
+                    return _this.homeworkStudents;
+                } else {
+                    for (let i = 0; i < _this.homeworkStudents.length; i++) {
+                        if(_this.homeworkStudents[i].studentName.indexOf(_this.inputValue) > -1 ||
+                            _this.homeworkStudents[i].studentAccount.indexOf(_this.inputValue) > -1){
+                            arr.push(_this.homeworkStudents[i]);
+                        }
+                    }
+                    return arr;
+                }*/
+            },
         },
         watch: {
             /*studentList: {
