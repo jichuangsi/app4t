@@ -35,6 +35,9 @@
             tips: {
                 type: String,
                 default: ''
+            },
+            updownRefresh:{
+                type:Number
             }
         },
         data() {
@@ -50,13 +53,20 @@
                 return this.refName + '_empty'
             }
         },
+        watch:{
+            updownRefresh(){
+            this.$nextTick(this.$_init())
+            }
+        },
         mounted() {
             this.$nextTick(this.$_init())
         },
         methods: {
             $_init() {
                 this.showEmptySlot = false;
+                console.log(789)
                 if (this.instance) this.instance.destroy();
+                console.log(456)
                 this.instance = new MeScroll(this.refName, {
                     //是否启用下拉刷新
                     down: {
@@ -80,7 +90,7 @@
                         offset: 300,                 //列表滚动到距离底部小于100px,即可触发上拉加载的回调
                         noMoreSize: 1,               //如果列表已无数据,可设置列表的总数量要大于5条才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看
                         loadFull: {
-                            use: false,              //不满一屏自动加载
+                            use: false              //不满一屏自动加载
                         },
                         page: {
                             num: 0,                  //默认为0执行一次this.$_upCallback就会加1

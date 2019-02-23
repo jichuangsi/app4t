@@ -5,8 +5,9 @@
                 <div class="task" :class="{violet:teacherHomework.homeworkStatus==='NOTSTART',
                 green:teacherHomework.homeworkStatus==='PROGRESS',
                 yellow:teacherHomework.homeworkStatus=='FINISH',
-                gray:teacherHomework.homeworkStatus=='COMPLETED'}">
-                    <div class="homeworkInfo" @click.stop.passive="goHomework(teacherHomework.homeworkId)">
+                gray:teacherHomework.homeworkStatus=='COMPLETED',
+                Deleting:isDeleting}">
+                    <div class="homeworkInfo" @click.stop.passive="goHomework(teacherHomework.homeworkId)"  @touchstart="gtouchstart(teacherHomework)" @touchend="gtouchend(teacherHomework)">
                         <div class="homeworkInfo1">
                             <div class="task_name">{{teacherHomework.homeworkName}}<span class="task_status">({{transferStatus(teacherHomework.homeworkStatus)}})</span></div>
                         </div>
@@ -34,7 +35,7 @@
     import {mapGetters} from 'vuex'
     import store from '@/store'
     import {updateHomeworkStatus} from "@/api/teacher/homework"
-
+    import {MessageBox} from 'mint-ui'
     export default {
         name: "homeworkList",
         props: {
@@ -43,6 +44,12 @@
                 default: function () {
                     return {}
                 }
+            }
+        },
+        data() {
+            return {
+                Loop:'',
+                isDeleting:false
             }
         },
         computed: {
@@ -87,11 +94,33 @@
             updateStatus(homeworkId, homeworkStatus){
                 let _this = this;
                 updateHomeworkStatus(homeworkId, homeworkStatus).then(res => {
-                    //console.log(res);
+                    console.log(res);
                     _this.$emit("reloadDatas");
                 }) .catch(err => {
                     //console.log(err);
                 });
+            },
+            gtouchstart(item) {
+                let self = this
+                console.log(item)
+                clearInterval(this.Loop);//再次清空定时器，防止重复注册定时器
+                this.Loop=setTimeout(function(){
+                    self.isDeleting = true;
+                    if(item.homeworkStatus == 'FINISH'){
+                        MessageBox.confirm('', {message: '是否结束'+item.homeworkName}).then(res=>{
+                            console.log(item.homeworkId,item.homeworkStatus)
+                            self.updateStatus(item.homeworkId,'COMPLETED')
+                        self.$emit('upRefresh')
+                        }).catch (e =>{
+                                console.log(e);
+                        })
+                    }
+                },500);
+            },
+            gtouchend() {
+                clearInterval(this.Loop);
+                this.isDeleting = false;
+                    console.log(789)
             }
         }
     }
@@ -241,6 +270,9 @@
                         background: url('../../assets/按钮.png') no-repeat;
                         background-position: -578px -1356px;
                     }
+                }
+                .Deleting {
+                    box-shadow:0px 0px 0px #fff;
                 }
                 .task:last-child {
                     margin-bottom: 0;

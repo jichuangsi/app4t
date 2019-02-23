@@ -28,11 +28,11 @@
             </swiper-slide>
             <swiper-slide v-if="pageShow">
                 <scroll-content class="homeWork_content" ref="myscrollfulls" @load="loadDatas" @reload="reloadDatas" :mescrollValue="mescrollValue"
-                                :tips="tipss">
+                                :tips="tipss" :updownRefresh="updownRefresh">
                     <div slot="empty">无任何数据</div>
                     <input class="search searchHomeWork " type="text"  v-model="inputValues" placeholder="搜索习题">
                     <homework-list v-for="item in filtersHWTextChange" :key="item.index"
-                                  :teacherHomework="item" @reloadDatas="reloadDatas"/>
+                                  :teacherHomework="item" @reloadDatas="reloadDatas" @upRefresh="upRefresh"/>
                     <div class="history" v-if="homeworkState">上拉查看历史信息</div>
                 </scroll-content>
             </swiper-slide>
@@ -66,6 +66,7 @@
                 //input输入的值
                 inputValue: '',
                 inputValues: '',
+                updownRefresh: 0,
                 mescrollValue: {up: true, down: true},
                 //课堂总页码
                 classPageNum: 100,
@@ -223,18 +224,28 @@
             },
             //作业上拉加载的api
             loadDatas(pageIndex) {
+                console.log(this.mescrollValue.up)
+                    console.log(this.homeworkPageNum, pageIndex);
                 setTimeout(() => {
+                    console.log(this.mescrollValue.up)
                     console.log(this.homeworkPageNum, pageIndex);
                     getHomeworkHistory(pageIndex)
                         .then(res => {
+                            console.log(res)
+                            // let temp
                             store.commit('SET_HOMEWORKHISTORY', res.data.data.content);
-                            this.teacherHomework = this.homeworkList;
+                            // temp = this.removeRepeat(this.homeworkList,'homeworkId')
+                            // console.log(temp)
+                            // this.teacherHomework = this.homeworkList;
+                            this.teacherHomework = this.removeRepeat(this.homeworkList,'homeworkId')
                             this.homeworkPageNum = res.data.data.pageCount;
+                            console.log(this.teacherHomework)
                             if (this.homeworkPageNum === pageIndex) {
                                 this.homeworkState = false;
                                 console.log('执行了');
                             }
                             this.$refs.myscrollfulls.endByPage(res.data.data.pageSize, res.data.data.pageCount);
+                            console.log(this.mescrollValue.up)
                         })
                         .catch(err => {
                             console.log(err);
@@ -264,6 +275,19 @@
                         console.log("err", err);
                     });
                 }, 1000);
+            },
+            upRefresh() {
+                    this.updownRefresh ++
+            },
+            removeRepeat(arr, key){
+                for(let i = 0; i < arr.length; i++) {
+                    for(let j = i+1; j < arr.length; j++) {
+                        if(arr[i][key] === arr[j][key]){
+                            arr.splice(j, 1);
+                            j = j-1;  // 关键，因为splice()删除元素之后，会使得数组长度减小，此时如果没有j=j-1的话，会导致相同id项在重复两次以上之后无法进行去重，且会错误删除id没有重复的项。
+                        }
+                    }
+                }
             }
         }
     }
