@@ -64,9 +64,9 @@
         methods: {
             $_init() {
                 this.showEmptySlot = false;
-                console.log(789)
+                //console.log(789)
                 if (this.instance) this.instance.destroy();
-                console.log(456)
+                //console.log(456)
                 this.instance = new MeScroll(this.refName, {
                     //是否启用下拉刷新
                     down: {

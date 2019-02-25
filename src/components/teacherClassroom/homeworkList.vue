@@ -102,13 +102,13 @@
             },
             gtouchstart(item) {
                 let self = this
-                console.log(item)
+                //console.log(item)
                 clearInterval(this.Loop);//再次清空定时器，防止重复注册定时器
                 this.Loop=setTimeout(function(){
                     self.isDeleting = true;
                     if(item.homeworkStatus == 'FINISH'){
                         MessageBox.confirm('', {message: '是否结束'+item.homeworkName}).then(res=>{
-                            console.log(item.homeworkId,item.homeworkStatus)
+                            //console.log(item.homeworkId,item.homeworkStatus)
                             self.updateStatus(item.homeworkId,'COMPLETED')
                         self.$emit('upRefresh')
                         }).catch (e =>{
