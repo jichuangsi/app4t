@@ -1,5 +1,6 @@
 <template>
     <div class="courseList"
+         :class="{newCourse:'PROGRESS' === teacherClassroom.courseStatus||'NOTSTART' === teacherClassroom.courseStatus}"
          @click="goCLassroom(teacherClassroom.courseId,teacherClassroom.courseName,teacherClassroom.teacherName,teacherClassroom.teacherId)">
         <div class="courseLeft">
             <div class="course">{{teacherClassroom.courseName}}</div>
@@ -71,7 +72,6 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2.29rem;
-        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.18);
         .courseLeft {
             .course {
                 color: rgba(53, 53, 53, 1);
@@ -103,5 +103,8 @@
         .started {
             background-color: #69B482;
         }
+    }
+    .newCourse {
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.18);
     }
 </style>

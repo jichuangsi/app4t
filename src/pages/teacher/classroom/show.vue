@@ -78,6 +78,7 @@
     import SockJS from 'sockjs-client'
     import Stomp from 'stompjs'
     import {MessageBox, Toast, Indicator} from 'mint-ui'
+    import store from '@/store'
 
     export default {
         components: {
@@ -127,7 +128,8 @@
             //vuex 调用
             ...mapGetters([
                 'courseId',
-                'courseName'
+                'courseName',
+                'classList'
             ])
         },
         mounted() {
@@ -440,8 +442,28 @@
                         try {
                             await MessageBox.confirm('', {message: '是否结束课程'});
                             //await changeCourseStatus(this.courseId, "FINISH");
-                            await courseEnd(this.courseId);
-                            this.classMsg.courseStatus = 'FINISH';
+                            let res = await courseEnd(this.courseId);
+                            if(res.data.code==='0010'){
+                                this.classMsg.courseStatus = 'FINISH';
+                                this.showTopicList.forEach((item, index) => {
+                                    item.questionStatus = 'FINISH';
+                                });
+                                for(let i = 0; i < this.classList.length; i++){
+                                    if(this.classList[i].courseId === this.courseId){
+                                        let tempCourse = this.classList.splice(i, 1);
+                                        //console.log(tempCourse);
+                                        if(tempCourse && tempCourse.length === 1){
+                                            tempCourse[0].courseStatus = 'FINISH';
+                                            this.classList.push(tempCourse[0]);
+                                        }
+                                        break;
+                                    }
+                                }
+                                store.commit('SET_CLASS', this.classList);
+                            }else{
+                                Toast('结束课程失败');
+                            }
+
                         } catch (e) {
                             console.log(e);
                         }

@@ -209,7 +209,8 @@
                     getHistory(pageIndex)
                         .then(res => {
                             store.commit('SET_CLASSHISTORY', res.data.data.content);
-                            this.teacherClassroom = this.classList;
+                            //this.teacherClassroom = this.classList;
+                            this.teacherClassroom = this.removeRepeat(this.classList, 'courseId');
                             this.classPageNum = res.data.data.pageCount;
                             if (this.classPageNum === pageIndex) {
                                 this.classState = false;
