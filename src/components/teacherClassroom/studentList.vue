@@ -16,11 +16,11 @@
                 <div class="studentSelect">{{item.answerForObjective}}</div>
                 <div class="state correct" v-if="item.result === 'CORRECT'">正确</div>
                 <div class="state look" v-if="item.result === 'WRONG'">错误</div>
-                <div class="state unsubmitted" v-if="item.result === 'NONE'">未提交</div>
+                <div class="state unsubmitted" v-if="item.result === 'NONE'"><span><i></i></span></div>
             </div>
             <div class="right" v-if="studentList.quesetionType ==='subjective'">
                 <div class="studentSelect">{{item.subjectiveScore}}</div>
-                <div class="state unsubmitted" v-if="item.result === 'NONE'">未提交</div>
+                <div class="state unsubmitted" v-if="item.result === 'NONE'"><span><i></i></span></div>
                 <div
                         @click="correct(item.studentId)"
                         class="state correct"
@@ -225,6 +225,26 @@
                 }
                 .unsubmitted {
                     color: rgba(162, 162, 162, 1);
+                    span {
+                        display: inline-block;
+                        width: 20px;
+                        height: 20px;
+                        border:2px solid #3d72fe;
+                        border-radius: 50%;
+                        position: relative;
+                        transform: rotate(0deg);
+                        opacity: 1;
+                        animation: all 1.5s linear infinite;
+                        i {
+                            position: absolute;
+                            width: 7px;
+                            height: 7px;
+                            background-color: #fff;
+                            top: -1.5px;
+                            right: -1.5px;
+                            transform: rotate(41deg);
+                        }
+                    }
                 }
             }
         }
@@ -278,4 +298,15 @@
             }
         }
     }
+    
+        @keyframes all {
+            0% {
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg);
+                opacity: 0.6;
+            }
+        }
 </style>
