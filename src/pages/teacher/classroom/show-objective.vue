@@ -91,9 +91,8 @@
                 initial: {
                     acc: '',
                     count: ''
-                }/*,
-                bigimg:'',
-                dsadsa: false*/
+                },
+                refresh: Object
             }
         },
         computed: {
@@ -106,6 +105,13 @@
         },
         mounted() {
             this.getObjectiveQuestions();
+            let self = this;
+            this.refresh = setInterval(function() {
+                self.getObjectiveQuestions();
+            }, 10000);
+        },
+        destroyed() {
+            clearInterval(this.refresh);
         },
         methods: {
             /*picimgshow(){
@@ -265,7 +271,7 @@
                         restStudent.push(allStudent[i]);
                     }
                 }
-                console.log(restStudent);
+                //console.log(restStudent);
                 restStudent.forEach((s) => {
                     s.result = "NONE";
                     answerForStudent.push(s);

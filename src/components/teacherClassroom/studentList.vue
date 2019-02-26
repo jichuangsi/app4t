@@ -81,7 +81,7 @@
                         this.arr.push(false);
                         console.log(1)
                     }
-                    console.log(this.arr);
+                    //console.log(this.arr);
                 },
                 immediate: true,
                 deep: true
