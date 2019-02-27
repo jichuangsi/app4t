@@ -10,11 +10,27 @@
       </div>
       <div class="row">
         <div class="title">名字</div>
-        <div class="text">{{username}}</div>
+        <div class="text">{{this.user.name}}</div>
       </div>
       <div class="row">
-        <div class="title">班级</div>
-        <div class="text">六年一斑</div>
+        <div class="title">学校</div>
+        <div class="text">{{this.user.school}}</div>
+      </div>
+      <div class="row">
+        <div class="title">科目</div>
+        <div class="text">{{this.user.subject}}</div>
+      </div>
+      <div class="row">
+        <div class="title">年级</div>
+        <div class="text">{{this.user.grade}}</div>
+      </div>
+      <div class="row">
+        <div class="title">班主任</div>
+        <div class="text">{{this.user.primaryClass}}</div>
+      </div>
+      <div class="row">
+        <div class="title">负责级班</div>
+        <div class="text">{{this.user.secondaryClass}}</div>
       </div>
     </div>
   </div>
@@ -35,7 +51,7 @@
           url: '/teacherIndex'
         },
         userimg:'',
-        username:'韩梅梅'
+        user: {name:'',school:'',subject:'',grade:'',primaryClass:'',secondaryClass:''}
       }
     },
     mounted(){
@@ -43,14 +59,29 @@
     },
     methods:{
       getteacher(){
-      let user = JSON.parse(localStorage.getItem('user'))
-      if(user.userSex=="FEMALE"){
-        this.userimg = require('../../assets/女老师.png')
-      }else{
-        this.userimg = require('../../assets/男老师.png')
-      }
-      this.username = user.userName
-      }
+          let userInStorage = JSON.parse(localStorage.getItem('user'));
+          if(userInStorage){
+              this.user.name = userInStorage.userName;
+              if(userInStorage.roles&&userInStorage.roles.length>0){
+                  this.user.school = userInStorage.roles[0].school.schoolName;
+                  this.user.subject = userInStorage.roles[0].primarySubject.subjectName;
+                  this.user.grade = userInStorage.roles[0].primaryGrade.gradeName;
+                  this.user.primaryClass = userInStorage.roles[0].primaryClass.className;
+                  if(userInStorage.roles[0].secondaryClass){
+                      let arr = [];
+                      userInStorage.roles[0].secondaryClass.forEach((c, index) => {
+                          arr.push(c.className)
+                      })
+                      this.user.secondaryClass = arr.join(',');
+                  }
+              }
+              if(userInStorage.userSex=="FEMALE"){
+                  this.userimg = require('../../assets/女老师.png')
+              }else{
+                  this.userimg = require('../../assets/男老师.png')
+              }
+          }
+        }
     }
   }
 </script>

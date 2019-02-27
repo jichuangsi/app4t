@@ -1,6 +1,9 @@
 <template>
     <div class="teacherMy">
         <div class="top">
+            <div class="fl">
+                版本：{{this.appVersion}}
+            </div>
             <h2>个人中心</h2>
             <div class="fr">
                 <router-link to="/teacherInformation">
@@ -77,7 +80,8 @@ export default {
       pageShow: false,
       username: "韩梅梅",
       usertext: "学如逆水行舟，不进则退。",
-      userimg: ''
+      userimg: '',
+      appVersion: ''
     };
   },
   mounted() {
@@ -85,23 +89,19 @@ export default {
   },
   methods: {
     getTeacherMy() {
-          let _this = this;
-          let user = JSON.parse(localStorage.getItem('user'))
+        this.pageShow = true;
+        this.loading = false;
+          let user = JSON.parse(localStorage.getItem('user'));
           if(user.userSex=="FEMALE"){
             this.userimg = require('../../assets/女老师.png')
           }else{
             this.userimg = require('../../assets/男老师.png')
           }
           this.username = user.userName
-        this.pageShow = true;
-        this.loading = false;
-      /*this.api
-        .getMy()
-        .then(function(res) {
-          _this.pageShow = true;
-          _this.loading = false;
-        })
-        .catch(function(err) {});*/
+        let _this = this;
+        cordova.getAppVersion.getVersionNumber().then(function (version) {
+            _this.appVersion = version;
+        });
     },
     loginout() {
       localStorage.removeItem('token');
@@ -120,6 +120,14 @@ export default {
   background-size: 100% 100%;
   overflow: hidden;
   position: relative;
+   .fl {
+        float: left;
+        position: absolute;
+        top: 2.7rem;
+        left: 3.1rem;
+        font-size: 2rem;
+        color: #fff;
+    }
   h2 {
     text-align: center;
     font-size: 3.8rem;
