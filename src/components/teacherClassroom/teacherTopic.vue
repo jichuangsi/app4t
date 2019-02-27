@@ -106,7 +106,6 @@
             },
             //进入题目
             goTopic(type, id, title) {
-                console.log(this.dsadsa)
                 store.commit('SET_TOPICID', id);
                 store.commit('SET_TITLE', title);
                 if (type === 'objective') {

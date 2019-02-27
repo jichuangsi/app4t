@@ -104,7 +104,8 @@ export default {
         .catch(function(err) {});*/
     },
     loginout() {
-      localStorage.removeItem('token')
+      localStorage.removeItem('token');
+      localStorage.removeItem('user')
       this.$router.push({ path: "/", name: "login" });
     }
   }
