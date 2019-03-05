@@ -16,11 +16,13 @@
                 <div class="studentSelect">{{item.answerForObjective}}</div>
                 <div class="state correct" v-if="item.result === 'CORRECT'">正确</div>
                 <div class="state look" v-if="item.result === 'WRONG'">错误</div>
-                <div class="state unsubmitted" v-if="item.result === 'NONE'"><span><i></i></span></div>
+                <div class="state unsubmitted" v-if="item.result === 'NONE' && studentList.questionStatus !='FINISH'"><span><i></i></span></div>
+                <div class="state unsubmitted" v-if="item.result === 'NONE' && studentList.questionStatus ==='FINISH'">未提交</div>
             </div>
             <div class="right" v-if="studentList.quesetionType ==='subjective'">
                 <div class="studentSelect">{{item.subjectiveScore}}</div>
-                <div class="state unsubmitted" v-if="item.result === 'NONE'"><span><i></i></span></div>
+                <div class="state unsubmitted" v-if="item.result === 'NONE' && studentList.questionStatus !='FINISH'"><span><i></i></span></div>
+                <div class="state unsubmitted" v-if="item.result === 'NONE' && studentList.questionStatus ==='FINISH'">未提交</div>
                 <div
                         @click="correct(item.studentId)"
                         class="state correct"

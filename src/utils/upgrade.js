@@ -120,7 +120,7 @@ export function checkUpgrade(platformType, pkName) {
 
     // 监听网络状况，无网络时
 
-    document.addEventListener('offline', function () {
+    /*document.addEventListener('offline', function () {
         debugger
         console.log("网络异常，不能连接到服务器！");
         alert({
@@ -129,5 +129,5 @@ export function checkUpgrade(platformType, pkName) {
         setTimeout(function () {
             console.log("settimeOut方法");
         }, 2000);
-    }, false);
+    }, false);*/
 }

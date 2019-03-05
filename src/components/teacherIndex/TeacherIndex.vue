@@ -16,7 +16,7 @@
         <swiper ref="mySwiper">
             <swiper-slide v-if="pageShow">
 
-                <scroll-content ref="myscrollfull" @load="loadData" @reload="reloadData" :mescrollValue="mescrollValue"
+                <scroll-content ref="myscrollfull" @load="loadData" @reload="reloadData" :mescrollValue="mescrollValue" @init="mescrollInit"
                                 :tips="tips">
                     <div slot="empty">无任何数据</div>
                     <input class="search classSearch" type="text" v-model="inputValue" placeholder="搜索课程">
@@ -27,7 +27,7 @@
 
             </swiper-slide>
             <swiper-slide v-if="pageShow">
-                <scroll-content class="homeWork_content" ref="myscrollfulls" @load="loadDatas" @reload="reloadDatas" :mescrollValue="mescrollValue"
+                <scroll-content class="homeWork_content" ref="myscrollfulls" @load="loadDatas" @reload="reloadDatas" :mescrollValue="mescrollValue"  @init="mescrollsInit"
                                 :tips="tipss" :updownRefresh="updownRefresh">
                     <div slot="empty">无任何数据</div>
                     <input class="search searchHomeWork " type="text"  v-model="inputValues" placeholder="搜索习题">
@@ -51,6 +51,7 @@
     import {getHistory} from "../../api/teacher/classroom"
     import {getHomeworkHistory} from "../../api/teacher/homework"
     import Upgrade from '../public/Upgrade'
+    import {Toast} from 'mint-ui';
 
     export default {
         name: 'TeacherIndex',
@@ -96,7 +97,9 @@
                 //课堂今天要上的课
                 teacherClassroom: [],
                 //作业列表
-                teacherHomework: []
+                teacherHomework: [],
+                mescroll: null,
+                mescrolls: null,
             }
         },
         computed: {
@@ -105,7 +108,8 @@
             },
             ...mapGetters([
                 'classList',
-                'homeworkList'
+                'homeworkList',
+                'isNew'
             ]),
             //查找数据
             filtersTextChange() {
@@ -150,7 +154,23 @@
         mounted() {
             this.getTeacherIndex();
         },
+        activated(){
+            if(this.isNew){
+                store.commit('SET_CLASSHISTORY', []);
+                store.commit('SET_HOMEWORKHISTORY', []);
+                this.getTeacherIndex();
+                this.mescroll.resetUpScroll();
+                this.mescrolls.resetUpScroll();
+                store.commit('IS_NEW', false);
+            }
+        },
         methods: {
+            mescrollInit (mescroll) {
+                this.mescroll = mescroll;
+            },
+            mescrollsInit (mescrolls) {
+                this.mescrolls = mescrolls;
+            },
             //检测导航改变
             changeTabs(index) {
                 for (let i = 0; i < this.tabs.length; i++) {
@@ -183,7 +203,17 @@
                         }
                     })
                 }).catch((err) => {
-                    console.log("err", err);
+                    console.log('err', err);
+                    /*let msg = this.getMsg(err);
+                    if(msg){
+                        Toast({
+                            message: msg,
+                            position: 'middle',
+                            duration: 2000
+                        });
+                    }*/
+                    _this.pageShow = true;
+                    _this.loading = false;
                 });
                 this.$store.dispatch('getTeacherHomework').then(() => {
                     _this.teacherHomework = _this.homeworkList;
@@ -205,7 +235,7 @@
             //课堂上拉加载的的api
             loadData(pageIndex) {
                 setTimeout(() => {
-                    console.log(this.classPageNum, pageIndex);
+                    //console.log(this.classPageNum, pageIndex);
                     getHistory(pageIndex)
                         .then(res => {
                             store.commit('SET_CLASSHISTORY', res.data.data.content);
@@ -214,25 +244,35 @@
                             this.classPageNum = res.data.data.pageCount;
                             if (this.classPageNum === pageIndex) {
                                 this.classState = false;
-                                console.log('执行了');
+                                //console.log('执行了');
                             }
                             this.$refs.myscrollfull.endByPage(res.data.data.pageSize, res.data.data.pageCount);
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log('err', err);
+                            this.mescroll.endErr();
+                            /*let msg = this.getMsg(err);
+                            if(msg){
+                                Toast({
+                                    message: msg,
+                                    position: 'middle',
+                                    duration: 2000
+                                });
+                            }*/
+                            //this.$refs.myscrollfull.endByPage(0, 0);
                         });
                 }, 2000)
             },
             //作业上拉加载的api
             loadDatas(pageIndex) {
-                console.log(this.mescrollValue.up)
-                    console.log(this.homeworkPageNum, pageIndex);
+                //console.log(this.mescrollValue.up)
+                    //console.log(this.homeworkPageNum, pageIndex);
                 setTimeout(() => {
-                    console.log(this.mescrollValue.up)
-                    console.log(this.homeworkPageNum, pageIndex);
+                    //console.log(this.mescrollValue.up)
+                    //console.log(this.homeworkPageNum, pageIndex);
                     getHomeworkHistory(pageIndex)
                         .then(res => {
-                            console.log(res)
+                            //console.log(res)
                             // let temp
                             store.commit('SET_HOMEWORKHISTORY', res.data.data.content);
                             // temp = this.removeRepeat(this.homeworkList,'homeworkId')
@@ -240,16 +280,26 @@
                             // this.teacherHomework = this.homeworkList;
                             this.teacherHomework = this.removeRepeat(this.homeworkList,'homeworkId')
                             this.homeworkPageNum = res.data.data.pageCount;
-                            console.log(this.teacherHomework)
+                            //console.log(this.teacherHomework)
                             if (this.homeworkPageNum === pageIndex) {
                                 this.homeworkState = false;
-                                console.log('执行了');
+                                //console.log('执行了');
                             }
                             this.$refs.myscrollfulls.endByPage(res.data.data.pageSize, res.data.data.pageCount);
-                            console.log(this.mescrollValue.up)
+                            //console.log(this.mescrollValue.up)
                         })
                         .catch(err => {
-                            console.log(err);
+                            console.log('err', err);
+                            this.mescrolls.endErr();
+                            /*let msg = this.getMsg(err);
+                            if(msg){
+                                Toast({
+                                    message: msg,
+                                    position: 'middle',
+                                    duration: 2000
+                                });
+                            }*/
+                            //this.$refs.myscrollfull.endSuccess();
                         });
                 }, 2000)
             },
@@ -257,28 +307,132 @@
             reloadData() {
                 let _this = this;
                 setTimeout(() => {
+                    let arr1 = [];
+                    arr1 = _this.teacherClassroom;
+                    //console.log(arr1);
                     this.$store.dispatch('getTeacherClass').then(() => {
                         _this.teacherClassroom = _this.classList;
-                        _this.$refs.myscrollfull.endSuccess();
+                        let arr2 = _this.teacherClassroom;
+                        //console.log(arr2);
+                        if(arr1&&arr1.length>0){
+                            let arr3 = [];
+                            arr1.forEach((item, index)=>{
+                                let i = arr2.findIndex(x=>{
+                                    return x.courseId === item.courseId;
+                                });
+                                if(i === -1){
+                                    arr3.push(arr1[index]);
+                                }
+                                //console.log(arr3);
+                            });
+                            let j = arr2.findIndex(x=>{
+                                return x.courseStatus === 'FINISH';
+                            });
+                            arr3.forEach((item, index)=>{
+                                //item.courseStatus = 'FINISH';
+                                if(j === -1){
+                                    _this.teacherClassroom.push(item);
+                                }else{
+                                    _this.teacherClassroom.splice(j++, 0, item);
+                                }
+                            })
+                            //console.log(_this.classList);
+                            _this.removeRepeat(_this.teacherClassroom, 'courseId');
+                        }
+                        //_this.teacherClassroom = _this.removeRepeat(_this.classList, 'courseId');
+                        //_this.$refs.myscrollfull.endSuccess();
                     }).catch((err) => {
-                        console.log("err", err);
+                        console.log('err', err);
+                        _this.mescroll.endErr();
+                        /*let msg = this.getMsg(err);
+                        if(msg){
+                            Toast({
+                                message: msg,
+                                position: 'middle',
+                                duration: 2000
+                            });
+                        }
+                        _this.$refs.myscrollfull.endSuccess();*/
                     });
+                    _this.$refs.myscrollfull.endSuccess();
                 }, 1000);
             },
             //作业下拉
             reloadDatas() {
                 let _this = this;
                 setTimeout(function () {
+                    let arr1 = [];
+                    arr1 = _this.teacherHomework;
+                    //console.log(arr1);
                     _this.$store.dispatch('getTeacherHomework').then(() => {
                         _this.teacherHomework = _this.homeworkList;
-                        _this.$refs.myscrollfulls.endSuccess();
+                        let arr2 = _this.teacherHomework;
+                        //console.log(arr2);
+                        if(arr1&&arr1.length>0){
+                            let arr3 = [];
+                            arr1.forEach((item, index)=>{
+                                let i = arr2.findIndex(x=>{
+                                    return x.homeworkId === item.homeworkId;
+                                });
+                                if(i === -1){
+                                    arr3.push(arr1[index]);
+                                }
+                                //console.log(arr3);
+                            });
+                            let j = arr2.findIndex(x=>{
+                                return x.homeworkStatus === 'COMPLETED';
+                            });
+                            arr3.forEach((item, index)=>{
+                                //item.homeworkStatus = 'FINISH';
+                                if(j === -1){
+                                    _this.teacherHomework.push(item);
+                                }else{
+                                    _this.teacherHomework.splice(j++, 0, item);
+                                }
+                            })
+                            //console.log(_this.workList);
+                            _this.removeRepeat(_this.teacherHomework, 'homeworkId');
+                        }
+                        //_this.teacherHomework = _this.removeRepeat(_this.homeworkList, 'homeworkId');
+                        //_this.$refs.myscrollfulls.endSuccess();
                     }).catch((err) => {
-                        console.log("err", err);
+                        console.log('err', err);
+                        _this.mescrolls.endErr();
+                        /*let msg = this.getMsg(err);
+                        if(msg){
+                            Toast({
+                                message: msg,
+                                position: 'middle',
+                                duration: 2000
+                            });
+                        }
+                        _this.$refs.myscrollfull.endSuccess();*/
                     });
+                    _this.$refs.myscrollfulls.endSuccess();
                 }, 1000);
             },
-            upRefresh() {
-                    this.updownRefresh ++
+            upRefresh(homeworkId, homeworkStatus) {
+                let i = this.teacherHomework.findIndex(x=>{
+                    return x.homeworkId == homeworkId;
+                });
+                if(i != -1){
+                    this.teacherHomework[i].homeworkStatus = homeworkStatus;
+                    if(homeworkStatus === 'COMPLETED'){
+                        let temp = this.teacherHomework.splice(i, 1);
+                        let j = this.teacherHomework.findIndex(x=>{
+                            return x.homeworkStatus === 'COMPLETED';
+                        });
+                        if(temp&&temp.length===1){
+                            if(j === -1){
+                                this.teacherHomework.push(temp[0]);
+                            }else{
+                                this.teacherHomework.splice(j, 0, temp[0]);
+                            }
+                        }
+                        this.removeRepeat(this.teacherHomework, 'homeworkId');
+                    }
+                }
+                //this.updownRefresh ++
             },
             removeRepeat(arr, key){
                 for(let i = 0; i < arr.length; i++) {
@@ -289,6 +443,7 @@
                         }
                     }
                 }
+                return arr;
             }
         }
     }

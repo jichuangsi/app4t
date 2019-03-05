@@ -30,6 +30,7 @@
             return {
                 transitionName: 'fold-left',
                 pageUrl: '',
+                networkTips: null,
             }
         },
         components: {
@@ -54,7 +55,9 @@
                     '/teacherInformation', '/teacherenquiry', 'studentenquiry','teacherhomework', 'principal','studentCollection','mistakescollection','Wrong','raising','assistant'];
                 //找到to.path和from.path在routerDeep数组中的下标
                 this.pageUrl = this.$route.path;
-                console.log("当前路由:" + this.$route.path);
+                /*console.log("当前路由:" + this.$route.path);
+                console.log(to);
+                console.log(from);*/
                 if(this.$route.path=='/assistant' /*需要调整为老师页面*/
                     ||this.$route.path=='/teacherIndex'
                     ||this.$route.path=='/teacherenquiry'
@@ -152,10 +155,32 @@
                         history.back();
                     }
                 }, false);
+
+                document.addEventListener('offline', function () {
+                    //debugger
+                    //console.log("网络异常，不能连接到服务器！");
+                    if(!_this.networkTips){
+                        _this.networkTips = setInterval(function() {
+                            Toast({
+                                message: '网络异常，不能连接到服务器！',
+                                position: 'middle',
+                                duration: 2000
+                            });
+                        }, 15000);
+                    }
+                }, false);
+                document.addEventListener("online", function(){
+                    clearInterval(_this.networkTips);
+                    Toast({
+                        message: '网络恢复，请重新刷新当前页面！',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                }, false);
+
             }, false);
         },
         methods:{
-
         }
     }
 </script>

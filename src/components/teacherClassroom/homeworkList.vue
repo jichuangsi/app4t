@@ -95,9 +95,9 @@
                 let _this = this;
                 updateHomeworkStatus(homeworkId, homeworkStatus).then(res => {
                     console.log(res);
-                    _this.$emit("reloadDatas");
+                    _this.$emit('upRefresh', homeworkId, homeworkStatus);
                 }) .catch(err => {
-                    //console.log(err);
+                    console.log('err', err);
                 });
             },
             gtouchstart(item) {
@@ -109,8 +109,7 @@
                     if(item.homeworkStatus == 'FINISH'){
                         MessageBox.confirm('', {message: '是否结束'+item.homeworkName}).then(res=>{
                             //console.log(item.homeworkId,item.homeworkStatus)
-                            self.updateStatus(item.homeworkId,'COMPLETED')
-                        self.$emit('upRefresh')
+                            self.updateStatus(item.homeworkId,'COMPLETED');
                         }).catch (e =>{
                                 console.log(e);
                         })
@@ -120,7 +119,7 @@
             gtouchend() {
                 clearInterval(this.Loop);
                 this.isDeleting = false;
-                    console.log(789)
+                //console.log(789)
             }
         }
     }

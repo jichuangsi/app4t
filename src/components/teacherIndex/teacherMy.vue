@@ -68,6 +68,7 @@
 <!--我的-->
 <script>
 import Loading from "../public/Loading";
+import store from '@/store'
 
 export default {
   name: "teacherMy",
@@ -84,7 +85,7 @@ export default {
       appVersion: ''
     };
   },
-  mounted() {
+  activated() {
     this.getTeacherMy();
   },
   methods: {
@@ -105,7 +106,8 @@ export default {
     },
     loginout() {
       localStorage.removeItem('token');
-      localStorage.removeItem('user')
+      store.commit('IS_NEW', false);
+      //localStorage.removeItem('user');
       this.$router.push({ path: "/", name: "login" });
     }
   }

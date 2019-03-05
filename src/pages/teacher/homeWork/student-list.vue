@@ -33,6 +33,7 @@
   import {mapGetters} from 'vuex'
   import store from '@/store'
   import {getHomework} from "@/api/teacher/homework"
+  import {Toast} from 'mint-ui';
 
   export default {
     components: {
@@ -92,7 +93,15 @@
                 this.pageShow = true;
                 this.loading = false;
             }).catch(err=>{
-                //console.log(err);
+                console.log('err', err);
+                /*let msg = this.getMsg(err);
+                if(msg){
+                    Toast({
+                        message: msg,
+                        position: 'middle',
+                        duration: 2000
+                    });
+                }*/
             })
         },
         //课堂下拉刷新

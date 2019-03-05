@@ -66,7 +66,7 @@
                   this.user.school = userInStorage.roles[0].school.schoolName;
                   this.user.subject = userInStorage.roles[0].primarySubject.subjectName;
                   this.user.grade = userInStorage.roles[0].primaryGrade.gradeName;
-                  this.user.primaryClass = userInStorage.roles[0].primaryClass.className;
+                  if(userInStorage.roles[0].primaryClass) this.user.primaryClass = userInStorage.roles[0].primaryClass.className;
                   if(userInStorage.roles[0].secondaryClass){
                       let arr = [];
                       userInStorage.roles[0].secondaryClass.forEach((c, index) => {

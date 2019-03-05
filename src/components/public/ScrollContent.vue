@@ -54,9 +54,9 @@
             }
         },
         watch:{
-            updownRefresh(){
-            this.$nextTick(this.$_init())
-            }
+            /*updownRefresh(){
+                this.$nextTick(this.$_init())
+            }*/
         },
         mounted() {
             this.$nextTick(this.$_init())
@@ -109,7 +109,8 @@
                 };
                 this.instance.removeEmpty = function () {
                     _this.showEmptySlot = false
-                }
+                };
+                this.$emit('init', this.instance);
             },
             // 上拉回调
             $_upCallback(page) {

@@ -45,5 +45,6 @@ const getters = {
     bluetoothValue: state => state.bluetooth.bluetoothValue,
     isPopupUpgrade: state => state.app.isPopupUpgrade,
     upgradeInfo: state => state.app.upgradeInfo,
+    isNew: state => state.app.isNew,
 };
 export default getters

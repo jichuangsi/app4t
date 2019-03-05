@@ -392,7 +392,15 @@
                         this.getQuestionStatisticsList();
                     })
                     .catch(err => {
-                        console.log(err);
+                        console.log('err', err);
+                        /*let msg = this.getMsg(err);
+                        if(msg){
+                            Toast({
+                                message: msg,
+                                position: 'middle',
+                                duration: 2000
+                            });
+                        }*/
                     });
                 //获取当前课堂人数
                 getCourseStatistics(_this.courseId)
@@ -431,8 +439,25 @@
                         try {
                             await MessageBox.confirm('', {message: '是否开始上课'});
                             //await changeCourseStatus(this.courseId, "PROGRESS");
-                            await courseStart(this.courseId);
-                            this.classMsg.courseStatus = 'PROGRESS';
+                            let res = await courseStart(this.courseId);
+                            if(res.data.code==='0010'){
+                                this.classMsg.courseStatus = this.courseStatus = 'PROGRESS';
+                                for(let i = 0; i < this.classList.length; i++){
+                                    if(this.classList[i].courseId === this.courseId){
+                                        let tempCourse = this.classList.splice(i, 1);
+                                        //console.log(tempCourse);
+                                        if(tempCourse && tempCourse.length === 1){
+                                            tempCourse[0].courseStatus = 'PROGRESS';
+                                            this.classList.unshift(tempCourse[0]);
+                                        }
+                                        break;
+                                    }
+                                }
+                                store.commit('SET_CLASSHISTORY', []);
+                                store.commit('SET_CLASS', this.classList);
+                            }else{
+                                Toast('开始课程失败');
+                            }
                         } catch (e) {
                             console.log(e);
 
@@ -444,7 +469,7 @@
                             //await changeCourseStatus(this.courseId, "FINISH");
                             let res = await courseEnd(this.courseId);
                             if(res.data.code==='0010'){
-                                this.classMsg.courseStatus = 'FINISH';
+                                this.classMsg.courseStatus = this.courseStatus = 'FINISH';
                                 this.showTopicList.forEach((item, index) => {
                                     item.questionStatus = 'FINISH';
                                 });
@@ -453,17 +478,24 @@
                                         let tempCourse = this.classList.splice(i, 1);
                                         //console.log(tempCourse);
                                         if(tempCourse && tempCourse.length === 1){
+                                            let j = this.classList.findIndex(x=>{
+                                                return x.courseStatus === 'FINISH';
+                                            });
                                             tempCourse[0].courseStatus = 'FINISH';
-                                            this.classList.push(tempCourse[0]);
+                                            if(j === -1){
+                                                this.classList.push(tempCourse[0]);
+                                            }else{
+                                                this.classList.splice(j, 0, tempCourse[0]);
+                                            }
                                         }
                                         break;
                                     }
                                 }
+                                store.commit('SET_CLASSHISTORY', []);
                                 store.commit('SET_CLASS', this.classList);
                             }else{
                                 Toast('结束课程失败');
                             }
-
                         } catch (e) {
                             console.log(e);
                         }

@@ -55,6 +55,11 @@ export default {
           this.selet = val
           this.seletshow = false
           this.type = val
+          if(this.type=='个人'&&this.studentname.length>0){
+              this.textname = this.studentname[0]
+          }else{
+              this.textname = '';
+          }
       },
       // 输入
       message(){
@@ -63,11 +68,10 @@ export default {
               console.log(value)
               this.xiaozu = Number(value.value)
               if((/(^[1-9]\d*$)/.test(this.xiaozu))){
-                  console.log(123)
                 if(this.xiaozu === "" || this.xiaozu ==null ||isNaN(this.xiaozu)){
                     Toast('请输入小组个数');
                 }else {
-                    this.textname=''
+                    this.textname=value.value;
                 }
               }else {
                   this.xiaozu=''
@@ -177,8 +181,12 @@ export default {
       },
       //返回
       back(){
-          this.$router.go(-1)
           this.clear = true
+          if(this.$route.query.from&&this.$route.query.from === 'dc'){
+              this.$router.push({path: '/teacherIndex'});
+          }else{
+              this.$router.go(-1)
+          }
       }
   },
   mounted() {
@@ -199,10 +207,12 @@ export default {
 <style lang="scss" scoped>
 .assistant {
   width: 100%;
-  position: relative;
+  position: fixed;
   img {
     position: relative;
     width: 100%;
+      height: 100%;
+      overflow: hidden;
     // padding-bottom: 200px;
   }
   .img {
