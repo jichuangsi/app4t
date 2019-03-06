@@ -71,7 +71,7 @@ export default {
       Average: '96.3', // 平均分
       Highestscore: '56', // 最高分
       beat: '3', // 击败年级
-      tableth: ['知识模块', '权重占比', '您的正确率', '年纪平均正确率'],
+      tableth: ['知识模块', '权重占比', '本班的正确率', '年级平均正确率'],
       tabletd: [
         {id: 1,
           value: ['基础知识', '75%', '75%', '80%']
@@ -648,10 +648,9 @@ export default {
     background-size: 100% 110%;
     color: #ffffff;
     font-size: 2rem;
-    padding-left: 2rem;
+    padding-left: 1rem;
     display: flex;
     .iconfont{
-    font-size: 2rem;
     display: inline-block;
     padding-right:1rem;
     }
@@ -660,21 +659,22 @@ export default {
       height: 3.15rem;
       overflow: hidden;
       li {
+        font-size: 1.8rem;
         display: inline-block;
         text-align: center;
-        padding-left: 1rem;
         span {
           display: inline-block;
           height: 3.15rem;
+          opacity: 0.8;
+          padding: 0rem 1rem;
         }
         .color {
           background: url('../../../assets/下标识.png') no-repeat;
           background-size: 100% 10%;
           background-position-y: 2.9rem;
+          font-size: 2rem;
+          opacity: 1;
         }
-      }
-      :nth-child(1) {
-        padding-left: 0;
       }
     }
   }

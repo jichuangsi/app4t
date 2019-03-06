@@ -1433,7 +1433,7 @@ export default {
     background-size: 100% 110%;
     color: #ffffff;
     font-size: 2rem;
-    padding-left: 2rem;
+    padding-left: 1rem;
     display: flex;
     .iconfont{
     font-size: 2rem;
@@ -1452,6 +1452,8 @@ export default {
           display: inline-block;
           height: 3.15rem;
           padding: 0 1rem;
+          font-size: 1.8rem;
+          opacity: 0.8;
         }
         .color {
           //   border-bottom: 4px solid #347cf9;
@@ -1459,10 +1461,9 @@ export default {
           background: url('../../../../assets/下标识.png') no-repeat;
           background-size: 100%;
           background-position-y: 2.9rem;
+          font-size: 2rem;
+          opacity: 1;
         }
-      }
-      :nth-child(1) {
-        margin-left: 0;
       }
     }
   }
