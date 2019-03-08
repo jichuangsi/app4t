@@ -7,7 +7,7 @@
             <h2>个人中心</h2>
             <div class="fr">
                 <router-link to="/teacherInformation">
-                    <i class="iconfont icon-shezhi" style="font-size:2rem"></i>设置
+                    <i class="iconfont icon-xinxi" style="font-size:2rem"></i><span>关于</span>
                 </router-link>
             </div>
         </div>
@@ -143,6 +143,13 @@ export default {
     right: 3.1rem;
     font-size: 2rem;
     color: #fff;
+    i {
+        font-size: 2.8rem !important;
+        vertical-align: middle !important;
+    }
+    span {
+        vertical-align: middle;
+    }
   }
 }
 .center {
