@@ -456,6 +456,7 @@
         left: 0;
         right: 0;
         bottom: 0;
+        background: url('../../assets/allbj.png') no-repeat;
         .header {
             width: 100%;
             height: 3.15rem;
@@ -544,7 +545,7 @@
                     margin-bottom: 3.43rem;
                 }
                 .classSearch {
-                    background-color: #ffffff;
+                    background-color: #f8f8f8;
                 }
 
                 .searchHomeWork {
@@ -552,7 +553,7 @@
                 }
             }
             .homeWork_content {
-                background-color: white;
+        background: url('../../assets/allbj.png') no-repeat;
             }
         }
         .history {
