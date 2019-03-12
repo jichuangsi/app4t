@@ -5,6 +5,7 @@
             <swiper ref="mySwiper" :options="swiperOption">
                 <swiper-slide v-for="(item,index) in homeworkQuestions" :key="index" v-if="pageShow">
                     <scroll-content ref="myscrollfull" :mescrollValue="mescrollValue">
+                                    <div class="centertext">左右滑动切换题目</div>
                         <div class="questions_warp">
                             <div class="topic" v-html="item.questionContent">
                                 {{item.questionContent}}
@@ -188,6 +189,14 @@
             right: 0;
             bottom: 0;
             z-index: 0;
+            
+                                .centertext {
+                                    text-align: center;
+                                    margin-top: 1rem;
+                                    font-size: 20px;
+                                    color: #3d72fe;
+                                    font-weight: 600;
+                                }
             .swiper-container {
                 width: 100%;
                 height: 100%;
