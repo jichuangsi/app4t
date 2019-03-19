@@ -19,8 +19,10 @@
     </scroll-content>
     <div class="footer" v-if="pageShow">
       <div class="score">
+        <div @click="score">
         得分:&nbsp;{{scores}}&nbsp;
-        <span class="iconfont edit" @click="score">&#xe60c;</span>
+        <span class="iconfont edit">&#xe60c;</span>
+        </div>
         <mt-popup v-model="popupVisible">
           <div class="popup_warp" v-if="inputState">
             <div class="title">请输入分数</div>
