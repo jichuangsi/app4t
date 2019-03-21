@@ -28,7 +28,7 @@
             <div class="button release" v-if="topic.questionStatus == 'NOTSTART'&&terminationid!=topic.questionId"
                  @click.stop="releaseTips(topic.questionId)">
             </div>
-            <div class="button terminationbox" v-if="terminationid==topic.questionId&&topic.questionStatus != 'FINISH'">
+            <div class="button terminationbox" v-if="terminationid==topic.questionId&&topic.questionStatus != 'FINISH'" @click.stop="">
                 {{miao}}
             </div>
         </div>
