@@ -20,13 +20,16 @@
                     <div class="progress" :style="{width:percent(topicCount,studentCount)+'%'}"></div>
                 </div>
             </div>
-            <router-link tag="div" to="/subjectiveDetails" class="button view" v-if="topic.questionStatus == 'FINISH' ">
+            <router-link tag="div" to="/subjectiveDetails" class="button view" v-if="topic.questionStatus == 'FINISH'&&terminationid!=topic.questionId">
             </router-link>
-            <div class="button termination" v-if="topic.questionStatus == 'PROGRESS'"
+            <div class="button termination" v-if="topic.questionStatus == 'PROGRESS'&&terminationid!=topic.questionId"
                  @click.stop="terminationTips(topic.questionId)">
             </div>
-            <div class="button release" v-if="topic.questionStatus == 'NOTSTART'"
+            <div class="button release" v-if="topic.questionStatus == 'NOTSTART'&&terminationid!=topic.questionId"
                  @click.stop="releaseTips(topic.questionId)">
+            </div>
+            <div class="button terminationbox" v-if="terminationid==topic.questionId&&topic.questionStatus != 'FINISH'">
+                {{miao}}
             </div>
         </div>
     </div>
@@ -76,6 +79,13 @@
             return {
                 /*bigimg:'',
                 dsadsa: false*/
+                termination:'',
+                terminationid:'',
+                miao:'',
+                one:'0',
+                two:'0',
+                three:'0',
+                four:'0'
             }
         },
         computed: {
@@ -124,13 +134,46 @@
             async terminationTips(questionId) {
                 let self = this;
                 try {
-                    await MessageBox.confirm('', {message: '是否终止答题'});
-                    await questionTerminate(self.courseId, questionId);
-                    self.topic.questionStatus = 'FINISH';
-                    Toast({
-                        message: '终止答题成功',
-                        position: 'bottom'
-                    });
+                    await MessageBox.prompt('请输入终止答题时间（秒）<br>（倒计时进行中请勿切换页面）').then(({ value, action }) => {
+                        if(value){
+                            self.terminationid = questionId
+                            value = Number(value)
+                            self.miao = value
+                            if(value > 0){
+                                self.termination = setInterval(function(){
+                                value--
+                                self.miao = value
+                                    if(value <= 0){
+                                        clearInterval(self.termination)
+                                        self.terminationid=""
+                                        questionTerminate(self.courseId, questionId);
+                                        self.topic.questionStatus = 'FINISH';
+                                        Toast({
+                                            message: '终止答题成功',
+                                            position: 'bottom'
+                                        });
+                                    }
+                                },1000)
+                            }else {
+                                Toast('请输入终止作答秒数');
+                            }
+                        }else {
+                            self.terminationid=""
+                            questionTerminate(self.courseId, questionId);
+                            self.topic.questionStatus = 'FINISH';
+                            Toast({
+                                message: '终止答题成功',
+                                position: 'bottom'
+                            });
+                        }
+                    })
+                    // await MessageBox.confirm('', {message: '是否终止答题'});
+                    // await questionTerminate(self.courseId, questionId);
+                    // self.topic.questionStatus = 'FINISH';
+                    // Toast({
+                    //     message: '终止答题成功',
+                    //     position: 'bottom'
+                    // });
                 } catch (e) {
                     // Toast({
                     //     message: e,
@@ -156,6 +199,9 @@
                     // });
                 }
             }
+        },
+        destroyed: function () {
+            clearInterval(this.termination)
         }
     }
 </script>
@@ -298,6 +344,16 @@
                 // box-shadow: 0 2px 6px 3px #54956a;
                 background: url('../../assets/按钮.png') no-repeat;
                 background-position: -605px -507px;
+            }
+            .terminationbox {
+                width: 130px;
+                height: 42px;
+                // background-color: #69B482;
+                background: url('../../assets/按钮.png') no-repeat;
+                background-position: -135px -1365px;
+                text-align: center;
+                color: #fff;
+                font-size: 18px;
             }
         }
         .release_warp {
