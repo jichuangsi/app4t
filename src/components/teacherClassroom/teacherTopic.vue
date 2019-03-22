@@ -173,6 +173,12 @@
                             value = Number(value)
                             self.miao = value
                             if(value > 0){
+                                questionPublish(self.courseId, questionId);
+                                self.topic.questionStatus = 'PROGRESS';
+                                Toast({
+                                    message: '发布成功',
+                                    position: 'bottom'
+                                });
                                 self.termination = setInterval(function(){
                                 value--
                                 self.miao = value
@@ -188,6 +194,7 @@
                                     }
                                 },1000)
                             }else {
+                                self.terminationid=""
                                 Toast('请输入终止作答秒数');
                             }
                         }else {
