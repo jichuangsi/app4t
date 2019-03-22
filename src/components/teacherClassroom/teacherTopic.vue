@@ -134,6 +134,39 @@
             async terminationTips(questionId) {
                 let self = this;
                 try {
+                    await MessageBox.confirm('', {message: '是否终止答题'});
+                    await questionTerminate(self.courseId, questionId);
+                    self.topic.questionStatus = 'FINISH';
+                    Toast({
+                        message: '终止答题成功',
+                        position: 'bottom'
+                    });
+                } catch (e) {
+                    // Toast({
+                    //     message: e,
+                    //     position: 'bottom'
+                    // });
+                }
+            },
+            //根据课堂id,题目id发布题目
+            async releaseTips(questionId) {
+                let self = this;
+                // try {
+                //     await MessageBox.confirm('', {message: '是否发布题目'});
+                //     await questionPublish(self.courseId, questionId);
+                //     self.topic.questionStatus = 'PROGRESS';
+                //     Toast({
+                //         message: '发布成功',
+                //         position: 'bottom'
+                //     });
+                // } catch (e) {
+                //     // Toast({
+                //     //     message: e,
+                //     //     position: 'bottom'
+                //     // });
+                // }
+                
+                try {
                     await MessageBox.prompt('请输入终止答题时间（秒）<br>（倒计时进行中请勿切换页面）').then(({ value, action }) => {
                         if(value){
                             self.terminationid = questionId
@@ -159,10 +192,10 @@
                             }
                         }else {
                             self.terminationid=""
-                            questionTerminate(self.courseId, questionId);
-                            self.topic.questionStatus = 'FINISH';
+                            questionPublish(self.courseId, questionId);
+                            self.topic.questionStatus = 'PROGRESS';
                             Toast({
-                                message: '终止答题成功',
+                                message: '发布成功',
                                 position: 'bottom'
                             });
                         }
@@ -174,24 +207,6 @@
                     //     message: '终止答题成功',
                     //     position: 'bottom'
                     // });
-                } catch (e) {
-                    // Toast({
-                    //     message: e,
-                    //     position: 'bottom'
-                    // });
-                }
-            },
-            //根据课堂id,题目id发布题目
-            async releaseTips(questionId) {
-                let self = this;
-                try {
-                    await MessageBox.confirm('', {message: '是否发布题目'});
-                    await questionPublish(self.courseId, questionId);
-                    self.topic.questionStatus = 'PROGRESS';
-                    Toast({
-                        message: '发布成功',
-                        position: 'bottom'
-                    });
                 } catch (e) {
                     // Toast({
                     //     message: e,
