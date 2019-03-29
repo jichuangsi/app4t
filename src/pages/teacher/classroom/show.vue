@@ -20,8 +20,9 @@
                     <div class="row">班级 &nbsp;<span>{{classMsg.className}}</span></div>
                     <div class="row">上课时间 &nbsp;<span>{{time(classMsg.courseStartTime)}}</span></div>
                     <div class="row">在线人数 &nbsp;<span class="people">{{studentCount}}</span> / {{studentTotal}}</div>
-                    <div class="row">附件 &nbsp;
-                        <a v-for="(item,index) in classMsg.attachments" :key="index" @click.capture="downloadAttachment4App(item)">{{item.name}}，</a>
+                    <div class="row" v-for="(item,index) in classMsg.attachments" :key="index" >附件 &nbsp;
+                        <a @click.capture="downloadAttachment4App(item)">{{item.name}}，</a>
+                        <div class="btn fr" @click="send(item)">发布附件</div>
                     </div>
                 </div>
                 <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div>
@@ -78,6 +79,7 @@
     import SockJS from 'sockjs-client'
     import Stomp from 'stompjs'
     import {MessageBox, Toast, Indicator} from 'mint-ui'
+    import {publishFile} from '@/api/teacher/statistics'
     import store from '@/store'
 
     export default {
@@ -142,6 +144,10 @@
             this.initialize();
         },
         methods: {
+            send(val) {
+                console.log(val)
+                console.log(this.classMsg.classId,val.name,val.sub)
+            },
             zsbtn(){
                 this.$router.push({
                     path: '@/pages/teacher/assistant',
@@ -571,6 +577,7 @@
                     }, subHeader);*/
                 });
             },
+            
             classData(response) {
                 let classData = JSON.parse(response.body);
                 if(classData.data&&classData.data.notifyType){

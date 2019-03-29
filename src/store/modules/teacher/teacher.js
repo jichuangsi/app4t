@@ -1,5 +1,6 @@
 import {getList} from '../../../api/teacher/classroom'
 import {getHomeworkList} from '../../../api/teacher/homework'
+import {gettestList} from '../../../api/teacher/test'
 
 const teacher = {
     state: {
@@ -12,6 +13,15 @@ const teacher = {
         homeworkStudents: [],
         homeworkQuestions: [],
         homeworkInitSlide: 0,
+        //
+        testList: [],
+        testListHistory: [],
+        testId: '',
+        testName: '',
+        testStudents: [],
+        testQuestions: [],
+        testInitSlide: 0,
+        //
         courseId: '',
         courseName: '',
         teacherName: '',
@@ -50,6 +60,31 @@ const teacher = {
         SET_HOMEWORKINITSLIDE: (state, homeworkInitSlide) => {
             state.homeworkInitSlide = homeworkInitSlide;
         },
+        //
+        SET_TEST: (state, testList) => {
+            state.testList = testList;
+            state.testList = state.testList.concat(state.testListHistory);
+        },
+        SET_TESTHISTORY: (state, testListHistory) => {
+            state.testListHistory = testListHistory;
+            state.testList = state.testList.concat(testListHistory);
+        },
+        SET_TESTID: (state, testId) => {
+            state.testId = testId;
+        },
+        SET_TESTNAME: (state, testName) => {
+            state.testName = testName;
+        },
+        SET_TESTSTUDENTS: (state, testStudents) => {
+            state.testStudents = testStudents;
+        },
+        SET_TESTQUESTIONS: (state, testQuestions) => {
+            state.testQuestions = testQuestions;
+        },
+        SET_TESTINITSLIDE: (state, testInitSlide) => {
+            state.testInitSlide = testInitSlide;
+        },
+        //
         SET_COURSEID: (state, courseId) => {
             state.courseId = courseId;
         },
@@ -81,6 +116,18 @@ const teacher = {
                 getHomeworkList()
                     .then(function (res) {
                         commit('SET_HOME', res.data.data);
+                        resolve()
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    })
+            })
+        },
+        getTeachertest({commit}) {
+            return new Promise((resolve, reject) => {
+                gettestList()
+                    .then(function (res) {
+                        commit('SET_TEST', res.data.data);
                         resolve()
                     })
                     .catch(function (error) {

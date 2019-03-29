@@ -17,6 +17,18 @@ const getters = {
     homeworkStudents: state => state.teacher.homeworkStudents,
     //老师习题问题列表
     homeworkQuestions: state => state.teacher.homeworkQuestions,
+    //老师端考试数据
+    testList: state => state.teacher.testList,
+    //老师考试id
+    testId: state => state.teacher.testId,
+    //老师考试Name
+    testName: state => state.teacher.testName,
+    //老师考试初始slide
+    testInitSlide: state => state.teacher.testInitSlide,
+    //老师考试学生列表
+    testStudents: state => state.teacher.testStudents,
+    //老师考试问题列表
+    testQuestions: state => state.teacher.testQuestions,
     //老师端课堂名字
     courseName: state => state.teacher.courseName,
     //老师端老师id

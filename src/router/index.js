@@ -246,6 +246,62 @@ export default new Router({
                 keepAlive: false,
                 isBack: false
             }
+        }, {
+            path: '/testindex',
+            name: 'testindex',
+            component: () => import('@/components/teacherIndex/testindex'), //教师端考试首页
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/testlist',
+            name: 'testlist',
+            component: () => import('@/components/teacherClassroom/testlist'), //教师端考试列表
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/teststudentlist',
+            name: 'teststudentlist',
+            component: () => import('@/pages/teacher/test/test-studentlist'), //教师端考试学生列表
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/testquestions',
+            name: 'testquestions',
+            component: () => import('@/pages/teacher/test/test-questions'), //教师端考试批改
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/PopupPicIntest',
+            name: 'PopupPicIntest',
+            component: () => import('@/components/teacherClassroom/PopupPicIntest'), //教师端查看图片
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/studentListIntest',
+            name: 'studentListIntest',
+            component: () => import('@/components/teacherClassroom/studentListIntest'), //教师端批改学生列表
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/chartIntest',
+            name: 'chartIntest',
+            component: () => import('@/components/teacherClassroom/chartIntest'), //教师端批改饼图
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
         }
     ]
 })

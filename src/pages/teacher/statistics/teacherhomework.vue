@@ -5,7 +5,7 @@
         <i class="iconfont icon-icon-arrow-left2" @click="back"></i>
         <ul>
           <li v-for="(item,index) in nav" @click="allocation(item,index)" :key="index">
-            <span :class="{'color':index==current}">{{item}}</span>
+            <span :class="{'color':index==current}">{{item.className}}</span>
           </li>
         </ul>
       </div>
@@ -13,7 +13,20 @@
         <h2>{{value}}</h2>
       </div>
     </div>
-    <div class="center">
+    <div class="homelist">
+      <div class="hometimenav">
+        <ul>
+          <li v-for="(item,index) in hometimenav" @click="hometime(item,index)" :key="index" :class="{'hometimecolor':index==hometimecurrent}">
+            {{item}}
+          </li>
+        </ul>
+      </div>
+      <div class="homelistnav">
+        <div class="listnav" v-for="(item,index) in homelist" :key="index" v-if="hometimetext == item.homeworkEndTime" @click="homedetails(item)">{{item.homeworkName}}</div>
+      </div>
+    </div>    
+     <!-- v-if="centershow" -->
+    <div class="center" :class="{centercolor:!centershow}">
       <h4>总人数:{{Total}}人</h4>
       <div class="echarts">
         <div id="myChart"></div>
@@ -30,23 +43,30 @@
           </div>
         </div>
       </div>
-      <div class="homeworknav">
-        <ul>
-          <li v-for="(item,index) in homenav" :key="index">{{item}}</li>
-        </ul>
-      </div>
       <div class="homeworktotal">
-        <ul v-for="(item,index) in homework" :key="index">
-          <li v-for="(itemval,index) in item.value" :key="index">
+        <ul>
+          <li v-for="(item,index) in homeworkobjective" :key="index">
             <div class="left">
-              <div class="text">{{item.text}}</div>
-              <div class="percentile" v-if="item.text === '选择题'">{{itemval.percentile}}</div>
-              <div class="percentile color" v-if="item.text === '解答题'">{{itemval.percentile}}</div>
-              <div class="subject">{{itemval.subject}}</div>
+              <div class="text">客观题</div>
+              <div class="percentile">{{item.percentile}}</div>
+              <div class="subject">{{item.questionType}}-{{index+1}}</div>
             </div>
             <div class="right">
-              <p>作答正确人数：{{itemval.ture}}人</p>
-              <p>作答错误人数：{{itemval.false}}人</p>
+              <p>作答正确人数：{{item.trueNum}}人</p>
+              <p>作答错误人数：{{item.wrongNum}}人</p>
+            </div>
+          </li>
+        </ul>
+        <ul>
+          <li v-for="(item,index) in homeworksubjective" :key="index">
+            <div class="left">
+              <div class="text">主观题</div>
+              <div class="percentile color">{{item.percentile}}</div>
+              <div class="subject">{{item.questionType}}-{{index+1}}</div>
+            </div>
+            <div class="right">
+              <p>作答正确人数：{{item.trueNum}}人</p>
+              <p>作答错误人数：{{item.wrongNum}}人</p>
             </div>
           </li>
         </ul>
@@ -56,197 +76,113 @@
 </template>
 
 <script>
+import {getSubjectQuestion,getSubjectQuestionRate} from '@/api/teacher/statistics'
 export default {
   name: "teacherhomework",
   data() {
     return {
-      current: 1,
-      nav: ['全科', '语文', '数学', '英语', '政治', '地理', '历史', '生物', '物理', '化学'],
-      value: "语 文",
+      hometimetext:'',
+      centershow:false,
+      hometimecurrent:0,
+      hometimenav:[],
+      homelist:[],
+      current: 0,
+      nav: [],
+      value: "",
       Total: "46",
       Submission: "46",
       Notsubmitted: "0",
-      homenav: ["全部", "七年级（2）班", "七年级（3）班"],
-      homework: [
-        {
-          text: "选择题",
-          value: [
-            {
-              subject: "第一题",
-              ture: 46,
-              false: 0,
-              percentile: "100%"
-            },
-            {
-              subject: "第二题",
-              ture: 44,
-              false: 2,
-              percentile: "98%"
-            }
-          ]
-        },
-        {
-          text: "解答题",
-          value: [
-            {
-              subject: "第一题",
-              ture: 46,
-              false: 0,
-              percentile: "100%"
-            }
-          ]
-        }
-      ],
-      datalist:[
-              {
-                value: 45,
-                name: "客观题"
-              },
-              {
-                value: 20,
-                name: "主观题"
-              }
-            ]
+      homeworkobjective: [],
+      homeworksubjective: [],
+      datalist:[]
     };
   },
   mounted() {
-    this.drawLine();
+    this.drawLine()
+    this.getdata()
   },
   methods: {
+    getdata() {
+      let arr = []
+      let arr1 = []
+      let date = new Date();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      this.hometimetext = month+'月'+day+'日'
+      this.hometimenav = [month+'月'+day+'日',month+'月'+(Number(day)-1)+'日',month+'月'+(Number(day)-2)+'日',month+'月'+(Number(day)-3)+'日',month+'月'+(Number(day)-4)+'日',month+'月'+(Number(day)-5)+'日',month+'月'+(Number(day)-6)+'日']
+      let subjectName = JSON.parse(localStorage.getItem('user')).roles[0].primarySubject.subjectName
+      let secondaryClass = JSON.parse(localStorage.getItem('user')).roles[0].secondaryClass
+      for (let i = 0; i < secondaryClass.length; i++) {
+        arr.push({className:secondaryClass[i].className,classId:secondaryClass[i].classId})
+      }
+      this.nav = arr
+      this.value = subjectName
+      getSubjectQuestion(secondaryClass[0].classId).then(res=>{
+        console.log(res)
+        for(let j = 0; j<res.data.data.length; j++){
+          res.data.data[j].homeworkEndTime = this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[1]+'月'+ this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[2] +'日'
+        }
+        this.homelist = res.data.data
+      }).catch(e=>{
+        console.log(e)
+      })
+    },
+    //转换日期格式
+    getLocalTime(nS) {     
+     return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');     
+    },
     // 判断当前选中哪个
     allocation(item, index) {
       this.current = index;
-      this.value = item;
-      if(index == 0){
-        this.datalist=[
+      this.centershow = false
+      getSubjectQuestion(item.classId).then(res=>{
+        console.log(res)
+        for(let j = 0; j<res.data.data.length; j++){
+          res.data.data[j].homeworkEndTime = this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[1]+'月'+ this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[2] +'日'
+        }
+        this.homelist = res.data.data
+      }).catch(e=>{
+        console.log(e)
+      })
+    },
+    //选择时间
+    hometime(item,index){
+      this.hometimecurrent = index
+      this.hometimetext = item
+      this.centershow = false
+    },
+    //作业详情
+    homedetails(item) {
+      getSubjectQuestionRate(item.classId,item.homeworkId).then(res=>{
+        console.log(res)
+      this.centershow = true
+        let arr1 = res.data.data.objective
+        for(let i = 0; i<arr1.length;i++){
+          arr1[i].percentile = ((Number(arr1[i].trueNum)/Number(res.data.data.studentNum))*100).toFixed() + '%'
+        }
+        let arr = res.data.data.subjective
+        for(let i = 0; i<arr.length;i++){
+          arr[i].percentile = ((Number(arr[i].trueNum)/Number(res.data.data.studentNum))*100).toFixed() + '%'
+        }
+        this.homeworkobjective= arr1
+        this.homeworksubjective= arr
+        this.datalist = [
               {
-                value: 45,
+                value: res.data.data.objectiveNum,
                 name: "客观题"
               },
               {
-                value: 55,
+                value: res.data.data.subjectiveNum,
                 name: "主观题"
               }
             ]
+            this.Total = res.data.data.studentNum
+            this.Submission = res.data.data.submitNum
+            this.Notsubmitted = Number(res.data.data.studentNum) - Number(res.data.data.submitNum)
             this.drawLine()
-      }
-      if(index == 1){
-        this.datalist=[
-              {
-                value: 45,
-                name: "客观题"
-              },
-              {
-                value: 20,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 2){
-        this.datalist=[
-              {
-                value: 35,
-                name: "客观题"
-              },
-              {
-                value: 20,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 3){
-        this.datalist=[
-              {
-                value: 20,
-                name: "客观题"
-              },
-              {
-                value: 30,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 4){
-        this.datalist=[
-              {
-                value: 45,
-                name: "客观题"
-              },
-              {
-                value: 45,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 5){
-        this.datalist=[
-              {
-                value: 25,
-                name: "客观题"
-              },
-              {
-                value: 20,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 6){
-        this.datalist=[
-              {
-                value: 40,
-                name: "客观题"
-              },
-              {
-                value: 30,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 7){
-        this.datalist=[
-              {
-                value: 10,
-                name: "客观题"
-              },
-              {
-                value: 20,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 8){
-        this.datalist=[
-              {
-                value: 20,
-                name: "客观题"
-              },
-              {
-                value: 20,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
-      if(index == 9){
-        this.datalist=[
-              {
-                value: 30,
-                name: "客观题"
-              },
-              {
-                value: 38,
-                name: "主观题"
-              }
-            ]
-            this.drawLine()
-      }
+      }).catch(e=>{
+        console.log(e)
+      })
     },
     back() {
       this.$router.push({
@@ -268,7 +204,7 @@ export default {
         },
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b}: {c} ({d}%)"
+          formatter: "{b} <br/>{c} ({d}%)"
         },
         legend: {
           //   orient: 'vertical',
@@ -493,5 +429,43 @@ export default {
       }
     }
   }
+}
+.homelist {
+  margin-top: 30px;
+  .hometimenav {
+    ul {
+      padding-left: 2rem;
+      li {
+        font-size: 18px;
+        display: inline-block;
+        padding: 5px 10px;
+        text-decoration:underline;
+        margin-left: 10px;
+        display: inline-block;
+      }
+      .hometimecolor {
+        color:#fff;
+        background-color: #5ea6ec;
+        border-radius: 5px;
+        text-decoration:none;
+      }
+    }
+  }
+  .homelistnav {
+    margin: 30px auto;
+    div {
+      margin: 20px auto;
+      width: 70%;
+      height: 64px;
+      line-height: 64px;
+      text-indent: 20px;
+      font-size: 24px;
+      border-radius: 13px;
+      box-shadow: inset 0px 0px 16px rgba(0,0,0,0.6),0px 0px 16px rgba(0,0,0,0.3);
+    }
+  }
+}
+.centercolor {
+  opacity: 0;
 }
 </style>
