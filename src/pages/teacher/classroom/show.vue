@@ -145,8 +145,12 @@
         },
         methods: {
             send(val) {
-                console.log(val)
-                console.log(this.classMsg.classId,val.name,val.sub)
+                console.log(this.classMsg.courseId,val.name,val.sub)
+                publishFile(this.classMsg.courseId,val.name,val.sub).then(res=>{
+                    if(res.data.data.code == '0010') {
+                        Toast('共享成功')
+                    }
+                })
             },
             zsbtn(){
                 this.$router.push({

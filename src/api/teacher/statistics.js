@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios from '../../utils/axios'
 
 //const apiUrl = 'http://api.jichuangsi.com/COURSESERVICE/student/';
 //const host = 'http://api.jichuangsi.com/CLASSINTERACTION/';
 // const apiUrl = '/COURSESERVICE/student/';
 
-const apiurl = 'http://192.168.31.154:8082/result/teacher/'
+const apiurl = '/result/teacher/'
 
 
 //课堂
@@ -36,7 +36,7 @@ export function getSubjectQuestionRate(classId,homeId) {
 export function publishFile(courseId,fileName,fileId) {
     return axios({
         method: 'post',
-        url: `192.168.31.154:8080/publishFile/`+courseId+'/'+fileName+'/'+fileId,
+        url: `http://192.168.31.154:8084/console/publishFile/`+courseId+'/'+fileName+'/'+fileId,
         headers: {'accessToken': localStorage.getItem('token')}
     });
 }
