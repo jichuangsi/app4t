@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="center">
-            <h4>总人数:{{Total}}人</h4>
-            <div class="centernav">
+            <!-- <h4>总人数:{{Total}}人</h4> -->
+            <div class="centernav" v-if="false">
                 <ul>
                     <li>
                         <div>击败年级</div>

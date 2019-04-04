@@ -21,7 +21,7 @@
             </div>
             <div class="nav">
                 <ul>
-                    <router-link to="/principal">
+                    <router-link to="/principal" v-if="false">
                         <li>
                             <div class="left">校长统计页面</div>
                             <div class="right">
@@ -31,7 +31,7 @@
                     </router-link>
                     <router-link to="/teacherenquiry">
                         <li>
-                            <div class="left">学生成绩</div>
+                            <div class="left">课堂详情</div>
                             <div class="right">
                                 <i class="iconfont icon-icon-arrow-right2"></i>
                             </div>
@@ -39,7 +39,7 @@
                     </router-link>
                     <router-link to="/teacherhomework">
                         <li>
-                            <div class="left">作业详情</div>
+                            <div class="left">习题详情</div>
                             <div class="right">
                                 <i class="iconfont icon-icon-arrow-right2"></i>
                             </div>

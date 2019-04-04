@@ -302,6 +302,14 @@ export default new Router({
                 keepAlive: false,
                 isBack: false
             }
+        }, {
+            path: '/onlinestudent',
+            name: 'onlinestudent',
+            component: () => import('@/pages/teacher/classroom/onlinestudent'), //教师端批改饼图
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
         }
     ]
 })

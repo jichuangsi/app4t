@@ -25,7 +25,7 @@
                         <div class="btn fr" @click="send(item)">发布附件</div>
                     </div>
                 </div>
-                <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div>
+                <!-- <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div> -->
                 <div class="right started" @click.stop.passive="updateState"
                      v-if="classMsg.courseStatus === 'NOTSTART'">
                 </div>
@@ -57,6 +57,11 @@
             </div>
         </div> -->
         <loading v-if="loading"/>
+        <div class="leftDrawer" :class="{rightDrawer:!Drawershow}" @click="Drawershow = !Drawershow">
+            <div class="Onlinestudent" @click.stop="zxbtn"></div>
+            <div class="Responder" @click.stop="qdbtn"></div>
+            <div class="assistant" @click.stop="zsbtn"></div>
+        </div>
     </div>
 </template>
 <!--课堂详情-->
@@ -91,6 +96,7 @@
         },
         data() {
             return {
+                Drawershow:true,
                 img:"",
                 onestudentname:"",
                 students:[],
@@ -142,16 +148,64 @@
             this.connectQP();*/
             this.start();
             this.initialize();
+
+            var arry = [
+            {user_id:1,money:100},
+            {user_id:2,money:33},
+            {user_id:1,money:12},
+            {user_id:3,money:21},
+            {user_id:2,money:43},
+            {user_id:1,money:12} 
+        ]
+
+  var temp = {};
+  for(var i in arry) {
+       var key= arry[i].user_id;
+       if(temp[key]) {
+           temp[key].money += arry[i].money;
+           temp[key].user_id = arry[i].user_id;
+           
+       } else {
+           temp[key] = {};
+           temp[key].money = arry[i].money;
+           temp[key].user_id = arry[i].user_id;
+       }
+   }
+   console.log(temp)
+   
+   var newArry = [];
+   for(var k in temp){
+       newArry.push(temp[k])
+   }
+   console.log(newArry)
+
+
         },
         methods: {
             send(val) {
                 console.log(this.classMsg.courseId,val.name,val.sub)
-                publishFile(this.classMsg.courseId,val.name,val.sub).then(res=>{
-                    if(res.data.data.code == '0010') {
+                MessageBox.confirm('是否共享此附件').then(action => {
+                    publishFile(this.classMsg.courseId,val.name,val.sub).then(res=>{
+                    if(res.data.code == '0010') {
                         Toast('共享成功')
                     }
                 })
+            }).catch(e=>{
+                console.log(e)
+            })
+                
             },
+            //在线学生
+            zxbtn(){
+                this.$router.push({
+                    path: '@/pages/teacher/classroom/onlinestudent',
+                    name: 'onlinestudent',
+                    query: {
+                        students: this.allstudents
+                    }
+                });
+            },
+            //小助手
             zsbtn(){
                 this.$router.push({
                     path: '@/pages/teacher/assistant',
@@ -969,4 +1023,55 @@
     sub{
         vertical-align: sub;
     }
+    .leftDrawer {
+        position: fixed;
+        width: 334px;
+        height: 308px;
+        top: 30%;
+        right: -300px;
+        background:  url("../../../assets/按钮.png") no-repeat;
+        background-position: -135px -1872px;
+        transition: right 0.5s linear;
+        z-index: 2005;
+        display: flex;
+        align-items: center;
+        // justify-content: center;
+        flex-wrap: wrap;
+    }
+    .rightDrawer {
+        width: 334px;
+        height: 308px;
+        background-position: -578px -1872px;
+        right: 0px;
+    }
+    .Onlinestudent {
+        margin-left: 75px;
+        width: 210px;
+        height: 50px;
+        background:  url("../../../assets/按钮.png") no-repeat;
+        background-position: -135px -1636px;
+    }
+       .Onlinestudent:active {
+            background-position: -578px -1636px;
+        }
+    .Responder {
+        margin-left: 75px;
+        width: 211px;
+        height: 46px;
+        background:  url("../../../assets/按钮.png") no-repeat;
+        background-position: -135px -1711px;
+    }
+        .Responder:active {
+            background-position: -578px -1713px;
+        }
+    .assistant {
+        margin-left: 75px;
+        width: 252px;
+        height: 42px;
+        background:  url("../../../assets/按钮.png") no-repeat;
+        background-position: -135px -1790px;
+    }
+        .assistant:active {
+            background-position: -578px -1792px;
+        }
 </style>
