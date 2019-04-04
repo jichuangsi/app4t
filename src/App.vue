@@ -61,7 +61,9 @@
                 if(this.$route.path=='/assistant' /*需要调整为老师页面*/
                     ||this.$route.path=='/teacherIndex'
                     ||this.$route.path=='/teacherenquiry'
-                    ||this.$route.path=='/teacherInformation'){
+                    ||this.$route.path=='/teacherInformation'
+                    ||this.$route.path=='/testindex'
+                ){
                 if(!(localStorage.getItem('token'))){
                     let route = this.$route.path
                         this.$router.push({ path: "/", name: "login" })
