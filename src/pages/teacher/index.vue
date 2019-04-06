@@ -37,7 +37,7 @@
                 linkState: 0,
                 footerArr: [{
                     icon: '&#xe617;',
-                    text: '课堂'
+                    text: '教务'
                 }, {
                     icon: '&#xe616;',
                     text: '我的'
@@ -52,6 +52,14 @@
         methods: {
             State(index) {
                 this.linkState = index;
+            },
+            switchTab(tab){
+                let _self = this;
+                switch (tab) {
+                    case '0': _self.linkState = 0; break;
+                    case '1': _self.linkState = 1; break;
+                    default: _self.linkState = 0;
+                }
             }
         },
         mounted() {
@@ -76,6 +84,7 @@
             }
         },
         activated() {
+            if(this.$route.query.tab) this.switchTab(this.$route.query.tab);
             if (!this.$route.meta.isBack) {
                 console.log('我运行了');
             }

@@ -13,7 +13,7 @@
             </div>
         </div>
         <Upgrade/>
-        <swiper ref="mySwiper">
+        <swiper ref="mySwiper" :options="swiperOption">
             <swiper-slide v-if="pageShow">
 
                 <scroll-content ref="myscrollfull" @load="loadData" @reload="reloadData" :mescrollValue="mescrollValue" @init="mescrollInit"
@@ -53,6 +53,7 @@
     import Upgrade from '../public/Upgrade'
     import {Toast} from 'mint-ui';
 
+    let vm = null;
     export default {
         name: 'TeacherIndex',
         components: {
@@ -100,6 +101,15 @@
                 teacherHomework: [],
                 mescroll: null,
                 mescrolls: null,
+                swiperOption: {
+                    on: {
+                        slideChange: function(){
+                            if(this.activeIndex===0) vm.navStyle = 'transition: left .2s;left:24px;';
+                            if(this.activeIndex===1) vm.navStyle = 'transition: left .2s;left:109px;';
+                        }
+                    },
+                },
+                slideFired: false
             }
         },
         computed: {
@@ -151,10 +161,31 @@
                 }
             }
         },
+        created() {
+            vm = this;
+        },
         mounted() {
-            this.getTeacherIndex();
+            let _self = this;
+            let networkState = navigator.connection.type;
+            //console.log(networkState);
+            if (networkState === "unknown") {
+                document.addEventListener("online", function(){
+                    //console.log(_self.slideFired);
+                    if(!_self.slideFired){
+                        _self.getTeacherIndex();
+                        _self.slideFired = true;
+                    }
+                });
+            }else{
+                this.getTeacherIndex();
+            }
         },
         activated(){
+            //console.log(this.$route.query);
+            if(this.$route.query.slide){
+                this.swiper.slideTo(this.$route.query.slide, 500, true);
+                this.slideFired = false;
+            }
             if(this.isNew){
                 store.commit('SET_CLASSHISTORY', []);
                 store.commit('SET_HOMEWORKHISTORY', []);
@@ -203,7 +234,7 @@
                         }
                     })
                 }).catch((err) => {
-                    console.log('err', err);
+                    console.log('err in getTeacherClass', err);
                     /*let msg = this.getMsg(err);
                     if(msg){
                         Toast({
@@ -229,7 +260,7 @@
                         }
                     })
                 }).catch((err) => {
-                    console.log("err", err);
+                    console.log("err in getTeacherHomework", err);
                 });
             },
             //课堂上拉加载的的api

@@ -61,6 +61,7 @@
                 teachertest: [],
                 mescroll: null,
                 mescrolls: null,
+                slideFired: false
             }
         },
         computed: {
@@ -90,9 +91,23 @@
             }
         },
         mounted() {
-            this.getTeacherIndex();
+            let _self = this;
+            let networkState = navigator.connection.type;
+            //console.log(networkState);
+            if (networkState === "unknown") {
+                document.addEventListener("online", function(){
+                    //console.log(_self.slideFired);
+                    if(!_self.slideFired){
+                        _self.getTeacherIndex();
+                        _self.slideFired = true;
+                    }
+                });
+            }else{
+                this.getTeacherIndex();
+            }
         },
         activated(){
+            this.slideFired = false;
             if(this.isNew){
                 store.commit('SET_testHISTORY', []);
                 this.getTeacherIndex();
@@ -111,28 +126,32 @@
             //获取第一次的内容
             getTeacherIndex() {
                 let _this = this;
-                this.$store.dispatch('getTeacherClass').then(() => {
+                /*this.$store.dispatch('getTeacherClass').then(() => {
                     _this.pageShow = true;
                     _this.loading = false;
                     _this.teacherClassroom = _this.classList;
                 }).catch((err) => {
                     console.log('err', err);
-                    /*let msg = this.getMsg(err);
+                    /!*let msg = this.getMsg(err);
                     if(msg){
                         Toast({
                             message: msg,
                             position: 'middle',
                             duration: 2000
                         });
-                    }*/
+                    }*!/
                     _this.pageShow = true;
                     _this.loading = false;
-                });
+                });*/
                 this.$store.dispatch('getTeachertest').then(() => {
-                    console.log(_this.teachertest)
+                    _this.pageShow = true;
+                    _this.loading = false;
+                    //console.log(_this.teachertest)
                     _this.teachertest = _this.testList;
                 }).catch((err) => {
                     console.log("err", err);
+                    _this.pageShow = true;
+                    _this.loading = false;
                 });
             },
             //作业上拉加载的api
