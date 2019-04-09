@@ -186,6 +186,7 @@
                 this.swiper.slideTo(this.$route.query.slide, 500, true);
                 this.slideFired = false;
             }
+            //console.log(this.isNew);
             if(this.isNew){
                 store.commit('SET_CLASSHISTORY', []);
                 store.commit('SET_HOMEWORKHISTORY', []);

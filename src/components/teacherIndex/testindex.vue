@@ -109,7 +109,7 @@
         activated(){
             this.slideFired = false;
             if(this.isNew){
-                store.commit('SET_testHISTORY', []);
+                store.commit('SET_TESTHISTORY', []);
                 this.getTeacherIndex();
                 this.mescroll.resetUpScroll();
                 this.mescrolls.resetUpScroll();
@@ -165,7 +165,7 @@
                         .then(res => {
                             // console.log(res)
                             // let temp
-                            store.commit('SET_testHISTORY', res.data.data.content);
+                            store.commit('SET_TESTHISTORY', res.data.data.content);
                             // temp = this.removeRepeat(this.testList,'testId')
                             // console.log(temp)
                             // this.teachertest = this.testList;

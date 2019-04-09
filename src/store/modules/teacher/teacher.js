@@ -31,19 +31,19 @@ const teacher = {
     mutations: {
         SET_CLASS: (state, classListToday) => {
             state.classList = classListToday;
-            state.classList = state.classList.concat(state.classListHistory);
+            if(state.classList) state.classList = state.classList.concat(state.classListHistory);
         },
         SET_CLASSHISTORY: (state, classListHistory) => {
             state.classListHistory = classListHistory;
-            state.classList = state.classList.concat(classListHistory);
+            if(state.classList) state.classList = state.classList.concat(classListHistory);
         },
         SET_HOME: (state, homeworkList) => {
             state.homeworkList = homeworkList;
-            state.homeworkList = state.homeworkList.concat(state.homeworkListHistory);
+            if(state.homeworkList) state.homeworkList = state.homeworkList.concat(state.homeworkListHistory);
         },
         SET_HOMEWORKHISTORY: (state, homeworkListHistory) => {
             state.homeworkListHistory = homeworkListHistory;
-            state.homeworkList = state.homeworkList.concat(homeworkListHistory);
+            if(state.homeworkList) state.homeworkList = state.homeworkList.concat(homeworkListHistory);
         },
         SET_HOMEWORKID: (state, homeworkId) => {
             state.homeworkId = homeworkId;
@@ -63,11 +63,11 @@ const teacher = {
         //
         SET_TEST: (state, testList) => {
             state.testList = testList;
-            state.testList = state.testList.concat(state.testListHistory);
+            if(state.testList) state.testList = state.testList.concat(state.testListHistory);
         },
         SET_TESTHISTORY: (state, testListHistory) => {
             state.testListHistory = testListHistory;
-            state.testList = state.testList.concat(testListHistory);
+            if(state.testList) state.testList = state.testList.concat(testListHistory);
         },
         SET_TESTID: (state, testId) => {
             state.testId = testId;

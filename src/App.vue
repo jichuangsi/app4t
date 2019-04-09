@@ -23,6 +23,7 @@
     import Preview from '../src/components/board/Preview'
     import initialize from '@/utils/board'
     import {mapGetters} from 'vuex'
+    import store from '@/store'
 
     export default {
         name: 'App',
@@ -67,7 +68,8 @@
                 if(!(localStorage.getItem('token'))){
                     let route = this.$route.path
                         this.$router.push({ path: "/", name: "login" })
-                    this.$store.state.userroute = route
+                        this.$store.state.userroute = route;
+                        store.commit('IS_NEW', true);
                     }
                     else {
                         this.$store.state.userroute = ''
