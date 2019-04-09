@@ -22,7 +22,8 @@
                     <div class="row">在线人数 &nbsp;<span class="people">{{studentCount}}</span> / {{studentTotal}}</div>
                     <div class="row" v-for="(item,index) in classMsg.attachments" :key="index" >附件 &nbsp;
                         <a @click.capture="downloadAttachment4App(item)">{{item.name}}，</a>
-                        <div class="btn fr" :class="{sendbtn:sendshow||item.publishFlag=='1'}" @click="send(item)">发布附件</div>
+                        <div class="btn fr" v-if="!(sendshow||item.publishFlag=='1')" @click="send(item)">发布附件</div>
+                        <div class="btn fr sendbtn" v-if="sendshow||item.publishFlag=='1'">已发布</div>
                     </div>
                 </div>
                 <!-- <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div> -->
@@ -201,7 +202,6 @@
         methods: {
             send(val) {
                 console.log(this.classMsg.courseId,val.name,val.sub)
-                if(!this.sendshow&&!val.publishFlag=='1'){
                     MessageBox.confirm('是否共享此附件').then(action => {
                         publishFile(this.classMsg.courseId,val.name,val.sub).then(res=>{
                         if(res.data.code == '0010') {
@@ -212,7 +212,6 @@
                     }).catch(e=>{
                         console.log(e)
                     })
-                }
             },
             //在线学生
             zxbtn(){
@@ -230,6 +229,7 @@
                 this.qdshow = true
                 this.Drawershow = false
                 this.confirmshow = false
+                this.confirmbtn = true
                 console.log(this.Drawershow)
             },
             qdconfirm() {
@@ -694,7 +694,6 @@
                         this.confirmtext = this.allstudents[i].studentName
                         this.confirmshow = true
                         this.cancelshow = true
-                        this.confirmbtn = true
                     }
                 }
                 }
@@ -1149,6 +1148,7 @@
             top: 0px;
             left: 0px;
             background-color: rgba(0, 0, 0, 0.3);
+            z-index: 2007;
             .qdbox {
                 width: 600px;
                 height: 200px;
@@ -1202,5 +1202,8 @@
                 background-color: #fff;
                 border: 1px solid #999;
             }
+        }
+        .mint-toast {
+            z-index: 9999 !important;
         }
 </style>

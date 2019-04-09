@@ -267,13 +267,13 @@ export default {
         position: absolute;
         left: 50%;
         top: 27.5%;
-        font-size: 5rem;
+        font-size: 4rem;
         text-align: center;
         color: #B8784A;
         transform: translateX(-48%);
     }
     .box {
-         width: 424px;
+         width: 328px;
          height: 12%;
          line-height: 200%;
          text-align: center;
@@ -314,7 +314,7 @@ export default {
         color: #48f3f9;
         background: url('../../assets/助手按钮.png') no-repeat;
         position: absolute;
-        top: 570px;
+        top: 45%;
         left: 50%;
         transform: translateX(-50%);
         z-index: 100;
@@ -331,8 +331,8 @@ export default {
         ul {
             width: 279px;
             position: absolute;
-            right: -279px;
-            top: 0px;
+            right: 0px;
+            top: 49px;
             li {
                 display: inline-block;
                 width: 279px;
@@ -352,7 +352,7 @@ export default {
         color: #48f3f9;
         background: url('../../assets/助手按钮.png') no-repeat;
         position: absolute;
-        top: 660px;
+        top: 52%;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -364,7 +364,7 @@ export default {
         color: #48f3f9;
         background: url('../../assets/助手按钮.png') no-repeat;
         position: absolute;
-        top: 750px;
+        top: 59%;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -382,29 +382,33 @@ export default {
     }
 }
 .assistantbox {
-  background: url('../../assets/助手背景（横）.png') no-repeat !important;
+  background: url('../../assets/助手背景（横）.png') no-repeat;
   background-size: 100% 100%;
   .text {
       top: 34% !important;
+      font-size: 3rem;
   }
   .box {
       top: 31% !important;
       height: 17% !important;
       line-height: 150% !important;
+      font-size: 4rem;
   }
   .img {
       top: 51% !important;
+      width: 50px;
+    height: 30px;
   }
   .selet {
       top: 57% !important;
   }
   .state {
       top: 67% !important;
-      transform: translateX(-125%) !important;
+      transform: translateX(-95%) !important;
   }
   .stop {
       top: 67% !important;
-      transform: translateX(25%) !important;
+      transform: translateX(5%) !important;
   }
 }
 </style>
