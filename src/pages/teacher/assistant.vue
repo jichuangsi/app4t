@@ -1,28 +1,45 @@
 <template>
-  <div class="assistant">
-    <img
-      src="../../assets/zsbj.png"
-      alt=""
-    >
-    <div class="back" @click="back">返回</div>
-    <div class="text" v-if="type!='计时'">{{textname}}</div>
-    <div class="box" v-if="type=='计时'">
-        <div>{{one}}</div>
-        <div>{{two}}</div>
-        :
-        <div>{{three}}</div>
-        <div>{{four}}</div>
+  <div class="assistant" :class="{'assistantbox':screenWidth>800}">
+    <div class="center">
+        <div class="back" @click="back">返回</div>
+        <div class="text" v-if="type!='计时'">{{textname}}</div>
+        <div class="box" v-if="type=='计时'">
+            <div>{{one}}</div>
+            <div>{{two}}</div>
+            :
+            <div>{{three}}</div>
+            <div>{{four}}</div>
+        </div>
+        <div class="selet" @click="seletshow= !seletshow">
+            {{selet}}<i></i>
+            <ul v-if="seletshow">
+                <li v-for="(item,index) in seletnav" :key="index" @click.stop="seletclick(item,index)">{{item}}</li>
+            </ul>
+        </div>
+        <div class="img" v-if="type=='小组'||type=='计时'" @click="message"><img src="../../assets/形状 1.png" alt=""></div>
+        <div class="state" @click="state">开始</div>
+        <div class="stop" @click="stop">停止</div>
     </div>
-    <div class="selet" @click="seletshow= !seletshow">
-        {{selet}}<i></i>
-        <ul v-if="seletshow">
-            <i></i>
-            <li v-for="(item,index) in seletnav" :key="index" @click.stop="seletclick(item,index)">{{item}}</li>
-        </ul>
+    <div class="center" v-if="screenWidth>800">
+        <div class="back" @click="back">返回</div>
+        <div class="text" v-if="type!='计时'">{{textname}}</div>
+        <div class="box" v-if="type=='计时'">
+            <div>{{one}}</div>
+            <div>{{two}}</div>
+            :
+            <div>{{three}}</div>
+            <div>{{four}}</div>
+        </div>
+        <div class="selet" @click="seletshow= !seletshow">
+            {{selet}}<i></i>
+            <ul v-if="seletshow">
+                <li v-for="(item,index) in seletnav" :key="index" @click.stop="seletclick(item,index)">{{item}}</li>
+            </ul>
+        </div>
+        <div class="img" v-if="type=='小组'||type=='计时'" @click="message"><img src="../../assets/形状 1.png" alt=""></div>
+        <div class="state" @click="state">开始</div>
+        <div class="stop" @click="stop">停止</div>
     </div>
-    <div class="img" v-if="type=='小组'||type=='计时'" @click="message"><img src="../../assets/形状 1.png" alt=""></div>
-    <div class="state" @click="state">开始</div>
-    <div class="stop" @click="stop">停止</div>
   </div>
 </template>
 
@@ -46,8 +63,15 @@ export default {
         one:'0',
         two:'0',
         three:'0',
-        four:'0'
+        four:'0',
+        screenWidth: document.body.clientWidth,
+        interval:''
     };
+  },
+  watch:{
+      screenWidth(val) {
+          console.log(val)
+      }
   },
   methods: {
       //选择
@@ -56,8 +80,10 @@ export default {
           this.seletshow = false
           this.type = val
           if(this.type=='个人'&&this.studentname.length>0){
+              this.clear = true
               this.textname = this.studentname[0]
           }else{
+              this.clear = true
               this.textname = '';
           }
       },
@@ -112,11 +138,11 @@ export default {
       //开始
       state(){
           let self = this
-            self.clear = false
+          self.clear = false
           if(self.type=='个人'){
-            let interval = setInterval(function(){
+            self.interval = setInterval(function(){
                 if(self.clear || self.type!='个人'){
-                clearInterval(interval)
+                clearInterval(self.interval)
                 }
             let i = Math.floor(Math.random()*(self.studentname.length));
             self.textname = self.studentname[i]
@@ -124,9 +150,9 @@ export default {
           }
           if(self.type=='小组'){
               if(self.xiaozu){
-                  let interval = setInterval(function(){
+                  self.interval = setInterval(function(){
                 if(self.clear || self.type!='小组'){
-                clearInterval(interval)
+                clearInterval(self.interval)
                 }
                 let i = Math.ceil(Math.random() * self.xiaozu)
                 self.textname = i
@@ -137,12 +163,13 @@ export default {
           }
           if(self.type=='计时'){
               if(self.jishi){
-                let interval = setInterval(function(){
+                self.interval = setInterval(function(){
                     if(self.clear||self.type!='计时'){
-                    clearInterval(interval)
+                    clearInterval(self.interval)
                     }else{
                         if(self.four==0){
                         self.four = 10
+                        console.log(132)
                         }
                         if(self.four!=0){
                             self.four = self.four-1
@@ -163,8 +190,8 @@ export default {
                             self.one = self.one-1
                         }
                         if(self.four==0&&self.three==0&&self.two==0&&self.one==0){
-                            clearInterval(interval)
-                            console.log(132)
+                            clearInterval(self.interval)
+                            self.clear = true
                             Toast('时间到');
                         }
                     }
@@ -200,6 +227,20 @@ export default {
       }else {
         self.seletnav=['小组','计时']
       }
+
+      window.onresize = () => {
+        return (() => {
+          window.screenWidth = document.body.clientWidth
+          self.screenWidth = window.screenWidth
+        })()
+      }
+      if(self.screenWidth>800){
+          console.log(123)
+      }
+  },
+  destroyed: function () {
+      this.clear = true
+      clearInterval(this.interval)
   }
 };
 </script>
@@ -207,52 +248,42 @@ export default {
 <style lang="scss" scoped>
 .assistant {
   width: 100%;
+  height: 100%;
   position: fixed;
-  img {
-    position: relative;
-    width: 100%;
-      height: 100%;
-      overflow: hidden;
-    // padding-bottom: 200px;
-  }
-  .img {
-      position: absolute;
-      width: 9%;
-      height: 4%;
-      left: 50%;
-      margin-left: -4.5%;
-      top: 45%;
-  }
+  font-size: 24px;
+  letter-spacing: 2px;
+  background: url('../../assets/助手背景（竖）.png') no-repeat;
+  background-size: 100% 100%;
   .back {
       font-size: 2rem;
       position: absolute;
       top: 3%;
       left: 3%;
-      color:#3591b6;
+      color: #48f3f9;
       font-weight: 700;
   }
     .text {
-        width: 56%;
+        width: 424px;
         position: absolute;
         left: 50%;
-        top: 26.5%;
+        top: 27.5%;
         font-size: 5rem;
         text-align: center;
         color: #B8784A;
-        margin-left: -28%;
+        transform: translateX(-48%);
     }
     .box {
-         width: 56%;
-         height: 11.5rem;
-         line-height: 11.5rem;
+         width: 424px;
+         height: 12%;
+         line-height: 200%;
          text-align: center;
          color: #3591B6;
          position: absolute;
          transform-style: preserve-3d;
-         top: 22%;
+         top: 24.5%;
          left: 50%;
          font-size: 6rem;
-         margin-left: -28%;
+         transform: translateX(-48%);
          vertical-align: text-top;
          div {
              display: inline-block;
@@ -276,86 +307,104 @@ export default {
          }
     }
     .selet {
-        width: 36.2%;
-        position: absolute;
-        left: 50%;
-        top: 56.2%;
-        height: 5.6%;
-        line-height: 5rem;
+        width: 279px;
+        height: 49px;
+        line-height: 49px;
         text-align: center;
-        color: #fff;
-        font-size: 2rem;
-        margin-left: -18.1%;
-        letter-spacing:1rem;
-        vertical-align: top;
+        color: #48f3f9;
+        background: url('../../assets/助手按钮.png') no-repeat;
+        position: absolute;
+        top: 570px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
         i {
             display: inline-block;
-            border: 0.5rem solid #fff;
-            border-color: transparent #fff #fff transparent;
+            width: 13px;
+            height: 11px;
+            margin-left: 15px;
             position: absolute;
             top: 50%;
-            right: 20%;
-            margin-top: -0.6rem;
-            transform: rotate(-45deg)
+            transform: translateY(-50%);
+            background: url('../../assets/助手下拉.png') no-repeat;
         }
         ul {
-            width: 40%;
+            width: 279px;
             position: absolute;
-            background-color: #3591B6;
-            left: 100%;
-            top: 10%;
-            z-index: 10;
-            transition: height 1s;
-            border-radius: 1rem;
-            margin-left: 1rem;
+            right: -279px;
+            top: 0px;
             li {
-                line-height: 5rem;
-            }
-            i {
                 display: inline-block;
-                width: 0px;
-                border: 0.5rem solid #fff;
-                border-color: #3591B6 transparent transparent #3591B6;
-                position: absolute;
-                top: 15%;
-                left: 0%;
-                margin-left: -0.5rem;
+                width: 279px;
+                height: 49px;
+                line-height: 49px;
+                text-align: center;
+                color: #48f3f9;
+                background: url('../../assets/助手按钮.png') no-repeat;
             }
         }
     }
     .state {
-        width: 36.2%;
-        position: absolute;
-        left: 50%;
-        top: 64%;
-        height: 5.6%;
-        line-height: 5rem;
+        width: 279px;
+        height: 49px;
+        line-height: 49px;
         text-align: center;
-        color: #fff;
-        font-size: 2rem;
-        margin-left: -18.1%;
-        letter-spacing:1rem;
+        color: #48f3f9;
+        background: url('../../assets/助手按钮.png') no-repeat;
+        position: absolute;
+        top: 660px;
+        left: 50%;
+        transform: translateX(-50%);
     }
     .stop {
-        width: 36.2%;
+        width: 279px;
+        height: 49px;
+        line-height: 49px;
+        text-align: center;
+        color: #48f3f9;
+        background: url('../../assets/助手按钮.png') no-repeat;
+        position: absolute;
+        top: 750px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .img {
+        width: 65px;
+        height: 40px;
         position: absolute;
         left: 50%;
-        top: 72%;
-        height: 5.4%;
-        line-height: 5rem;
-        text-align: center;
-        color: #fff;
-        font-size: 2rem;
-        margin-left: -18.1%;
-        letter-spacing:1rem;
+        top: 39%;
+        transform: translateX(-50%);
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 }
-@keyframes te {
-    0% {
-        // transform: rotateY(0deg)
-    }
-    100% {
-        // transform: rotateY(180deg)
-    }
+.assistantbox {
+  background: url('../../assets/助手背景（横）.png') no-repeat !important;
+  background-size: 100% 100%;
+  .text {
+      top: 34% !important;
+  }
+  .box {
+      top: 31% !important;
+      height: 17% !important;
+      line-height: 150% !important;
+  }
+  .img {
+      top: 51% !important;
+  }
+  .selet {
+      top: 57% !important;
+  }
+  .state {
+      top: 67% !important;
+      transform: translateX(-125%) !important;
+  }
+  .stop {
+      top: 67% !important;
+      transform: translateX(25%) !important;
+  }
 }
 </style>

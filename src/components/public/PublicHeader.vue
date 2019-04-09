@@ -3,6 +3,7 @@
         <router-link v-if="header.url" tag="div" :to="header.url" class="previous_page item">返回
         </router-link>
         <div class="title item">{{header.title}}</div>
+        <div class="fr shuaxin" v-if="shuaxin.title=='刷新'" @click="shuaxinbtn"><img src="../../assets/刷新.png" alt=""></div>
         <router-link :to="jump.url" tag="div" class="jump item" v-if="jump.name !== ''">{{jump.name}}</router-link>
     </div>
 </template>
@@ -19,6 +20,12 @@
                     return {}
                 }
             },
+            shuaxin: {
+                tyPe: Object,
+                default: function () {
+                    return {title: ''}
+                }
+            },
             jump: {
                 tyPe: Object,
                 default: function () {
@@ -32,6 +39,9 @@
         methods: {
             backPage() {
                 this.$emit('backPage')
+            },
+            shuaxinbtn(){
+                this.$emit('shuaxinbtn',1)
             }
         }
     }
@@ -43,8 +53,8 @@
         top: 0;
         z-index: 1005;
         width: 100%;
-        height: 3.15rem;
-        line-height: 3.15rem;
+        height: 4.4rem;
+        line-height: 4.4rem;
         // padding: 0 1.14rem;
         box-sizing: border-box;
         // background-color: rgba(128, 213, 156, 1);
@@ -53,7 +63,7 @@
         background-size: 110% 110%;
         .item {
             padding-top: 1px;
-            font-size: 1.5rem;//18px;
+            font-size: 1.8rem;//18px;
             color: #ffffff;
         }
         .previous_page {
@@ -98,6 +108,15 @@
                 top: 50%;
                 right: -.8rem;
                 margin-top: -3px;
+            }
+        }
+        .shuaxin {
+            width: 4.4rem;
+            height: 4.4rem;
+            padding: 1rem;
+            img {
+                width: 100%;
+                height: 100%;
             }
         }
     }

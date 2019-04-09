@@ -4,6 +4,7 @@ import axios from '../../utils/axios'
 //const host = 'http://192.168.31.108:8888/COURSESTATISTICS/'
 const apiUrl = '/COURSESERVICE/teacher/'
 const host = '/COURSESTATISTICS/'
+const host1 = '/CLASSINTERACTION/';
 
 export function getList() {
     return axios({
@@ -249,5 +250,12 @@ export function shareAnswer(questionId, studentAnswerId, answerId, score, stubFo
             teacherName
         },
         //headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+
+export function pubRaceQuestion (courseId,raceId) {
+    return axios({
+        method: 'post',
+        url: `${host1}pubRaceQuestion/${courseId}/${raceId}`,
     });
 }

@@ -1,12 +1,12 @@
 <template>
   <div class="onlinestudent">
-    <teacher-header :header="header" />
+    <teacher-header :header="header" :shuaxin="shuaxin" @shuaxinbtn="shuaxinbtn" />
     <div class="center">
         <div class="user" v-for="(item,index) in studentlist" :key="index" @click="Fabulous(item)">
-            <div class="userimg" :class="{onlineimg:onlineshow}"></div>
+            <div class="userimg" :class="{onlineimg:item.signFlag=='1'}"></div>
             <div class="username">
                 <div class="left" :class="{onlineleft:Fabulouslist.indexOf(item.studentId)!=-1}"></div>
-                <div class="right" :class="{onlineright:onlineshow}">{{item.studentName}}</div>
+                <div class="right" :class="{onlineright:item.signFlag=='1'}">{{item.studentName}}</div>
             </div>
         </div>
         <div class="user" style="opacity:0" v-if="show3">
@@ -42,8 +42,9 @@
 </template>
 <!--课堂详情-->
 <script>
-import Vue from "vue";
+import Vue from "vue";   
 import TeacherHeader from "../../../components/public/PublicHeader";
+import{getCourseSign} from '@/api/teacher/statistics'
 
 export default {
   components: {
@@ -56,30 +57,21 @@ export default {
         title: "在线学生",
         url: "/TClassroom"
       },
+      shuaxin: {
+        title: "刷新",
+      },
+      courseId:'',
+      classId:'',
       studentlist: [],
       show3:false,
       show5:0,
-      onlineshow:false,
       Fabulouslist:''
     };
   },
   mounted() {
-    this.studentlist = this.$route.query.students
-    console.log(this.studentlist)
-    if(this.studentlist.length%3 == 2){
-        this.show3 = true
-    }else {
-        this.show3 = false
-    }
-    if(this.studentlist.length%5 == 2){
-        this.show5 = 2
-    }else if(this.studentlist.length%5 == 3) {
-        this.show5 = 3
-    }else if(this.studentlist.length%5 == 4) {
-        this.show5 = 4
-    }else {
-        this.show5 = 0
-    }
+    this.courseId = this.$route.query.courseId
+    this.classId = this.$route.query.classId
+    this.getonlinedata()
   },
   methods: {
       Fabulous(val){
@@ -93,6 +85,33 @@ export default {
               }
           }
                   console.log(this.Fabulouslist)
+      },
+      getonlinedata() {
+         getCourseSign(this.courseId,this.classId).then(res=>{
+                console.log(res)
+                if(res.data.code == '0010') {
+                    this.studentlist = res.data.data
+                    if(this.studentlist.length%3 == 2){
+                        this.show3 = true
+                    }else {
+                        this.show3 = false
+                    }
+                    if(this.studentlist.length%5 == 2){
+                        this.show5 = 2
+                    }else if(this.studentlist.length%5 == 3) {
+                        this.show5 = 3
+                    }else if(this.studentlist.length%5 == 4) {
+                        this.show5 = 4
+                    }else {
+                        this.show5 = 0
+                    }
+                }
+            }).catch(e=>{
+                console.log(e)
+            })
+      },
+      shuaxinbtn(val){
+          this.getonlinedata()
       }
   }
 };

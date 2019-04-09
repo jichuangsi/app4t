@@ -4,7 +4,7 @@ import axios from '../../utils/axios'
 //const host = 'http://api.jichuangsi.com/CLASSINTERACTION/';
 // const apiUrl = '/COURSESERVICE/student/';coursestatistics
 
-let apiurl = '/COURSESTATISTICS/result/teacher/'
+const apiurl = '/COURSESTATISTICS/result/teacher/'
 
 
 //课堂
@@ -37,6 +37,14 @@ export function publishFile(courseId,fileName,fileId) {
     return axios({
         method: 'post',
         url: `/COURSESERVICE/console/publishFile/`+courseId+'/'+fileName+'/'+fileId,
+        // headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+
+export function getCourseSign(courseId,classId) {
+    return axios({
+        method: 'GET',
+        url: `/COURSESTATISTICS/class/getCourseSign/${courseId}/${classId}`,
         // headers: {'accessToken': localStorage.getItem('token')}
     });
 }

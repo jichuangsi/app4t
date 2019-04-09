@@ -490,8 +490,8 @@
         background: url('../../assets/allbj.png') no-repeat;
         .header {
             width: 100%;
-            height: 3.15rem;
-            line-height: 3.15rem;
+            height: 4.4rem;
+            line-height: 4.4rem;
             position: fixed;
             z-index: 10;
             // background-color: rgba(145, 220, 169, 1);
@@ -513,7 +513,7 @@
                 }
                 .bar {
                     position: absolute;
-                    width: 66px;
+                    width: 5rem;
                     left: 24px;
                     bottom: -.5px;
                     height: 4px;

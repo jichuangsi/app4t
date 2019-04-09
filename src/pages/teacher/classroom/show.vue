@@ -22,7 +22,7 @@
                     <div class="row">在线人数 &nbsp;<span class="people">{{studentCount}}</span> / {{studentTotal}}</div>
                     <div class="row" v-for="(item,index) in classMsg.attachments" :key="index" >附件 &nbsp;
                         <a @click.capture="downloadAttachment4App(item)">{{item.name}}，</a>
-                        <div class="btn fr" @click="send(item)">发布附件</div>
+                        <div class="btn fr" :class="{sendbtn:sendshow||item.publishFlag=='1'}" @click="send(item)">发布附件</div>
                     </div>
                 </div>
                 <!-- <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div> -->
@@ -59,8 +59,17 @@
         <loading v-if="loading"/>
         <div class="leftDrawer" :class="{rightDrawer:!Drawershow}" @click="Drawershow = !Drawershow">
             <div class="Onlinestudent" @click.stop="zxbtn"></div>
-            <div class="Responder" @click.stop="qdbtn"></div>
-            <div class="assistant" @click.stop="zsbtn"></div>
+            <div class="Responder" @click="qdbtn"></div>
+            <div class="assistantbtn" @click.stop="zsbtn"></div>
+        </div>
+        <div class="Responderbox" v-if="qdshow">
+            <div class="qdbox">
+                <div class="none" v-if="confirmshow" @click="qdshow = false">x</div>
+                <div class="text">是否发布抢答</div>
+                <div class="cancel" @click="cancelshow?qdshow = false:qdshow=true">取消</div>
+                <div class="confirm" @click="qdconfirm">确认</div>
+                <div class="studentname" v-if="confirmshow">{{confirmtext}}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -85,6 +94,7 @@
     import Stomp from 'stompjs'
     import {MessageBox, Toast, Indicator} from 'mint-ui'
     import {publishFile} from '@/api/teacher/statistics'
+    import {pubRaceQuestion} from '@/api/teacher/classroom'
     import store from '@/store'
 
     export default {
@@ -96,6 +106,13 @@
         },
         data() {
             return {
+                confirmbtn:true,
+                confirmtext:'',
+                classId:'',
+                cancelshow:true,
+                confirmshow:false,
+                sendshow:false,
+                qdshow:false,
                 Drawershow:true,
                 img:"",
                 onestudentname:"",
@@ -184,16 +201,18 @@
         methods: {
             send(val) {
                 console.log(this.classMsg.courseId,val.name,val.sub)
-                MessageBox.confirm('是否共享此附件').then(action => {
-                    publishFile(this.classMsg.courseId,val.name,val.sub).then(res=>{
-                    if(res.data.code == '0010') {
-                        Toast('共享成功')
-                    }
-                })
-            }).catch(e=>{
-                console.log(e)
-            })
-                
+                if(!this.sendshow&&!val.publishFlag=='1'){
+                    MessageBox.confirm('是否共享此附件').then(action => {
+                        publishFile(this.classMsg.courseId,val.name,val.sub).then(res=>{
+                        if(res.data.code == '0010') {
+                            this.sendshow = true
+                            Toast('共享成功')
+                        }
+                    })
+                    }).catch(e=>{
+                        console.log(e)
+                    })
+                }
             },
             //在线学生
             zxbtn(){
@@ -201,9 +220,31 @@
                     path: '@/pages/teacher/classroom/onlinestudent',
                     name: 'onlinestudent',
                     query: {
-                        students: this.allstudents
+                        courseId: this.courseId,
+                        classId: this.classId,
                     }
                 });
+            },
+            //抢答
+            qdbtn() {
+                this.qdshow = true
+                this.Drawershow = false
+                this.confirmshow = false
+                console.log(this.Drawershow)
+            },
+            qdconfirm() {
+                this.cancelshow = false
+                if(this.confirmbtn){
+                    this.confirmbtn = false
+                    var timestamp=new Date().getTime()
+                    pubRaceQuestion(this.courseId,timestamp).then(res=>{
+                        console.log(res)
+                        if(res.data.code == '0010') {
+                            Toast('发布成功')
+                            return
+                        }
+                    })
+                }
             },
             //小助手
             zsbtn(){
@@ -432,6 +473,7 @@
                         _this.classMsg = res.data.data;
                         _this.allquestions = res.data.data.questions
                         _this.allstudents = res.data.data.students
+                        _this.classId = res.data.data.classId
                         let objective = 0;
                         let subjective = 0;
                         _this.courseStatus = this.classMsg.courseStatus;
@@ -646,6 +688,16 @@
                         case "StudentAnswer": this.classAnswerSubmit(response); break;
                     }
                 }
+                if (classData.data&&classData.data.quType){
+                for (let i =0;i<this.allstudents.length;i++){
+                    if(this.allstudents[i].studentId == classData.data.studentId){
+                        this.confirmtext = this.allstudents[i].studentName
+                        this.confirmshow = true
+                        this.cancelshow = true
+                        this.confirmbtn = true
+                    }
+                }
+                }
             },
             connectWithParam(param, method) {
                 //地址+端点路径，构建websocket链接地址
@@ -738,6 +790,7 @@
                 //                             answer:self.img}]
                 //                             console.log(self.AnswerShareList)
                 // }
+                console.log(self.allstudents)
                 // }
                 for (let i =0;i<self.allstudents.length;i++){
                     if(self.allstudents[i].studentId == subjectivesubmit.data.studentId){
@@ -1064,14 +1117,90 @@
         .Responder:active {
             background-position: -578px -1713px;
         }
-    .assistant {
+    .assistantbtn {
         margin-left: 75px;
         width: 252px;
         height: 42px;
         background:  url("../../../assets/按钮.png") no-repeat;
         background-position: -135px -1790px;
     }
-        .assistant:active {
+        .assistantbtn:active {
             background-position: -578px -1792px;
+        }
+        .btn {
+            padding: 5px 10px;
+            border-radius: 10px;
+            transform: translateY(-25%);
+            background-color: #5AA5EF;
+            color: #f2f2f2;
+        }
+        .btn:active {
+            background-color: #f2f2f2;
+            color: #5AA5EF;
+        }
+        .sendbtn {
+            background-color: #f2f2f2;
+            color: #5AA5EF;
+        }
+        .Responderbox {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            background-color: rgba(0, 0, 0, 0.3);
+            .qdbox {
+                width: 600px;
+                height: 200px;
+                background-color: #fff;
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                transform: translate(-50%,-50%);
+            }
+            .none {
+                font-size: 30px;
+                float: right;
+                margin-right: 10px;
+            }
+            .text {
+                font-size: 24px;
+                text-align: center;
+                font-weight: 700;
+                margin: 50px 0;
+            }
+            .cancel {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 22px;
+                border: 1px solid #999;
+            }
+            .confirm {
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 22px;
+                border: 1px solid #999;
+            }
+            .studentname {
+                width: 100%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 22px;
+                position: absolute;
+                bottom: -50px;
+                background-color: #fff;
+                border: 1px solid #999;
+            }
         }
 </style>
