@@ -228,11 +228,11 @@
                         width:136px;
                         height:50px;
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -135px -1136px;
+                        background-position: -135px -2406px;
                     }
                     .state:active {
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -578px -1136px;
+                        background-position: -578px -2406px;
                     }
                 }
                 .green {

@@ -3,7 +3,7 @@
         <router-link v-if="header.url" tag="div" :to="header.url" class="previous_page item">返回
         </router-link>
         <div class="title item">{{header.title}}</div>
-        <div class="fr shuaxin" v-if="shuaxin.title=='刷新'" @click="shuaxinbtn"><img src="../../assets/刷新.png" alt=""></div>
+        <div class="fr shuaxin" :class="{xuanzhuan:shuaxinshow}" v-if="shuaxin.title=='刷新'" @click="shuaxinbtn"><img src="../../assets/刷新.png" alt=""></div>
         <router-link :to="jump.url" tag="div" class="jump item" v-if="jump.name !== ''">{{jump.name}}</router-link>
     </div>
 </template>
@@ -34,14 +34,21 @@
             }
         },
         data() {
-            return {}
+            return {
+                shuaxinshow:false
+            }
         },
         methods: {
             backPage() {
                 this.$emit('backPage')
             },
             shuaxinbtn(){
-                this.$emit('shuaxinbtn',1)
+                let self = this
+                self.shuaxinshow = true
+                self.$emit('shuaxinbtn',1)
+                setTimeout(function(){
+                    self.shuaxinshow = false
+                },1000)
             }
         }
     }
@@ -117,6 +124,17 @@
             img {
                 width: 100%;
                 height: 100%;
+            }
+        }
+        .xuanzhuan {
+            animation: all 1s;
+        }
+        @keyframes all {
+            0% {
+                transform: rotate(0deg)
+            }
+            100% {
+                transform: rotate(720deg)
             }
         }
     }
