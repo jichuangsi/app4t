@@ -40,6 +40,9 @@
         <div class="state" @click="state">开始</div>
         <div class="stop" @click="stop">停止</div>
     </div>
+    <div id="box">
+        <audio id="audios" :src="audiosrc">您的浏览器不支持 audio 标签。</audio>
+    </div>
   </div>
 </template>
 
@@ -49,6 +52,7 @@ export default {
   name: "assistant",
   data() {
     return {
+        audiosrc:require('../../assets/4204.mp3'),
         textname:'',
         selet:'请选择',
         studentlist:[],
@@ -65,7 +69,8 @@ export default {
         three:'0',
         four:'0',
         screenWidth: document.body.clientWidth,
-        interval:''
+        interval:'',
+        status:true
     };
   },
   watch:{
@@ -74,6 +79,9 @@ export default {
       }
   },
   methods: {
+      qqq(){
+          document.getElementById('audio').play()
+      },
       //选择
       seletclick(val,index){
           this.selet = val
@@ -108,28 +116,71 @@ export default {
             })
           }
           if(this.type=='计时'){
-              MessageBox.prompt('请输入分钟').then((value) => {
-              this.jishi = value.value
-              if((/(^[1-9]\d*$)/.test(Number(this.jishi)))){
-                  if(Number(this.jishi)<10 && Number(this.jishi)>0){
-                      this.one = 0
-                      this.two = this.jishi
-                      this.three = 0
-                      this.four = 0
-                  }
-                  if(Number(this.jishi) >= 10 &&Number(this.jishi) <= 60) {
-                      this.one = this.jishi.split('')[0]
-                      this.two = this.jishi.split('')[1]
-                      this.three = 0
-                      this.four = 0
-                  }
-                  if(!(Number(this.jishi) > 0 &&Number(this.jishi) <= 60)){
-                    Toast('请输入1-60的整数');
-                  }
+              let s
+              let m 
+              MessageBox.prompt('请输入秒数').then((value) => {
+              this.jishi = Number(value.value)
+              if((/(^[1-9]\d*$)/.test(this.jishi))){
+                s=parseInt(this.jishi)
+                if(s>60){
+                    m = parseInt(s / 60)
+                    s = parseInt(s % 60);
+                }
+                console.log(s)
+                console.log(m)
+                if(s<10){
+                    this.three = 0
+                    this.four = s
+                }
+                if(s>=10){
+                    this.three = String(s)[0]
+                    this.four = String(s)[1]
+                }
+                if(m<10){
+                    this.one = 0
+                    this.two = m
+                }
+                if(m>=10){
+                    this.one = String(m)[0]
+                    this.two = String(m)[1]
+                }
+                if(!m){
+                    this.one = 0
+                    this.two = 0
+                }
+                if(!(0<this.jishi&&this.jishi<=3600)){
+                    this.one = 0
+                    this.two = 0
+                    this.three = 0
+                    this.four = 0
+                    Toast('请输入1-3600的整数');
+                    return
+                }
               }else {
-                  this.jishi=''
-                Toast('请输入1-60的整数');
+                this.jishi=''
+                Toast('请输入1-3600的整数');
               }
+
+            //   if((/(^[1-9]\d*$)/.test(Number(this.jishi)))){
+            //       if(Number(this.jishi)<10 && Number(this.jishi)>0){
+            //           this.one = 0
+            //           this.two = this.jishi
+            //           this.three = 0
+            //           this.four = 0
+            //       }
+            //       if(Number(this.jishi) >= 10 &&Number(this.jishi) <= 60) {
+            //           this.one = this.jishi.split('')[0]
+            //           this.two = this.jishi.split('')[1]
+            //           this.three = 0
+            //           this.four = 0
+            //       }
+            //       if(!(Number(this.jishi) > 0 &&Number(this.jishi) <= 60)){
+            //         Toast('请输入1-60的整数');
+            //       }
+            //   }else {
+            //       this.jishi=''
+            //     Toast('请输入1-60的整数');
+            //   }
             }).catch(err=>{
                 console.log(err)
             })
@@ -162,14 +213,14 @@ export default {
               }
           }
           if(self.type=='计时'){
-              if(self.jishi){
+              if(self.jishi&&self.status){
+                  self.status = false
                 self.interval = setInterval(function(){
                     if(self.clear||self.type!='计时'){
                     clearInterval(self.interval)
                     }else{
                         if(self.four==0){
                         self.four = 10
-                        console.log(132)
                         }
                         if(self.four!=0){
                             self.four = self.four-1
@@ -192,18 +243,20 @@ export default {
                         if(self.four==0&&self.three==0&&self.two==0&&self.one==0){
                             clearInterval(self.interval)
                             self.clear = true
+                            self.status = true
+                            document.getElementById('audios').play()
                             Toast('时间到');
                         }
                     }
                 },1000)
               }else{
-                  Toast('请输入1-60的数字');
               }
           }
       },
       //停止
       stop(){
           this.clear = true
+            this.status = true
           console.log(this.clear)
       },
       //返回
@@ -214,7 +267,7 @@ export default {
           }else{
               this.$router.go(-1)
           }
-      }
+      },
   },
   mounted() {
       this.studentlist = this.$route.query.students
@@ -237,6 +290,7 @@ export default {
       if(self.screenWidth>800){
           console.log(123)
       }
+    //   this.getradio()
   },
   destroyed: function () {
       this.clear = true
@@ -254,6 +308,14 @@ export default {
   letter-spacing: 2px;
   background: url('../../assets/助手背景（竖）.png') no-repeat;
   background-size: 100% 100%;
+  audio {
+      opacity: 1;
+  }
+  #box {
+      width: 320px;
+      height: 50px;
+      background-color: transparent;
+  }
   .back {
       font-size: 2rem;
       position: absolute;
@@ -275,7 +337,7 @@ export default {
     .box {
          width: 328px;
          height: 12%;
-         line-height: 200%;
+         line-height: 190%;
          text-align: center;
          color: #3591B6;
          position: absolute;
@@ -391,7 +453,7 @@ export default {
   .box {
       top: 31% !important;
       height: 17% !important;
-      line-height: 150% !important;
+      line-height: 170% !important;
       font-size: 4rem;
   }
   .img {

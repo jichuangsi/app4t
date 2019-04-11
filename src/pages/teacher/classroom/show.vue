@@ -65,7 +65,7 @@
         </div>
         <div class="Responderbox" v-if="qdshow">
             <div class="qdbox">
-                <div class="none" v-if="confirmshow" @click="qdshow = false">x</div>
+                <div class="none" @click="qdshow = false">x</div>
                 <div class="text">是否发布抢答</div>
                 <div class="cancel" @click="cancelshow?qdshow = false:qdshow=true">取消</div>
                 <div class="confirm" @click="qdconfirm">确认</div>
