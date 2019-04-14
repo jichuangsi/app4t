@@ -505,32 +505,32 @@
                         .subjective_submit {
                             position: absolute;
                             right: 3.71rem;
-                            width: 128px;
-                            height: 38px;
+                            width: 154px;
+                            height: 46px;
                             border-radius: 1.145rem;
                             font-size: 18px;
                             z-index: 100;
                             background: url('../../../assets/按钮.png') no-repeat;
-                            background-position: -149px -616px;
+                            background-position: -135px -922px;
                         }
                         .subjective_submit:active {
                             background: url('../../../assets/按钮.png') no-repeat;
-                            background-position: -588px -616px;
+                            background-position: -592px -922px;
                             }
                         .subjective_submit_box {
                             position: absolute;
                             right: 3.71rem;
-                            width: 128px;
-                            height: 38px;
+                            width: 154px;
+                            height: 46px;
                             border-radius: 1.145rem;
                             font-size: 18px;
                             z-index: 101;
                             background: url('../../../assets/按钮.png') no-repeat;
-                            background-position: -149px -563px;
+                            background-position: -135px -826px;
                         }
                         .subjective_submit_box:active {
                             background: url('../../../assets/按钮.png') no-repeat;
-                            background-position: -588px -563px;
+                            background-position: -592px -826px;
                             }
                     }
                 }
@@ -631,28 +631,28 @@
                 // padding: 0.57rem 3.14rem;
                 // background-color: #9a84ff;
                 border-radius: 100px;
-                width: 156px;
-                height: 42px;
+                width: 186px;
+                height: 49px;
                 background: url('../../../assets/按钮.png') no-repeat;
-                background-position: -135px -1426px;
+                background-position: -135px -1822px;
             }
             .next:active {
                 background: url('../../../assets/按钮.png') no-repeat;
-                background-position: -578px -1426px;
+                background-position: -592px -1822px;
             }
             .submit {
             font-size: 18px;
             border-radius: 100px;
-            width: 136px;
-            height: 42px;
+            width: 162px;
+            height: 49px;
             background: url('../../../assets/按钮.png') no-repeat;
-            background-position: -145px -670px;
+            background-position: -135px -1009px;
             }
             .submit:active {
             // box-shadow: 0 2px 6px 3px #7c6fd1;
             // background-color: #7c6fd1;
             background: url('../../../assets/按钮.png') no-repeat;
-            background-position: -584px -670px;
+            background-position: -592px -1009px;
             }
         }
     }

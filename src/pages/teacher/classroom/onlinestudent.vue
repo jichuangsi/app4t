@@ -139,10 +139,10 @@ export default {
                 height: 82px;
                 margin-bottom: 10px;
                 background:  url("../../../assets/按钮.png") no-repeat;
-                background-position: -578px -2208px;
+                background-position: -592px -2807px;
             }
             .onlineimg {
-                background-position: -135px -2208px;
+                background-position: -135px -2807px;
             }
             .username {
                 width: 180px;
@@ -152,10 +152,10 @@ export default {
                     height: 28px;
                     margin-right: 10px;
                     background:  url("../../../assets/按钮.png") no-repeat;
-                    background-position: -578px -2334px;
+                    background-position: -592px -2932px;
                 }
                 .onlineleft {
-                    background-position: -135px -2334px;
+                    background-position: -135px -2932px;
                 }
                 .right {
                     font-size: 22px;

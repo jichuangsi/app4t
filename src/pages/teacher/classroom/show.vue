@@ -920,36 +920,38 @@
                     color: rgba(255, 255, 255, 1);
                 }
                 .class {
-                    width: 126px;
-                    height: 48px;
+                    width: 150px;
+                    height: 56px;
                     background: url('../../../assets/按钮.png') no-repeat;
-                    background-position: -150px -226px;
+                    background-position: -135px -208px;
                     // background-size: 100% 100%;
                     // background-color: #8E78F0;
                 }
                 .class:active {
-                    width: 126px;
-                    height: 48px;
                     background: url('../../../assets/按钮.png') no-repeat;
-                    background-position: -589px -226px;
+                    background-position: -592px -209px;
                     // background-color: #7262c2;
                     // box-shadow: 0 2px 6px 3px #7262c2;
                 }
                 .view {
+                    width: 150px;
+                    height: 56px;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
                     // background-color: #888888;
                 }
                 .started {
-                    width: 126px;
-                    height: 48px;
+                    width: 150px;
+                    height: 56px;
                     background: url('../../../assets/按钮.png') no-repeat;
-                    background-position: -150px -102px;
+                    background-position: -135px -16px;
                     // background-color: #69B482;
                 }
                 .started:active {
-                    width: 126px;
-                    height: 48px;
                     background: url('../../../assets/按钮.png') no-repeat;
-                    background-position: -589px -102px;
+                    background-position: -592px -16px;
                     // background-color: #4a9460;
                     // box-shadow: 0 2px 6px 3px #4a9460;
                 }
@@ -1077,12 +1079,12 @@
     }
     .leftDrawer {
         position: fixed;
-        width: 334px;
+        width: 335px;
         height: 308px;
         top: 30%;
         right: -300px;
         background:  url("../../../assets/按钮.png") no-repeat;
-        background-position: -135px -1872px;
+        background-position: -135px -2479px;
         transition: right 0.5s linear;
         z-index: 2005;
         display: flex;
@@ -1091,40 +1093,40 @@
         flex-wrap: wrap;
     }
     .rightDrawer {
-        width: 334px;
+        width: 335px;
         height: 308px;
-        background-position: -578px -1872px;
+        background-position: -592px -2479px;
         right: 0px;
     }
     .Onlinestudent {
         margin-left: 75px;
-        width: 210px;
-        height: 50px;
+        width: 207px;
+        height: 46px;
         background:  url("../../../assets/按钮.png") no-repeat;
-        background-position: -135px -1636px;
+        background-position: -135px -2171px;
     }
        .Onlinestudent:active {
-            background-position: -578px -1636px;
+            background-position: -592px -2173px;
         }
     .Responder {
         margin-left: 75px;
-        width: 211px;
+        width: 207px;
         height: 46px;
         background:  url("../../../assets/按钮.png") no-repeat;
-        background-position: -135px -1711px;
+        background-position: -135px -2258px;
     }
         .Responder:active {
-            background-position: -578px -1713px;
+            background-position: -590px -2260px;
         }
     .assistantbtn {
         margin-left: 75px;
-        width: 252px;
-        height: 42px;
+        width: 248px;
+        height: 38px;
         background:  url("../../../assets/按钮.png") no-repeat;
-        background-position: -135px -1790px;
+        background-position: -135px -2356px;
     }
         .assistantbtn:active {
-            background-position: -578px -1792px;
+            background-position: -592px -2358px;
         }
         .btn {
             padding: 5px 10px;

@@ -324,55 +324,50 @@
                 // white-space: nowrap; /*强制不换行*/
             }
             .view {
-                width: 94px;
-                height: 42px;
+                width: 112px;
+                height: 49px;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -166px -164px;
+                background-position: -135px -119px;
                 // background-color: #5AA5EF;
             }
             .view:active {
-                width: 94px;
-                height: 42px;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -605px -164px;
+                background-position: -592px -119px;
                 // box-shadow: 0 2px 6px 3px #5AA5EF;
             }
             .termination {
-                width: 130px;
-                height: 42px;
+                width: 155px;
+                height: 49px;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -148px -344px;
+                background-position: -135px -431px;
                 // background-color: #FE5454;
             }
             .termination:active {
-                width: 130px;
-                height: 42px;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -587px -344px;
+                background-position: -592px -431px;
                 // background-color: #e74f4f;
                 // box-shadow: 0 2px 6px 3px #e74f4f;
             }
             .release {
-                width: 94px;
-                height: 42px;
+                width: 112px;
+                height: 49px;
                 // background-color: #69B482;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -166px -507px;
+                background-position: -135px -714px;
             }
             .release:active {
-                width: 94px;
-                height: 42px;
                 // background-color: #54956a;
                 // box-shadow: 0 2px 6px 3px #54956a;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -605px -507px;
+                background-position: -592px -714px;
             }
             .terminationbox {
-                width: 130px;
-                height: 42px;
+                width: 155px;
+                height: 49px;
+                line-height: 49px;
                 // background-color: #69B482;
                 background: url('../../assets/按钮.png') no-repeat;
-                background-position: -135px -1365px;
+                background-position: -135px -1714px;
                 text-align: center;
                 color: #fff;
                 font-size: 18px;

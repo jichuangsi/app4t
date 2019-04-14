@@ -225,49 +225,49 @@
                         //border-radius: 1.86rem;
                         // background-color: rgba(142, 120, 240, 1);
                         // color: white;
-                        width:136px;
-                        height:50px;
+                        width:165px;
+                        height:59px;
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -135px -1136px;
+                        background-position: -135px -1410px;
                     }
                     .state:active {
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -578px -1136px;
+                        background-position: -592px -1410px;
                     }
                 }
                 .green {
                     background-color: rgba(222, 255, 225, 1);
                     .state {
-                        width:136px;
-                        height:50px;
+                        width:165px;
+                        height:59px;
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -135px -1211px;
+                        background-position: -135px -1514px;
                     }
                     .state:active {
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -578px -1211px;
+                        background-position: -592px -1514px;
                     }
                 }
                 .yellow {
                     background-color: rgb(255, 252, 225);
                     .state {
-                        width:136px;
-                        height:50px;
+                        width:165px;
+                        height:59px;
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -135px -1280px;
+                        background-position: -135px -1614px;
                     }
                     .state:active {
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -578px -1280px;
+                        background-position: -592px -1614px;
                     }
                 }
                 .gray {
                     background-color: rgba(230, 230, 230, 1);
                     .state {
-                        width:136px;
-                        height:50px;
+                        width:165px;
+                        height:59px;
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -578px -1356px;
+                        background-position: -592px -1714px;
                     }
                 }
                 .Deleting {
