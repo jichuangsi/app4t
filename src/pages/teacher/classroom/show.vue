@@ -66,9 +66,16 @@
         <div class="Responderbox" v-if="qdshow">
             <div class="qdbox">
                 <div class="none" @click="qdshow = false">x</div>
-                <div class="text">是否发布抢答</div>
-                <div class="cancel" @click="cancelshow?qdshow = false:qdshow=true">取消</div>
-                <div class="confirm" @click="qdconfirm">确认</div>
+                <div class="text" v-if="ddshow">是否发布抢答</div>
+                <div class="cancel" @click="cancelshow?qdshow = false:qdshow=true"  v-if="ddshow">取消</div>
+                <div class="confirm" @click="qdconfirm" v-if="ddshow">确认</div>
+                <div class="loading" v-if="!ddshow">
+                    <div class="loading_quan">
+                        <div class="loading_box">
+                        </div>
+                    </div>
+                        loading...
+                </div>
             </div>
         </div>
         <div class="studentname" v-if="qdname">
@@ -113,6 +120,7 @@
         },
         data() {
             return {
+                ddshow:true,
                 qdname:false,
                 confirmbtn:true,
                 confirmtext:'',
@@ -237,6 +245,7 @@
                 this.Drawershow = false
                 this.confirmshow = false
                 this.confirmbtn = true
+                this.ddshow = true
                 console.log(this.Drawershow)
             },
             qdconfirm() {
@@ -247,6 +256,7 @@
                     pubRaceQuestion(this.courseId,timestamp).then(res=>{
                         console.log(res)
                         if(res.data.code == '0010') {
+                            this.ddshow = false
                             Toast('发布成功')
                             return
                         }
@@ -1110,7 +1120,7 @@
     .Onlinestudent {
         margin-left: 75px;
         width: 207px;
-        height: 46px;
+        height: 48px;
         background:  url("../../../assets/按钮.png") no-repeat;
         background-position: -135px -2171px;
     }
@@ -1130,11 +1140,12 @@
     .assistantbtn {
         margin-left: 75px;
         width: 248px;
-        height: 38px;
+        height: 42px;
         background:  url("../../../assets/按钮.png") no-repeat;
         background-position: -135px -2356px;
     }
         .assistantbtn:active {
+            height: 38px;
             background-position: -592px -2358px;
         }
         .btn {
@@ -1202,6 +1213,32 @@
                 font-size: 22px;
                 border: 1px solid #999;
             }
+            .loading {
+                width: 100px;
+                height: 100px;
+                line-height: 100px;
+                text-align: center;
+                margin: 30px auto;
+                position: relative;
+                .loading_box {
+                    width: 10px;
+                    height: 40px;
+                    background-color: #fff;
+                    position: absolute;
+                    top: 10px;
+                    right: -5px;
+                }
+                .loading_quan {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    border-radius: 50%;
+                    border: 3px solid #666;
+                    animation: all 2s linear infinite;
+                }
+            }
         }
         
         .studentname {
@@ -1242,4 +1279,12 @@
         .mint-toast {
             z-index: 9999 !important;
         }
+            @keyframes all {
+                0% {
+                    transform: rotate(0deg)
+                }
+                100% {
+                    transform: rotate(720deg)
+                }
+            }
 </style>

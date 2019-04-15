@@ -1,6 +1,6 @@
 <template>
   <div class="assistant" :class="{'assistantbox':screenWidth>800}">
-    <div class="center">
+    <div class="center" v-if="screenWidth<=800">
         <div class="back" @click="back">返回</div>
         <div class="text" v-if="type!='计时'">{{textname}}</div>
         <div class="box" v-if="type=='计时'">
@@ -12,13 +12,13 @@
         </div>
         <div class="selet" @click="seletshow= !seletshow">
             {{selet}}<i></i>
-            <ul v-if="seletshow">
+            <ul :class="{selectli:seletshow}">
                 <li v-for="(item,index) in seletnav" :key="index" @click.stop="seletclick(item,index)">{{item}}</li>
             </ul>
         </div>
         <div class="img" v-if="type=='小组'||type=='计时'" @click="message"><img src="../../assets/形状 1.png" alt=""></div>
-        <div class="state" @click="state">开始</div>
-        <div class="stop" @click="stop">停止</div>
+        <div class="state" @click="state" :class="{selectclass:seletshow}">开始</div>
+        <div class="stop" @click="stop" :class="{selectclass:seletshow}">停止</div>
     </div>
     <div class="center" v-if="screenWidth>800">
         <div class="back" @click="back">返回</div>
@@ -32,13 +32,13 @@
         </div>
         <div class="selet" @click="seletshow= !seletshow">
             {{selet}}<i></i>
-            <ul v-if="seletshow">
+            <ul :class="{selectli:seletshow}">
                 <li v-for="(item,index) in seletnav" :key="index" @click.stop="seletclick(item,index)">{{item}}</li>
             </ul>
         </div>
         <div class="img" v-if="type=='小组'||type=='计时'" @click="message"><img src="../../assets/形状 1.png" alt=""></div>
-        <div class="state" @click="state">开始</div>
-        <div class="stop" @click="stop">停止</div>
+        <div class="state" @click="state" :class="{selectleft:seletshow}">开始</div>
+        <div class="stop" @click="stop" :class="{selectright:seletshow}">停止</div>
     </div>
     <div id="box">
         <audio id="audios" :src="audiosrc">您的浏览器不支持 audio 标签。</audio>
@@ -392,17 +392,22 @@ export default {
         }
         ul {
             width: 279px;
+            height: 0px;
             position: absolute;
             right: 0px;
             top: 49px;
+            transition: height 1s;
+            overflow: hidden;
+            opacity: 0;
             li {
                 display: inline-block;
-                width: 279px;
+                width: 100%;
                 height: 49px;
                 line-height: 49px;
                 text-align: center;
                 color: #48f3f9;
                 background: url('../../assets/助手按钮.png') no-repeat;
+                list-style-type: none;
             }
         }
     }
@@ -417,6 +422,7 @@ export default {
         top: 52%;
         left: 50%;
         transform: translateX(-50%);
+        transition: left 1s,opacity 1s;
     }
     .stop {
         width: 279px;
@@ -429,6 +435,7 @@ export default {
         top: 59%;
         left: 50%;
         transform: translateX(-50%);
+        transition: left 1s,opacity 1s;
     }
     .img {
         width: 65px;
@@ -472,5 +479,20 @@ export default {
       top: 67% !important;
       transform: translateX(5%) !important;
   }
+}
+.selectclass {
+    opacity: 0;
+}
+.selectleft {
+    opacity: 0;
+    left: 25% !important;
+}
+.selectright {
+    opacity: 0;
+    left: 75% !important;
+}
+.selectli {
+    height: 147px !important;
+    opacity: 1 !important;
 }
 </style>
