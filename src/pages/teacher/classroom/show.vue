@@ -69,7 +69,13 @@
                 <div class="text">是否发布抢答</div>
                 <div class="cancel" @click="cancelshow?qdshow = false:qdshow=true">取消</div>
                 <div class="confirm" @click="qdconfirm">确认</div>
-                <div class="studentname" v-if="confirmshow">{{confirmtext}}</div>
+            </div>
+        </div>
+        <div class="studentname" v-if="qdname">
+            <div class="studentbox">
+                <div class="none" @click="qdname = false">x</div>
+                <div class="studentimg"></div>
+                <div class="student_name">{{confirmtext}}</div>
             </div>
         </div>
     </div>
@@ -107,6 +113,7 @@
         },
         data() {
             return {
+                qdname:false,
                 confirmbtn:true,
                 confirmtext:'',
                 classId:'',
@@ -694,6 +701,8 @@
                         this.confirmtext = this.allstudents[i].studentName
                         this.confirmshow = true
                         this.cancelshow = true
+                        this.qdshow = false
+                        this.qdname = true
                     }
                 }
                 }
@@ -1163,7 +1172,7 @@
             .none {
                 font-size: 30px;
                 float: right;
-                margin-right: 10px;
+                padding:5px 15px;
             }
             .text {
                 font-size: 24px;
@@ -1193,16 +1202,41 @@
                 font-size: 22px;
                 border: 1px solid #999;
             }
-            .studentname {
-                width: 100%;
-                height: 50px;
-                line-height: 50px;
-                text-align: center;
-                font-size: 22px;
-                position: absolute;
-                bottom: -50px;
+        }
+        
+        .studentname {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 2007;
+            .none {
+                font-size: 30px;
+                float: right;
+                padding:5px 15px;
+            }
+            .studentbox {
+                width: 400px;
+                height: 200px;
                 background-color: #fff;
-                border: 1px solid #999;
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                transform: translate(-50%,-50%);
+                .studentimg {
+                    width: 82px;
+                    height: 82px;
+                    margin-bottom: 10px;
+                    background:  url("../../../assets/按钮.png") no-repeat;
+                    background-position: -135px -2807px;
+                    margin: 30px auto;
+                }
+                .student_name {
+                    font-size: 24px;
+                    text-align: center;
+                }
             }
         }
         .mint-toast {
