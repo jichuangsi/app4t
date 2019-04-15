@@ -408,6 +408,17 @@ export default {
                 color: #48f3f9;
                 background: url('../../assets/助手按钮.png') no-repeat;
                 list-style-type: none;
+                position: absolute;
+                left: 0px;
+            }
+            li:nth-child(1){
+                top: 0px;
+            }
+            li:nth-child(2){
+                top: 49px;
+            }
+            li:nth-child(3){
+                top: 98px;
             }
         }
     }
