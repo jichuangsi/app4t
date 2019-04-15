@@ -56,7 +56,7 @@
                 navStyle: '',
                 loading: true,    //加载状态
                 pageShow: false,  //内容加载状态
-                tipss: '没有更多习题',      //作业加载到最后的提示
+                tipss: '没有更多考试',      //作业加载到最后的提示
                 //作业列表
                 teachertest: [],
                 mescroll: null,

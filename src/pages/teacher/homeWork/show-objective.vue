@@ -4,7 +4,7 @@
         <div class="objective_content" v-show="pageShow">
             <div class="objectiveTitle">
                 <span class="icon"></span>
-                <span class="title">作业信息</span>
+                <span class="title">习题信息</span>
             </div>
             <div class="student_msg">
                 <div class="msg">
@@ -17,7 +17,7 @@
             </div>
             <div class="objectiveTitle" style="margin-bottom: 2.24rem">
                 <span class="icon"></span>
-                <span class="title">作业详情</span>
+                <span class="title">习题详情</span>
             </div>
             <div class="objective_topic">
                 <div class="class_topic_warp">
