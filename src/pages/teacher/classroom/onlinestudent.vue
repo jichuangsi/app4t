@@ -148,7 +148,7 @@ export default {
                 width: 180px;
                 display: flex;
                 .left {
-                    width: 30px;
+                    width: 32px;s
                     height: 28px;
                     margin-right: 10px;
                     background:  url("../../../assets/按钮.png") no-repeat;
