@@ -9,7 +9,8 @@ service.interceptors.request.use(function (config) {
     if (networkState === Connection.NONE||networkState===Connection.UNKNOWN) {
         throw '网络异常，不能连接到服务器！'
     }
-    if(config.url.indexOf(apiHost) == -1){
+    //console.log(config.url);
+    if(config.url.indexOf(apiHost) == -1&&!config.url.startsWith("http")){
       config.url = apiHost.concat(config.url);
     }
     if(!config.headers.accessToken&&localStorage.getItem('token')){

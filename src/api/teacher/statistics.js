@@ -6,7 +6,6 @@ import axios from '../../utils/axios'
 
 const apiurl = '/COURSESTATISTICS/result/teacher/'
 
-
 //课堂
 export function getCourseSubjectResult(classId,subjectname) {
     return axios({
@@ -46,5 +45,28 @@ export function getCourseSign(courseId,classId) {
         method: 'GET',
         url: `/COURSESTATISTICS/class/getCourseSign/${courseId}/${classId}`,
         // headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+
+//课堂点赞
+export function commendCourse(courseId, studentId, studentName) {
+    return axios({
+        method: 'POST',
+        url: `/COURSESERVICE/teacher/commendCourse`,
+        data: {
+            courseId,
+            studentId,
+            studentName
+        },
+        //headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+
+//取消课堂点赞
+export function discommendCourse(courseId, studentId) {
+    return axios({
+        method: 'PUT',
+        url: `/COURSESERVICE/teacher/discommendCourse/${courseId}/${studentId}`,
+        //headers: {'accessToken': localStorage.getItem('token')}
     });
 }

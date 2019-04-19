@@ -44,7 +44,7 @@
 <script>
 import Vue from "vue";   
 import TeacherHeader from "../../../components/public/PublicHeader";
-import{getCourseSign} from '@/api/teacher/statistics'
+import{getCourseSign,commendCourse,discommendCourse} from '@/api/teacher/statistics'
 
 export default {
   components: {
@@ -74,21 +74,27 @@ export default {
     this.getonlinedata()
   },
   methods: {
-      Fabulous(val){
+      async Fabulous(val){
           if(this.Fabulouslist.length == 0){
             this.Fabulouslist = val.studentId
+            let ret = await commendCourse(this.courseId, val.studentId, val.studentName);
+              if(ret.data.code && ret.data.code != "0010") this.Fabulouslist = "";
           }else {
               if(this.Fabulouslist.indexOf(val.studentId) != -1){
                  this.Fabulouslist =  this.Fabulouslist.split(val.studentId).join('');
+                  let ret = await discommendCourse(this.courseId, val.studentId);
+                  if(ret.data.code && ret.data.code != "0010") this.Fabulouslist = this.Fabulouslist + val.studentId
               }else {
                   this.Fabulouslist = this.Fabulouslist + val.studentId
+                  let ret = await commendCourse(this.courseId, val.studentId, val.studentName);
+                  if(ret.data.code && ret.data.code != "0010") this.Fabulouslist =  this.Fabulouslist.split(val.studentId).join('');
               }
           }
-                  console.log(this.Fabulouslist)
+          //console.log(this.Fabulouslist)
       },
       getonlinedata() {
          getCourseSign(this.courseId,this.classId).then(res=>{
-                console.log(res)
+                //console.log(res)
                 if(res.data.code == '0010') {
                     this.studentlist = res.data.data
                     if(this.studentlist.length%3 == 2){
@@ -105,6 +111,13 @@ export default {
                     }else {
                         this.show5 = 0
                     }
+                    let self = this;
+                    this.studentlist.forEach((item, index)=>{
+                        if(item.commendFlag&&item.commendFlag>0){
+                            self.Fabulouslist += item.studentId;
+                        }
+                    });
+                    //console.log(this.Fabulouslist);
                 }
             }).catch(e=>{
                 console.log(e)
