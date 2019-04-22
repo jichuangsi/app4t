@@ -150,9 +150,9 @@
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
-                    padding: .64rem 1.14rem .64rem 1.14rem;
+                    padding: 1.64rem 1.14rem 1.64rem 1.14rem;
                     margin-bottom: 1.14rem;
-                    height: 7rem;
+                    height: 10rem;
                     line-height: 1.86rem;
                     font-size: 16px;
                     border-radius: 16px;
@@ -228,11 +228,11 @@
                         width:165px;
                         height:59px;
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -135px -2083px;
+                        background-position: -135px -2002px;
                     }
                     .state:active {
                         background: url('../../assets/按钮.png') no-repeat;
-                        background-position: -592px -2083px;
+                        background-position: -592px -2002px;
                     }
                 }
                 .green {

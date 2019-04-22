@@ -150,9 +150,9 @@
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
-                    padding: .64rem 1.14rem .64rem 1.14rem;
+                    padding: 1.64rem 1.14rem 1.64rem 1.14rem;
                     margin-bottom: 1.14rem;
-                    height: 7rem;
+                    height: 10rem;
                     line-height: 1.86rem;
                     font-size: 16px;
                     border-radius: 16px;
