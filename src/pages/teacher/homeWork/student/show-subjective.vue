@@ -702,6 +702,7 @@
                     top: 0rem;
                     bottom: 0;
                     padding: 0rem 1rem 0rem;
+                    padding-bottom: 6rem;
                     height: auto !important;
                     background-color: rgba(255, 255, 255, 1);
                     .subjective_warp {
@@ -736,7 +737,7 @@
                                 padding: 15px;
                             }
                             .button_warp {
-                                padding-bottom: 20px;
+                                padding-bottom: 60px;
                                 position: relative;
                                 height: 2.7rem;
                                 .subjective_submit {

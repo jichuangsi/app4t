@@ -481,7 +481,7 @@ export default {
         background-color: white;
         box-sizing: border-box;
         .button_warp {
-          padding-bottom: 20px;
+          padding-bottom: 60px;
           position: relative;
           height: 2.7rem;
           .subjective_submit {
