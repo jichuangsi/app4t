@@ -58,7 +58,7 @@
         computed: {
             //vuex 调用
             ...mapGetters([
-                'homeworkStudents',
+                'testStudents',
             ]),
             //查找数据
             filtersCommittStudent() {
@@ -67,7 +67,7 @@
                 if(!_this.question.answerModelForStudent||_this.question.answerModelForStudent.length==0){
                     return arr;
                 }else{
-                    _this.homeworkStudents.forEach((s, index) => {
+                    _this.testStudents.forEach((s, index) => {
                         //console.log(s);
                         let i = _this.question.answerModelForStudent.findIndex(x => {
                             //console.log(x);
@@ -110,10 +110,10 @@
             //去批改页面
             correct(studentId) {
                 store.commit('SET_STUDENTID', studentId);
-                store.commit('SET_HOMEWORKINITSLIDE', this.index);
+                store.commit('SET_TESTINITSLIDE', this.index);
                 this.$router.push({
-                    path: '@/pages/teacher/homeWork/show-subjective',
-                    name: 'TSubjective'
+                    path: '/testSubjective',
+                    name: 'testSubjective'
                 })
             }
         }

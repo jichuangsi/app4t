@@ -15,7 +15,7 @@
           </div>
           <!--<router-link tag="div" to="/TObjective" class="correction" v-if="item.completedTime==1">批改</router-link>
           <router-link tag="div" to="/TObjective" class="view" v-if="item.completedTime==2">查看</router-link>-->
-          <div class="correction" v-if="item.completedTime>0">已提交</div>
+          <div class="correction" v-if="item.completedTime>0" @click.stop.passive="goHomeworkDetail(item.studentId, item.studentName)">可批改</div>
           <div class="notSubmitted" v-if="item.completedTime===0">未提交</div>
         </div>
       </div>
@@ -47,7 +47,7 @@
           loading: true,                                   //页面加载状态
           pageShow: false,                                 //页面内容加载状态
           mescrollValue: {up: false, down: true},         //页面是否需要上拉下拉
-          jump: {name: '开始批改', url: '/TQuestions'},//添加主观题按钮
+          jump: {name: '统一批改', url: '/TQuestions'},//添加主观题按钮
           header: {                                        //头部标题
             url: '/teacherIndex',
             title: ''
@@ -82,6 +82,16 @@
       this.getHomeworkDetail();
     },
     methods: {
+        goHomeworkDetail(studentId, studentName){
+            this.$router.push({
+                path: '/TStudentObjective',
+                name: 'TStudentObjective',
+                query: {
+                    studentId: studentId,
+                    studentName: studentName
+                }
+            });
+        },
         getHomeworkDetail() {
             getHomework(this.homeworkId).then(res=>{
                 //console.log(res.data.data);
@@ -190,6 +200,7 @@
           }
           .correction {
             color: rgba(142, 120, 240, 1);
+            text-decoration:underline;
           }
           .view {
             color: rgba(101, 179, 127, 1);

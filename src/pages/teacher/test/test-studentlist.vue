@@ -15,7 +15,7 @@
           </div>
           <!--<router-link tag="div" to="/TObjective" class="correction" v-if="item.completedTime==1">批改</router-link>
           <router-link tag="div" to="/TObjective" class="view" v-if="item.completedTime==2">查看</router-link>-->
-          <div class="correction" v-if="item.completedTime>0">已提交</div>
+          <div class="correction" v-if="item.completedTime>0" @click.stop.passive="goTestDetail(item.studentId, item.studentName)">可批改</div>
           <div class="notSubmitted" v-if="item.completedTime===0">未提交</div>
         </div>
       </div>
@@ -79,22 +79,32 @@
           },
       },
     created() {
-      this.getHomeworkDetail();
+      this.getTestDetail();
     },
     methods: {
-        getHomeworkDetail() {
-            console.log(this.testId)
+        goTestDetail(studentId, studentName){
+            this.$router.push({
+                path: '/testStudentObjective',
+                name: 'testStudentObjective',
+                query: {
+                    studentId: studentId,
+                    studentName: studentName
+                }
+            });
+        },
+        getTestDetail() {
+            //console.log(this.testId)
             gettest(this.testId).then(res=>{
-                console.log(res)
+                //console.log(res)
                 //console.log(res.data.data);
                 store.commit('SET_TESTSTUDENTS', res.data.data.students);
                 store.commit('SET_TESTQUESTIONS', res.data.data.questions);
-                store.commit('SET_TESTNAME', res.data.data.homeworkName);
+                store.commit('SET_TESTNAME', res.data.data.testName);
                 store.commit('SET_TESTINITSLIDE', 0);
-                this.header.title = res.data.data.homeworkName;
+                this.header.title = res.data.data.testName;
                 this.pageShow = true;
                 this.loading = false;
-                console.log(this.testQuestions)
+                //console.log(this.testQuestions)
             }).catch(err=>{
                 console.log('err', err);
                 /*let msg = this.getMsg(err);
@@ -111,7 +121,7 @@
         reloadData() {
             let _this = this;
             setTimeout(() => {
-                _this.getHomeworkDetail();
+                _this.getTestDetail();
                 _this.$refs.myscrollfull.endSuccess();
             }, 1000);
         },
@@ -193,6 +203,7 @@
           }
           .correction {
             color: rgba(142, 120, 240, 1);
+            text-decoration:underline;
           }
           .view {
             color: rgba(101, 179, 127, 1);

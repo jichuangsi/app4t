@@ -165,7 +165,7 @@ export default {
   methods: {
     qq() {
       this.bse();
-      $(".answer").jSignature("disable"); 
+      $(".answer").jSignature("disable");
     },
     zz(id) {
       this.subjectiveId = id;
@@ -179,7 +179,7 @@ export default {
         cssclass:'backcolor',
         lineWidth: 1
       });
-      $(".answer").jSignature("enable"); 
+      $(".answer").jSignature("enable");
       // console.log(Boolean(this.sharebtn))
     },
     //获取课堂列表穿过来的数据
@@ -270,7 +270,7 @@ export default {
     determine() {
       this.inputState = false;
       // this.warningState = true;
-      if (this.fraction !== "") {
+      if (this.fraction !== "" && (/(^[1-9]\d*$)/.test(this.fraction))) {
         this.popupVisible = false;
         this.inputState = false;
         this.scores = this.fraction;
@@ -339,7 +339,12 @@ export default {
             message: "提交成功",
             position: "bottom"
           });
-
+            self.topicId = '';
+            self.answerId = '';
+            //self.scores = '';
+            self.picForSubjective = '';
+            //self.fraction = '';
+            //self.buttonSate = false;
           // sessionStorage.setItem("sharebtn", "共享");
           self.sharebtn = "共享"
         } catch (e) {
@@ -379,7 +384,8 @@ export default {
           imgq.src = datapair;
           imgq.onload = function() {
           console.log(this.width,this.height)
-            ctx.drawImage(this, 0, 0,772,1000);
+            //ctx.drawImage(this, 0, 0,772,1000);
+            ctx.drawImage(this, 0, 0,canvas.width,canvas.height);
             var imgq = canvas.toDataURL("image/png", 0.5);
             let img = imgq.split("data:image/png;base64,")[1];
             for (let i = 0; i < self.subjectiveAnswer.length; i++) {

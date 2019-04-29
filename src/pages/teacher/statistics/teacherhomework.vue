@@ -24,7 +24,7 @@
       <div class="homelistnav">
         <div class="listnav" v-for="(item,index) in homelist" :key="index" v-if="hometimetext == item.homeworkEndTime" @click="homedetails(item)">{{item.homeworkName}}</div>
       </div>
-    </div>    
+    </div>
      <!-- v-if="centershow" -->
     <div class="center" :class="{centercolor:!centershow}">
       <h4>总人数:{{Total}}人</h4>
@@ -110,26 +110,34 @@ export default {
       let day = date.getDate();
       this.hometimetext = month+'月'+day+'日'
       this.hometimenav = [month+'月'+day+'日',month+'月'+(Number(day)-1)+'日',month+'月'+(Number(day)-2)+'日',month+'月'+(Number(day)-3)+'日',month+'月'+(Number(day)-4)+'日',month+'月'+(Number(day)-5)+'日',month+'月'+(Number(day)-6)+'日']
-      let subjectName = JSON.parse(localStorage.getItem('user')).roles[0].primarySubject.subjectName
-      let secondaryClass = JSON.parse(localStorage.getItem('user')).roles[0].secondaryClass
-      for (let i = 0; i < secondaryClass.length; i++) {
-        arr.push({className:secondaryClass[i].className,classId:secondaryClass[i].classId})
-      }
+      let subjectName = JSON.parse(localStorage.getItem('user')).roles[0].primarySubject.subjectName;
+        if(JSON.parse(localStorage.getItem('user')).roles[0].primaryClass){
+            let primaryClass = JSON.parse(localStorage.getItem('user')).roles[0].primaryClass;
+            arr.push({className:primaryClass.className,classId:primaryClass.classId})
+        }
+        if(JSON.parse(localStorage.getItem('user')).roles[0].secondaryClass){
+            let secondaryClass = JSON.parse(localStorage.getItem('user')).roles[0].secondaryClass;
+            for (let i = 0; i < secondaryClass.length; i++) {
+                arr.push({className:secondaryClass[i].className,classId:secondaryClass[i].classId})
+            }
+        }
       this.nav = arr
       this.value = subjectName
-      getSubjectQuestion(secondaryClass[0].classId).then(res=>{
-        console.log(res)
-        for(let j = 0; j<res.data.data.length; j++){
-          res.data.data[j].homeworkEndTime = this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[1]+'月'+ this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[2] +'日'
+        if(arr.length>0){
+          getSubjectQuestion(arr[0].classId).then(res=>{
+            console.log(res)
+            for(let j = 0; j<res.data.data.length; j++){
+              res.data.data[j].homeworkEndTime = this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[1]+'月'+ this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[2] +'日'
+            }
+            this.homelist = res.data.data
+          }).catch(e=>{
+            console.log(e)
+          })
         }
-        this.homelist = res.data.data
-      }).catch(e=>{
-        console.log(e)
-      })
     },
     //转换日期格式
-    getLocalTime(nS) {     
-     return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');     
+    getLocalTime(nS) {
+     return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
     },
     // 判断当前选中哪个
     allocation(item, index) {

@@ -85,7 +85,7 @@
             //进入课堂
             gotest(testId) {
                 store.commit('SET_TESTID', testId);
-                console.log(testId);
+                //console.log(testId);
                 this.$router.push({
                     path: '@/pages/teacher/test/teststudentlist',
                     name: 'teststudentlist'

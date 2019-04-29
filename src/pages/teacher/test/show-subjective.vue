@@ -64,7 +64,7 @@
         getPicByString,
         sendPicByString,
         sendAnswer
-    } from "@/api/teacher/homework";
+    } from "@/api/teacher/test";
     import { Toast, Indicator } from "mint-ui";
     import { mapGetters } from "vuex";
     import store from "@/store";
@@ -92,7 +92,7 @@
                 header: {
                     //页面头部
                     title: '',
-                    url: "/TQuestions"
+                    url: "/testquestions"
                 },
                 subjectiveTopic: [
                     {
@@ -153,8 +153,8 @@
             //vuex 调用
             ...mapGetters([
                 "studentId",
-                'homeworkQuestions',
-                'homeworkInitSlide'
+                'testQuestions',
+                'testInitSlide'
             ])
         },
         methods: {
@@ -178,7 +178,7 @@
             },
             getSubjectPic() {
                 //获取题目基本信息
-                this.subjectiveMsg = this.homeworkQuestions[this.homeworkInitSlide];
+                this.subjectiveMsg = this.testQuestions[this.testInitSlide];
                 this.topicId = this.subjectiveMsg.questionId;
                 //console.log(this.subjectiveMsg);
                 this.getImg();
@@ -308,7 +308,7 @@
                 });
                 let self = this;
                 let datapair = $(".answer").jSignature("getData");
-                //console.log(this.subjectiveAnswer);
+                //(this.subjectiveAnswer);
                 for (let i = 0; i < this.subjectiveAnswer.length; i++) {
                     if (this.subjectiveAnswer[i].id === this.topicId && this.subjectiveAnswer[i].answer) {
                         this.imgawer = this.subjectiveAnswer[i].answer;
@@ -413,7 +413,6 @@
             next(){
                 let self = this;
                 let stubForSubjective = undefined;
-                //console.log(self.subjectiveMsg.answerModelForStudent);
                 if (self.subjectiveMsg.answerModelForStudent) {
                     stubForSubjective =
                         self.subjectiveMsg.answerModelForStudent[
@@ -436,17 +435,17 @@
                 }
             },
             updateQuestionsInPage(){
-                //console.log(this.homeworkQuestions);
-                for(let i = 0; i < this.homeworkQuestions.length; i++){
+                //console.log(this.testQuestions);
+                for(let i = 0; i < this.testQuestions.length; i++){
                     let stop = false;
-                    if(this.homeworkQuestions[i].questionId===this.topicId){
-                        for(let j = 0; j < this.homeworkQuestions[i].answerModelForStudent.length; j++){
-                            if(this.homeworkQuestions[i].answerModelForStudent[j].studentId===this.studentId){
-                                this.homeworkQuestions[i].answerModelForStudent[j].reviseForSubjective = this.picForSubjective;
-                                this.homeworkQuestions[i].answerModelForStudent[j].subjectiveScore = this.scores;
-                                this.homeworkQuestions[i].answerModelForStudent[j].result = 'PASS';
-                                //console.log(this.homeworkQuestions[i].answerModelForStudent[j])
-                                store.commit('SET_HOMEWORKQUESTIONS', this.homeworkQuestions);
+                    if(this.testQuestions[i].questionId===this.topicId){
+                        for(let j = 0; j < this.testQuestions[i].answerModelForStudent.length; j++){
+                            if(this.testQuestions[i].answerModelForStudent[j].studentId===this.studentId){
+                                this.testQuestions[i].answerModelForStudent[j].reviseForSubjective = this.picForSubjective;
+                                this.testQuestions[i].answerModelForStudent[j].subjectiveScore = this.scores;
+                                this.testQuestions[i].answerModelForStudent[j].result = 'PASS';
+                                //console.log(this.testQuestions[i].answerModelForStudent[j])
+                                store.commit('SET_TESTQUESTIONS', this.testQuestions);
                                 stop = true;
                                 break;
                             }

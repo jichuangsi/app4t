@@ -92,13 +92,10 @@ export function sendAnswer(questionId, studentAnswerId, score, stubForSubjective
 }
 
 //学生作业详情
-export function getStudentDetail(homeworkId) {
+export function getStudentHomework(homeworkId,studentId) {
   return axios({
     method: 'get',
-    url: `${apiUrl}getStudentDetail`,
-    data: {
-      homeworkId
-    }
+    url: `${apiUrl}getStudentHomework/${homeworkId}/${studentId}`
   });
 }
 

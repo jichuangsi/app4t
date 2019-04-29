@@ -13,6 +13,11 @@ const teacher = {
         homeworkStudents: [],
         homeworkQuestions: [],
         homeworkInitSlide: 0,
+        homeworkObjectiveQs: [],
+        homeworkSubjectiveQs: [],
+        homeworkCompleted: false,
+        homeworkStudentId: '',
+        homeworkStudentName: '',
         //
         testList: [],
         testListHistory: [],
@@ -21,6 +26,11 @@ const teacher = {
         testStudents: [],
         testQuestions: [],
         testInitSlide: 0,
+        testObjectiveQs: [],
+        testSubjectiveQs: [],
+        testCompleted: false,
+        testStudentId: '',
+        testStudentName: '',
         //
         courseId: '',
         courseName: '',
@@ -60,6 +70,21 @@ const teacher = {
         SET_HOMEWORKINITSLIDE: (state, homeworkInitSlide) => {
             state.homeworkInitSlide = homeworkInitSlide;
         },
+        SET_HOMEWORKOBJECTIVEQS: (state, homeworkObjectiveQs) => {
+            state.homeworkObjectiveQs = homeworkObjectiveQs;
+        },
+        SET_HOMEWORKSUBJECTIVEQS: (state, homeworkSubjectiveQs) => {
+            state.homeworkSubjectiveQs = homeworkSubjectiveQs;
+        },
+        SET_HOMEWORKCOMPLETED: (state, homeworkCompleted) => {
+            state.homeworkCompleted = homeworkCompleted;
+        },
+        SET_HOMEWORKSTUDENTID: (state, homeworkStudentId) => {
+            state.homeworkStudentId = homeworkStudentId;
+        },
+        SET_HOMEWORKSTUDENTNAME: (state, homeworkStudentName) => {
+            state.homeworkStudentName = homeworkStudentName;
+        },
         //
         SET_TEST: (state, testList) => {
             state.testList = testList;
@@ -83,6 +108,21 @@ const teacher = {
         },
         SET_TESTINITSLIDE: (state, testInitSlide) => {
             state.testInitSlide = testInitSlide;
+        },
+        SET_TESTOBJECTIVEQS: (state, testObjectiveQs) => {
+            state.testObjectiveQs = testObjectiveQs;
+        },
+        SET_TESTSUBJECTIVEQS: (state, testSubjectiveQs) => {
+            state.testSubjectiveQs = testSubjectiveQs;
+        },
+        SET_TESTCOMPLETED: (state, testCompleted) => {
+            state.testCompleted = testCompleted;
+        },
+        SET_TESTSTUDENTID: (state, testStudentId) => {
+            state.testStudentId = testStudentId;
+        },
+        SET_TESTSTUDENTNAME: (state, testStudentName) => {
+            state.testStudentName = testStudentName;
         },
         //
         SET_COURSEID: (state, courseId) => {

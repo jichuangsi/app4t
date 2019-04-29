@@ -89,28 +89,36 @@ export default {
       let arr2 = []
       let arr3 = []
       let subjectName = JSON.parse(localStorage.getItem('user')).roles[0].primarySubject.subjectName
-      let secondaryClass = JSON.parse(localStorage.getItem('user')).roles[0].secondaryClass
-      for (let i = 0; i < secondaryClass.length; i++) {
-        arr.push({className:secondaryClass[i].className,classId:secondaryClass[i].classId})
+      if(JSON.parse(localStorage.getItem('user')).roles[0].primaryClass){
+          let primaryClass = JSON.parse(localStorage.getItem('user')).roles[0].primaryClass;
+          arr.push({className:primaryClass.className,classId:primaryClass.classId})
+      }
+      if(JSON.parse(localStorage.getItem('user')).roles[0].secondaryClass){
+          let secondaryClass = JSON.parse(localStorage.getItem('user')).roles[0].secondaryClass;
+          for (let i = 0; i < secondaryClass.length; i++) {
+              arr.push({className:secondaryClass[i].className,classId:secondaryClass[i].classId})
+          }
       }
       this.nav = arr
       this.value = subjectName
-      console.log(secondaryClass[0].classId,subjectName)
-      getCourseSubjectResult(secondaryClass[0].classId,subjectName).then(res=>{
-        console.log(res)
-        this.resnav = res.data.data.studentResultModels
-        for(let j = 0 ;j<this.resnav.length;j++){
-          arr1.push({id:j+1,value:[this.resnav[j].knowledgeName,(Number(this.resnav[j].knowledgeRate)*100).toFixed()+'%',(Number(this.resnav[j].classResultRate)*100).toFixed()+'%',(Number(this.resnav[j].gradeResultRate)*100).toFixed()+'%']}) 
-          arr2.push(this.resnav[j].knowledgeName)
-          arr3.push({value:(Number(this.resnav[j].knowledgeRate)*100).toFixed(),name:this.resnav[j].knowledgeName})
-        }
-        this.tabletd = arr1
-        this.dataname = arr2
-        this.datalist = arr3
-        this.drawLine()
-      }).catch(e=>{
-        console.log(e)
-      })
+      //console.log(secondaryClass[0].classId,subjectName)
+      if(arr.length>0){
+          getCourseSubjectResult(arr[0].classId,subjectName).then(res=>{
+              //console.log(res)
+              this.resnav = res.data.data.studentResultModels
+              for(let j = 0 ;j<this.resnav.length;j++){
+                  arr1.push({id:j+1,value:[this.resnav[j].knowledgeName,(Number(this.resnav[j].knowledgeRate)*100).toFixed()+'%',(Number(this.resnav[j].classResultRate)*100).toFixed()+'%',(Number(this.resnav[j].gradeResultRate)*100).toFixed()+'%']})
+                  arr2.push(this.resnav[j].knowledgeName)
+                  arr3.push({value:(Number(this.resnav[j].knowledgeRate)*100).toFixed(),name:this.resnav[j].knowledgeName})
+              }
+              this.tabletd = arr1
+              this.dataname = arr2
+              this.datalist = arr3
+              this.drawLine()
+          }).catch(e=>{
+              console.log(e)
+          })
+      }
     },
     // 判断当前选中哪个
     allocation (item, index) {
@@ -123,7 +131,7 @@ export default {
         console.log(res)
         this.resnav = res.data.data.studentResultModels
         for(let j = 0 ;j<this.resnav.length;j++){
-          arr1.push({id:j+1,value:[this.resnav[j].knowledgeName,(Number(this.resnav[j].knowledgeRate)*100).toFixed()+'%',(Number(this.resnav[j].classResultRate)*100).toFixed()+'%',(Number(this.resnav[j].gradeResultRate)*100).toFixed()+'%']}) 
+          arr1.push({id:j+1,value:[this.resnav[j].knowledgeName,(Number(this.resnav[j].knowledgeRate)*100).toFixed()+'%',(Number(this.resnav[j].classResultRate)*100).toFixed()+'%',(Number(this.resnav[j].gradeResultRate)*100).toFixed()+'%']})
           arr2.push(this.resnav[j].knowledgeName)
           arr3.push({value:(Number(this.resnav[j].knowledgeRate)*100).toFixed(),name:this.resnav[j].knowledgeName})
         }

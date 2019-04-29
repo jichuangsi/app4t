@@ -92,14 +92,11 @@ export function sendAnswer(questionId, studentAnswerId, score, stubForSubjective
 }
 
 //学生作业详情
-export function getStudentDetail(testId) {
-  return axios({
-    method: 'get',
-    url: `${apiUrl}getStudentDetail`,
-    data: {
-      testId
-    }
-  });
+export function getStudentTest(testId,studentId) {
+    return axios({
+        method: 'get',
+        url: `${apiUrl}getStudentTest/${testId}/${studentId}`
+    });
 }
 
 //作业主观题批改图片存根

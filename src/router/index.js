@@ -73,7 +73,7 @@ export default new Router({
                 keepAlive: false,
                 isBack: false
             }
-        }, 
+        },
         {
             path: '/studenthomework',
             name: 'studenthomework',
@@ -100,7 +100,7 @@ export default new Router({
                 keepAlive: false,
                 isBack: false
             }
-        }, 
+        },
         {
             path: '/Wrong',
             name: 'Wrong',
@@ -109,7 +109,7 @@ export default new Router({
                 keepAlive: false,
                 isBack: false
             }
-        }, 
+        },
         {
             path: '/raising',
             name: 'raising',
@@ -183,6 +183,22 @@ export default new Router({
                 isBack: false
             }
         }, {
+            path: '/TStudentObjective',
+            name: 'TStudentObjective',
+            component: () => import('@/pages/teacher/homeWork/student/show-objective'), //老师端单独学生作业客观题批改
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/TStudentSubjective',
+            name: 'TStudentSubjective',
+            component: () => import('@/pages/teacher/homeWork/student/show-subjective'), //老师端单独学生主观题批改
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        },{
             path: '/TQuestions',
             name: 'TQuestions',
             component: () => import('@/pages/teacher/homeWork/show-questions'), //老师端作业列表
@@ -279,6 +295,30 @@ export default new Router({
                 isBack: false
             }
         }, {
+            path: '/testSubjective',
+            name: 'testSubjective',
+            component: () => import('@/pages/teacher/test/show-subjective'), //老师端主观题批改
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/testStudentObjective',
+            name: 'testStudentObjective',
+            component: () => import('@/pages/teacher/test/student/show-objective'), //老师端单独学生作业客观题批改
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        }, {
+            path: '/testStudentSubjective',
+            name: 'testStudentSubjective',
+            component: () => import('@/pages/teacher/test/student/show-subjective'), //老师端单独学生主观题批改
+            meta: {
+                keepAlive: false,
+                isBack: false
+            }
+        },{
             path: '/PopupPicIntest',
             name: 'PopupPicIntest',
             component: () => import('@/components/teacherClassroom/PopupPicIntest'), //教师端查看图片
