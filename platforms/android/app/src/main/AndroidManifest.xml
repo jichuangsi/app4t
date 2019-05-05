@@ -10,7 +10,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".DrawActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme" />
-        <activity android:name=".RouteDeliverActivity" android:screenOrientation="portrait">
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:name=".RouteDeliverActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -28,4 +28,5 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>
