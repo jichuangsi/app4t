@@ -188,7 +188,7 @@
             {user_id:1,money:12},
             {user_id:3,money:21},
             {user_id:2,money:43},
-            {user_id:1,money:12} 
+            {user_id:1,money:12}
         ]
 
   var temp = {};
@@ -197,7 +197,7 @@
        if(temp[key]) {
            temp[key].money += arry[i].money;
            temp[key].user_id = arry[i].user_id;
-           
+
        } else {
            temp[key] = {};
            temp[key].money = arry[i].money;
@@ -205,7 +205,7 @@
        }
    }
    console.log(temp)
-   
+
    var newArry = [];
    for(var k in temp){
        newArry.push(temp[k])
@@ -694,7 +694,7 @@
                     }, subHeader);*/
                 });
             },
-            
+
             classData(response) {
                 let classData = JSON.parse(response.body);
                 if(classData.data&&classData.data.notifyType){
@@ -1030,7 +1030,7 @@
     }
   }
   .awbtn {
-    left: 18rem !important; 
+    left: 18rem !important;
     img {
       width: 100%;
       height: 100%;
@@ -1240,7 +1240,7 @@
                 }
             }
         }
-        
+
         .studentname {
             position: absolute;
             width: 100%;

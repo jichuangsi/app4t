@@ -94,12 +94,12 @@
             }
         }
         .title {
-            position: absolute;
+            position: fixed;
             left: 50%;
             transform: translateX(-50%);
         }
         .jump {
-            position: absolute;
+            position: fixed;
             right: 2.5rem;
             &:before {
                 content: " ";

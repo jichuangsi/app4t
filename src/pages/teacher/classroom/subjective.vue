@@ -92,6 +92,16 @@
             this.refresh = setInterval(function() {
                 self.getStudent();
             }, 10000);
+            screen.orientation.addEventListener('change', function(){
+                //Toast(screen.orientation.type); // e.g. portrait
+                if("landscape-primary"===screen.orientation.type){
+                    document.getElementById('subjectiveChart').setAttribute('style', 'height:20rem;padding-bottom:0rem;');
+                }else if("portrait-primary"===screen.orientation.type){
+                    document.getElementById('subjectiveChart').setAttribute('style', 'height:11.7rem;padding-bottom:1.93rem;');
+                }
+                self.$echarts.getInstanceByDom(document.getElementById('subjectiveChart')).resize();
+                //self.$forceUpdate();
+            });
         },
         destroyed() {
           clearInterval(this.refresh);
@@ -220,7 +230,7 @@
             box-sizing: border-box;
             position: absolute;
             top: 3.15rem;
-            bottom: 6rem;
+            bottom: 0;
             padding: 3.5rem 4.86rem 3.14rem;
             height: auto !important;
             background-color: rgba(255, 255, 255, 1);

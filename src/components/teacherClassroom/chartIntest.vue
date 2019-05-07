@@ -50,6 +50,18 @@
       },
       mounted() {
         this.drawChart();
+          let self = this;
+          screen.orientation.addEventListener('change', function(){
+              //Toast(screen.orientation.type); // e.g. portrait
+              if("landscape-primary"===screen.orientation.type){
+                  document.getElementById('chart').setAttribute('style', 'height:20rem;padding-bottom:0rem;');
+              }else if("portrait-primary"===screen.orientation.type){
+                  document.getElementById('chart').setAttribute('style', 'height:15rem;padding-bottom:1.7rem;');
+              }
+              self.$echarts.getInstanceByDom(document.getElementById('chart1'+self.question.questionId)).resize();
+              self.$echarts.getInstanceByDom(document.getElementById('chart2'+self.question.questionId)).resize();
+              //self.$forceUpdate();
+          });
       },
       methods: {
           drawChart(){
