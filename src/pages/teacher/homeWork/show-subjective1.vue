@@ -11,6 +11,9 @@
                    @click="modifyAnswer(item.id)">批改答案
               </div>
             </div>
+            <div class="load"  v-show="subjectiveAnswer.length == 0">
+                <div><span>loading...</span><i></i></div>
+            </div>
             <board :id="item.id" :subjectiveAnswer="subjectiveAnswer"/>
           </div>
         </swiper-slide>
@@ -177,4 +180,58 @@
       }
     }
   }
+  
+        .load {
+        width: 586px;
+        height: 700px;
+        margin: 0 auto;
+        // background-color: blueviolet;
+        position: relative;
+        div {
+            width: 150px;
+            height: 150px;
+            line-height: 150px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 50%;
+            font-size: 30px;
+            text-align: center;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            span {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: #fff;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                z-index: 10;
+            }
+            i {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: #69b482;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+            }
+            i:nth-child(2){
+                animation: loading 1s linear infinite;
+            }
+        }
+    }
+    @keyframes loading {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1.5);
+            opacity: 0.1;
+        }
+    }
 </style>
