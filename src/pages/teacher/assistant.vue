@@ -98,7 +98,7 @@ export default {
       // 输入
       message(){
           if(this.type=='小组'){
-              MessageBox.prompt('请输入小组个数').then((value) => {
+              MessageBox.prompt('',{message:'请输入小组个数',inputType:'number'}).then((value) => {
               console.log(value)
               this.xiaozu = Number(value.value)
               if((/(^[1-9]\d*$)/.test(this.xiaozu))){
@@ -117,8 +117,8 @@ export default {
           }
           if(this.type=='计时'){
               let s
-              let m 
-              MessageBox.prompt('请输入秒数').then((value) => {
+              let m
+              MessageBox.prompt('',{message:'请输入秒数',inputType:'number'}).then((value) => {
               this.jishi = Number(value.value)
               if((/(^[1-9]\d*$)/.test(this.jishi))){
                 s=parseInt(this.jishi)

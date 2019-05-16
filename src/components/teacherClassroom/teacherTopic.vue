@@ -165,9 +165,9 @@
                 //     //     position: 'bottom'
                 //     // });
                 // }
-                
+
                 try {
-                    await MessageBox.prompt('请输入终止答题时间（秒）<br>（倒计时进行中请勿切换页面）').then(({ value, action }) => {
+                    await MessageBox.prompt('',{message:'请输入终止答题时间（秒）<br/>（倒计时进行中请勿切换页面）',inputType:'number'}).then(({ value, action }) => {
                         if(value){
                             self.terminationid = questionId
                             value = Number(value)
