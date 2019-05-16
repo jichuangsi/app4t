@@ -698,14 +698,13 @@
             classData(response) {
                 let classData = JSON.parse(response.body);
                 if(classData.data&&classData.data.notifyType){
-                    console.log(classData.data.notifyType);
                     switch(classData.data.notifyType){
                         case "CourseStatistics": this.classNumber(response); break;
                         case "QuestionStatistics": this.classAnswer(response); break;
                         case "StudentAnswer": this.classAnswerSubmit(response); break;
                     }
                 }
-                if (classData.data&&classData.data.quType){
+                if (classData.data&&classData.data.quType == 'StudentAnswer'){
                 for (let i =0;i<this.allstudents.length;i++){
                     if(this.allstudents[i].studentId == classData.data.studentId){
                         this.confirmtext = this.allstudents[i].studentName
@@ -790,6 +789,7 @@
             classAnswerSubmit(resopnse){
                 let self = this
                 let subjectivesubmit = JSON.parse(resopnse.body);
+                console.log(subjectivesubmit)
                 // console.log(subjectivesubmit.hasOwnProperty('quType'))
                 if(subjectivesubmit.data.quType){
                 // for (let i =0; i<self.allquestions.length;i++){
