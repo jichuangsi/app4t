@@ -101,176 +101,28 @@ export default {
       }
       this.nav = arr
       this.value = subjectName
-      this.simulation()
-      //console.log(secondaryClass[0].classId,subjectName)
-      // if(arr.length>0){
-      //     getCourseSubjectResult(arr[0].classId,subjectName).then(res=>{
-      //         //console.log(res)
-      //         this.resnav = res.data.data.studentResultModels
-      //         for(let j = 0 ;j<this.resnav.length;j++){
-      //             arr1.push({id:j+1,value:[this.resnav[j].knowledgeName,(Number(this.resnav[j].knowledgeRate)*100).toFixed()+'%',(Number(this.resnav[j].classResultRate)*100).toFixed()+'%',(Number(this.resnav[j].gradeResultRate)*100).toFixed()+'%']})
-      //             arr2.push(this.resnav[j].knowledgeName)
-      //             arr3.push({value:(Number(this.resnav[j].knowledgeRate)*100).toFixed(),name:this.resnav[j].knowledgeName})
-      //         }
-      //         this.tabletd = arr1
-      //         this.dataname = arr2
-      //         this.datalist = arr3
-      //         this.drawLine()
-      //     }).catch(e=>{
-      //         console.log(e)
-      //     })
-      // }
+      // console.log(secondaryClass[0].classId,subjectName)
+      if(arr.length>0){
+          getCourseSubjectResult(arr[0].classId,subjectName).then(res=>{
+              // console.log(res)
+              this.resnav = res.data.data.studentResultModels
+              for(let j = 0 ;j<this.resnav.length;j++){
+                  arr1.push({id:j+1,value:[this.resnav[j].knowledgeName,(Number(this.resnav[j].knowledgeRate)*100).toFixed()+'%',(Number(this.resnav[j].classResultRate)*100).toFixed()+'%',(Number(this.resnav[j].gradeResultRate)*100).toFixed()+'%']})
+                  arr2.push(this.resnav[j].knowledgeName)
+                  arr3.push({value:(Number(this.resnav[j].knowledgeRate)*100).toFixed(),name:this.resnav[j].knowledgeName})
+              }
+              this.tabletd = arr1
+              this.dataname = arr2
+              this.datalist = arr3
+              this.drawLine()
+          }).catch(e=>{
+              console.log(e)
+          })
+      }
 
 
     },
     
-    simulation(){
-      if(this.value == '语文'){
-          this.tabletd = [
-            {id:'1',value:['成语','20%','60%','90%']},
-            {id:'2',value:['病句辨析','20%','30%','80%']},
-            {id:'3',value:['一词多义','40%','40%','90%']},
-            {id:'4',value:['仿写句子','20%','60%','70%']}
-          ]
-          this.dataname = ['成语','病句辨析','一词多义','仿写句子']
-          this.datalist =[
-            {value:20,name:'成语'},
-            {value:20,name:'病句辨析'},
-            {value:40,name:'一词多义'},
-            {value:20,name:'仿写句子'}
-          ]
-      }
-      //
-      if(this.value == '数学'){
-          this.tabletd = [
-            {id:'1',value:['有理数的大小比较','10%','100%','90%']},
-            {id:'2',value:['整式化简求值','20%','60%','85%']},
-            {id:'3',value:['一元一次方程','40%','40%','90%']},
-            {id:'4',value:['实数','30%','60%','70%']}
-          ]
-          this.dataname = ['有理数的大小比较','整式化简求值','一元一次方程','实数']
-          this.datalist =[
-            {value:10,name:'有理数的大小比较'},
-            {value:20,name:'整式化简求值'},
-            {value:40,name:'一元一次方程'},
-            {value:30,name:'实数'}
-          ]
-      }
-      //
-      if(this.value == '英语'){
-          this.tabletd = [
-            {id:'1',value:['专有名词','10%','80%','90%']},
-            {id:'2',value:['字母','20%','70%','85%']},
-            {id:'3',value:['一般疑问句','40%','60%','80%']},
-            {id:'4',value:['单词，词组','30%','50%','95%']}
-          ]
-          this.dataname = ['专有名词','字母','一般疑问句','单词，词组']
-          this.datalist =[
-            {value:10,name:'专有名词'},
-            {value:20,name:'字母'},
-            {value:40,name:'一般疑问句'},
-            {value:30,name:'单词，词组'}
-          ]
-      }
-      //
-      if(this.value == '政治'){
-          this.tabletd = [
-            {id:'1',value:['理智面对学习压力','20%','80%','70%']},
-            {id:'2',value:['社区生活','40%','50%','90%']},
-            {id:'3',value:['自立与自强','10%','90%','80%']},
-            {id:'4',value:['培养良好习惯','30%','70%','95%']}
-          ]
-          this.dataname = ['理智面对学习压力','社区生活','自立与自强','培养良好习惯']
-          this.datalist =[
-            {value:20,name:'理智面对学习压力'},
-            {value:40,name:'社区生活'},
-            {value:10,name:'自立与自强'},
-            {value:30,name:'培养良好习惯'}
-          ]
-      }
-      //
-      if(this.value == '地理'){
-          this.tabletd = [
-            {id:'1',value:['地球的大小','20%','80%','70%']},
-            {id:'2',value:['重要的经纬线','10%','50%','90%']},
-            {id:'3',value:['经纬网的含义','30%','90%','80%']},
-            {id:'4',value:['降水的类型以及区别','40%','70%','95%']}
-          ]
-          this.dataname = ['地球的大小','重要的经纬线','经纬网的含义','降水的类型以及区别']
-          this.datalist =[
-            {value:20,name:'地球的大小'},
-            {value:10,name:'重要的经纬线'},
-            {value:30,name:'经纬网的含义'},
-            {value:40,name:'降水的类型以及区别'}
-          ]
-      }
-      //
-      if(this.value == '历史'){
-          this.tabletd = [
-            {id:'1',value:['中国文化起源','15%','80%','80%']},
-            {id:'2',value:['西周的结束','35%','70%','90%']},
-            {id:'3',value:['丝绸之路','30%','80%','95%']},
-            {id:'4',value:['百家争鸣','20%','85%','90%']}
-          ]
-          this.dataname = ['中国文化起源','西周的结束','丝绸之路','百家争鸣']
-          this.datalist =[
-            {value:15,name:'中国文化起源'},
-            {value:35,name:'西周的结束'},
-            {value:30,name:'丝绸之路'},
-            {value:20,name:'百家争鸣'}
-          ]
-      }
-      //
-      if(this.value == '生物'){
-          this.tabletd = [
-            {id:'1',value:['画细胞结构图注意事项','15%','70%','75%']},
-            {id:'2',value:['动物细胞的结构','45%','50%','80%']},
-            {id:'3',value:['生态农业','10%','80%','90%']},
-            {id:'4',value:['人体骨骼的组成','20%','75%','80%']}
-          ]
-          this.dataname = ['画细胞结构图注意事项','动物细胞的结构','生态农业','人体骨骼的组成']
-          this.datalist =[
-            {value:15,name:'画细胞结构图注意事项'},
-            {value:45,name:'动物细胞的结构'},
-            {value:10,name:'生态农业'},
-            {value:20,name:'人体骨骼的组成'}
-          ]
-      }
-      //
-      if(this.value == '物理'){
-          this.tabletd = [
-            {id:'1',value:['运动和力','30%','70%','75%']},
-            {id:'2',value:['新材料及应用','20%','50%','80%']},
-            {id:'3',value:['压强','40%','80%','90%']},
-            {id:'4',value:['静电现象','10%','75%','80%']}
-          ]
-          this.dataname = ['运动和力','新材料及应用','压强','静电现象']
-          this.datalist =[
-            {value:30,name:'运动和力'},
-            {value:20,name:'新材料及应用'},
-            {value:40,name:'压强'},
-            {value:10,name:'静电现象'}
-          ]
-      }
-      //
-      if(this.value == '化学'){
-          this.tabletd = [
-            {id:'1',value:['科学的探究能力','30%','70%','75%']},
-            {id:'2',value:['二氧化碳对环境的影响','20%','50%','80%']},
-            {id:'3',value:['气体的净化','40%','80%','90%']},
-            {id:'4',value:['影响溶解的快慢因素','10%','75%','80%']}
-          ]
-          this.dataname = ['科学的探究能力','二氧化碳对环境的影响','气体的净化','影响溶解的快慢因素']
-          this.datalist =[
-            {value:30,name:'科学的探究能力'},
-            {value:20,name:'二氧化碳对环境的影响'},
-            {value:40,name:'气体的净化'},
-            {value:10,name:'影响溶解的快慢因素'}
-          ]
-      }
-      
-        this.drawLine()
-    },
     // 判断当前选中哪个
     allocation (item, index) {
       this.current = index

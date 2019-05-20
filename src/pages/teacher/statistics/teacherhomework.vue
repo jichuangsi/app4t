@@ -124,24 +124,15 @@ export default {
       this.nav = arr
       this.value = subjectName
         if(arr.length>0){
-           this.homelist = [
-             {homeworkName:'习题1',homeworkEndTime:'5月13日'},
-             {homeworkName:'习题2',homeworkEndTime:'5月13日'},
-             {homeworkName:'习题3',homeworkEndTime:'5月14日'},
-             {homeworkName:'习题4',homeworkEndTime:'5月15日'},
-             {homeworkName:'习题5',homeworkEndTime:'5月15日'},
-             {homeworkName:'习题6',homeworkEndTime:'5月16日'},
-             {homeworkName:'习题7',homeworkEndTime:'5月17日'}
-           ]
-          // getSubjectQuestion(arr[0].classId).then(res=>{
-          //   console.log(res)
-          //   for(let j = 0; j<res.data.data.length; j++){
-          //     res.data.data[j].homeworkEndTime = this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[1]+'月'+ this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[2] +'日'
-          //   }
-          //   this.homelist = res.data.data
-          // }).catch(e=>{
-          //   console.log(e)
-          // })
+          getSubjectQuestion(arr[0].classId).then(res=>{
+            console.log(res)
+            for(let j = 0; j<res.data.data.length; j++){
+              res.data.data[j].homeworkEndTime = this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[1]+'月'+ this.getLocalTime(Number(res.data.data[j].homeworkEndTime)/1000).split(' ')[0].split('/')[2] +'日'
+            }
+            this.homelist = res.data.data
+          }).catch(e=>{
+            console.log(e)
+          })
         }
     },
     //转换日期格式
@@ -170,229 +161,36 @@ export default {
     },
     //作业详情
     homedetails(item) {
-      // getSubjectQuestionRate(item.classId,item.homeworkId).then(res=>{
-      //   console.log(res)
-      // this.centershow = true
-      //   let arr1 = res.data.data.objective
-      //   for(let i = 0; i<arr1.length;i++){
-      //     arr1[i].percentile = ((Number(arr1[i].trueNum)/Number(res.data.data.studentNum))*100).toFixed() + '%'
-      //   }
-      //   let arr = res.data.data.subjective
-      //   for(let i = 0; i<arr.length;i++){
-      //     arr[i].percentile = ((Number(arr[i].trueNum)/Number(res.data.data.studentNum))*100).toFixed() + '%'
-      //   }
-      //   this.homeworkobjective= arr1
-      //   this.homeworksubjective= arr
-      //   this.datalist = [
-      //         {
-      //           value: res.data.data.objectiveNum,
-      //           name: "客观题"
-      //         },
-      //         {
-      //           value: res.data.data.subjectiveNum,
-      //           name: "主观题"
-      //         }
-      //       ]
-      //       this.Total = res.data.data.studentNum
-      //       this.Submission = res.data.data.submitNum
-      //       this.Notsubmitted = Number(res.data.data.studentNum) - Number(res.data.data.submitNum)
-      //       this.drawLine()
-      // }).catch(e=>{
-      //   console.log(e)
-      // })
-       this.centershow = true
-
-      if(item.homeworkName == '习题1'){
-        this.homeworkobjective= [
-          {percentile:'80%',questionType:'单选题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3},
-          {percentile:'90%',questionType:'单选题',trueNum:9,wrongNum:1}
-        ]
-        this.homeworksubjective= [
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'主观题',trueNum:6,wrongNum:4},
-          {percentile:'70%',questionType:'主观题',trueNum:7,wrongNum:3},
-          {percentile:'90%',questionType:'主观题',trueNum:9,wrongNum:1}
-        ]
+      getSubjectQuestionRate(item.classId,item.homeworkId).then(res=>{
+        console.log(res)
+      this.centershow = true
+        let arr1 = res.data.data.objective
+        for(let i = 0; i<arr1.length;i++){
+          arr1[i].percentile = ((Number(arr1[i].trueNum)/Number(res.data.data.studentNum))*100).toFixed() + '%'
+        }
+        let arr = res.data.data.subjective
+        for(let i = 0; i<arr.length;i++){
+          arr[i].percentile = ((Number(arr[i].trueNum)/Number(res.data.data.studentNum))*100).toFixed() + '%'
+        }
+        this.homeworkobjective= arr1
+        this.homeworksubjective= arr
         this.datalist = [
               {
-                value: 4,
+                value: res.data.data.objectiveNum,
                 name: "客观题"
               },
               {
-                value: 4,
+                value: res.data.data.subjectiveNum,
                 name: "主观题"
               }
             ]
-            this.Total = 10
-            this.Submission = 10
-            this.Notsubmitted = 0
-      }
-      //
-      if(item.homeworkName == '习题2'){
-        this.homeworkobjective= [
-          {percentile:'80%',questionType:'单选题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4},
-          {percentile:'90%',questionType:'单选题',trueNum:7,wrongNum:3}
-        ]
-        this.homeworksubjective= [
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'主观题',trueNum:6,wrongNum:4},
-          {percentile:'70%',questionType:'主观题',trueNum:7,wrongNum:3},
-          {percentile:'90%',questionType:'主观题',trueNum:7,wrongNum:3},
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2}
-        ]
-        this.datalist = [
-              {
-                value: 3,
-                name: "客观题"
-              },
-              {
-                value: 5,
-                name: "主观题"
-              }
-            ]
-            this.Total = 10
-            this.Submission = 8
-            this.Notsubmitted = 2
-      }
-      //
-      if(item.homeworkName == '习题3'){
-        this.homeworkobjective= [
-          {percentile:'80%',questionType:'单选题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3}
-        ]
-        this.homeworksubjective= [
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'主观题',trueNum:6,wrongNum:4}
-        ]
-        this.datalist = [
-              {
-                value: 5,
-                name: "客观题"
-              },
-              {
-                value: 2,
-                name: "主观题"
-              }
-            ]
-            this.Total = 10
-            this.Submission = 10
-            this.Notsubmitted = 0
-      }
-      //
-      if(item.homeworkName == '习题4'){
-        this.homeworkobjective= [
-          {percentile:'80%',questionType:'单选题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3}
-        ]
-        this.homeworksubjective= [
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'主观题',trueNum:6,wrongNum:4}
-        ]
-        this.datalist = [
-              {
-                value: 5,
-                name: "客观题"
-              },
-              {
-                value: 2,
-                name: "主观题"
-              }
-            ]
-            this.Total = 10
-            this.Submission = 10
-            this.Notsubmitted = 0
-      }
-      //
-      if(item.homeworkName == '习题5'){
-        this.homeworkobjective= [
-          {percentile:'80%',questionType:'单选题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4},
-          {percentile:'70%',questionType:'多选题',trueNum:7,wrongNum:3},
-          {percentile:'70%',questionType:'单选题',trueNum:7,wrongNum:3}
-        ]
-        this.homeworksubjective= [
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'填空题',trueNum:6,wrongNum:4}
-        ]
-        this.datalist = [
-              {
-                value: 4,
-                name: "客观题"
-              },
-              {
-                value: 2,
-                name: "主观题"
-              }
-            ]
-            this.Total = 10
-            this.Submission = 9
-            this.Notsubmitted = 1
-      }
-      //
-      if(item.homeworkName == '习题6'){
-        this.homeworkobjective= [
-          {percentile:'70%',questionType:'多选题',trueNum:7,wrongNum:3},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4},
-          {percentile:'70%',questionType:'多选题',trueNum:7,wrongNum:3},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4}
-        ]
-        this.homeworksubjective= [
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'填空题',trueNum:6,wrongNum:4},
-          {percentile:'60%',questionType:'主观题',trueNum:9,wrongNum:1}
-        ]
-        this.datalist = [
-              {
-                value: 4,
-                name: "客观题"
-              },
-              {
-                value: 3,
-                name: "主观题"
-              }
-            ]
-            this.Total = 10
-            this.Submission = 10
-            this.Notsubmitted = 0
-      }
-      //
-      if(item.homeworkName == '习题7'){
-        this.homeworkobjective= [
-          {percentile:'70%',questionType:'多选题',trueNum:7,wrongNum:3},
-          {percentile:'50%',questionType:'多选题',trueNum:5,wrongNum:5},
-          {percentile:'70%',questionType:'多选题',trueNum:7,wrongNum:3},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4},
-          {percentile:'60%',questionType:'单选题',trueNum:6,wrongNum:4}
-        ]
-        this.homeworksubjective= [
-          {percentile:'80%',questionType:'主观题',trueNum:8,wrongNum:2},
-          {percentile:'60%',questionType:'填空题',trueNum:6,wrongNum:4},
-          {percentile:'60%',questionType:'主观题',trueNum:9,wrongNum:1}
-        ]
-        this.datalist = [
-              {
-                value: 5,
-                name: "客观题"
-              },
-              {
-                value: 3,
-                name: "主观题"
-              }
-            ]
-            this.Total = 10
-            this.Submission = 10
-            this.Notsubmitted = 0
-      }
+            this.Total = res.data.data.studentNum
+            this.Submission = res.data.data.submitNum
+            this.Notsubmitted = Number(res.data.data.studentNum) - Number(res.data.data.submitNum)
             this.drawLine()
+      }).catch(e=>{
+        console.log(e)
+      })
     },
     back() {
       this.$router.push({
