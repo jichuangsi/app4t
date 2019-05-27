@@ -5,6 +5,7 @@ import axios from '../../utils/axios'
 const apiUrl = '/COURSESERVICE/teacher/'
 const host = '/COURSESTATISTICS/'
 const host1 = '/CLASSINTERACTION/';
+const service='/USERSERVICE/';
 
 export function getList() {
     return axios({
@@ -13,7 +14,17 @@ export function getList() {
         //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
-
+export function updatePwd(userId,oldPwd,newPwd) {
+    return axios({
+        method: 'POST',
+        url: `${service}updateOtherPwd/${userId}`,
+        data: {
+            oldPwd,
+            newPwd
+        },
+        //headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
 //历史课程列表
 export function getHistory(pageNum) {
     return axios({
