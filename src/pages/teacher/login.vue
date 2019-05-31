@@ -94,9 +94,9 @@ export default {
               path: this.$store.state.userroute
             });
           } else {
-            if (userInfo.portrait != null) {
+            /*if (userInfo.portrait != null) {
               let a = await getImg(userInfo.portrait);
-            }
+            }*/
             if (userInfo) {
               this.flag = true;
               this.$router.push({

@@ -194,7 +194,7 @@ export default {
           _this.userimg = "data:image/jpeg;base64," + imageData;
         }
         function onFail(message) {
-          Toast("拍照失败，原因为: " + message);
+          //Toast("拍照失败，原因为: " + message);
         }
       } else {
         Toast("设备没响应，请稍后重试");
@@ -226,7 +226,7 @@ export default {
           _this.userimg = "data:image/jpeg;base64," + imageData;
         }
         function onFail(message) {
-          alert("Failed because: " + message);
+          //alert("Failed because: " + message);
         }
       } else {
         Toast("设备没响应，请稍后重试");
