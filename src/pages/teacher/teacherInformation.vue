@@ -4,8 +4,25 @@
     <div class="content">
       <div class="avatar clearfix">
         <div class="title">头像</div>
-        <div class="img_warp">
+        <div class="img_warp" @click="oepenPicture">
           <img :src="userimg">
+        </div>
+      </div>
+      <div class="set_box" v-if="setPictrue" @click="setPictrue = false">
+        <div class="setbox" @click.stop="setPictrue = true">
+          <div class="title">提示</div>
+          <div class="text">修改头像</div>
+          <div class="pictrue">
+            <div class="pictrueBox" @click="cameraTakePicture">
+              <!-- <img src="../../../assets/照相机.png"> -->
+            </div>
+            <div class="pictrueBox1" @click="Picturelibrary">
+              <!-- <img src="../../../assets/图库.png"> -->
+            </div>
+          </div>
+          <div class="btn">
+            <div class="cancel" @click.stop="setPictrue= false">取消</div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -58,7 +75,7 @@
 
 <script>
 import PublicHeader from "../../components/public/PublicHeader";
-import { updatePwd } from "@/api/teacher/classroom";
+import { updatePwd, updateImg, getImg } from "@/api/teacher/classroom";
 import { Toast } from "mint-ui";
 
 export default {
@@ -74,6 +91,8 @@ export default {
       },
       userimg: "",
       setshowPwd: false,
+      setPictrue: false,
+      ready: false,
       oldPwd: "",
       newPwd: "",
       user: {
@@ -87,9 +106,22 @@ export default {
     };
   },
   mounted() {
+    this.initialize();
     this.getteacher();
   },
   methods: {
+    initialize() {
+      let _this = this;
+      document.addEventListener(
+        "deviceready",
+        _this.onDeviceReady.bind(this),
+        false
+      );
+    },
+    // deviceready Event Handler
+    onDeviceReady() {
+      this.ready = true;
+    },
     getteacher() {
       let userInStorage = JSON.parse(localStorage.getItem("user"));
       if (userInStorage) {
@@ -109,15 +141,96 @@ export default {
             this.user.secondaryClass = arr.join(",");
           }
         }
-        if (userInStorage.userSex == "FEMALE") {
-          this.userimg = require("../../assets/女老师.png");
+        var img = localStorage.getItem("HeadPortrait")
+          ? localStorage.getItem("HeadPortrait")
+          : "";
+        if (img) {
+          this.userimg = "data:image/jpeg;base64," + img;
         } else {
-          this.userimg = require("../../assets/男老师.png");
+          if (userInStorage.userSex == "FEMALE") {
+            this.userimg = require("../../assets/女老师.png");
+          } else {
+            this.userimg = require("../../assets/男老师.png");
+          }
         }
       }
     },
     setPwd() {
       this.setshowPwd = true;
+    },
+     //打开照相机
+    oepenPicture() {
+      this.setPictrue = true;
+    },
+      //打开照相机
+    oepenPicture() {
+      this.setPictrue = true;
+    },
+    //测试照相机
+    cameraTakePicture() {
+      if (this.ready) {
+        let _this = this;
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 50,
+          destinationType: Camera.DestinationType.DATA_URL,
+          allowEdit: true,
+          targetWidth: 214,
+          targetHeight: 214,
+          mediaType: 0,
+          saveToPhotoAlbum: true,
+          cameraDirection: 0,
+          encodingType: Camera.EncodingType.PNG
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById("myImage");
+          updateImg(imageData).then(res => {
+            if (res.data.code === "0010") {
+              Toast("修改成功");
+              localStorage.setItem("HeadPortrait", imageData);
+            } else {
+              Toast("修改失败");
+            }
+          });
+          _this.userimg = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          Toast("拍照失败，原因为: " + message);
+        }
+      } else {
+        Toast("设备没响应，请稍后重试");
+      }
+    },
+     //图库
+    Picturelibrary() {
+      if (this.ready) {
+        let _this = this;
+        navigator.camera.getPicture(onSuccess, onFail, {
+          quality: 50,
+          allowEdit: true,
+          targetWidth: 214,
+          targetHeight: 214,
+          mediaType: 0,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM
+        });
+        function onSuccess(imageData) {
+          var image = document.getElementById("myImage");
+          updateImg(imageData).then(res => {
+            if (res.data.code === "0010") {
+              Toast("修改成功");
+              localStorage.setItem("HeadPortrait", imageData);
+            } else {
+              Toast("修改失败");
+            }
+          });
+          _this.userimg = "data:image/jpeg;base64," + imageData;
+        }
+        function onFail(message) {
+          alert("Failed because: " + message);
+        }
+      } else {
+        Toast("设备没响应，请稍后重试");
+      }
     },
     update() {
       //修改密码
@@ -145,7 +258,7 @@ export default {
       } else {
         Toast("密码不能为空");
       }
-    },
+    }
   }
 };
 </script>
@@ -247,6 +360,7 @@ export default {
   top: 0px;
   left: 0px;
   background-color: rgba(0, 0, 0, 0.3);
+   z-index: 100;
   .setbox {
     width: 85%;
     position: absolute;
@@ -289,6 +403,29 @@ export default {
       }
       input {
         width: 100%;
+      }
+    }
+    .pictrue {
+      width: 100%;
+      padding: 15px 28% 15px 28%;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      .pictrueBox {
+        line-height: 100px;
+        width: 100px;
+        height: 100px;
+        background: url("../../assets/按钮.png") no-repeat;
+        background-size: 600px 1750px;
+        background-position: -289px -1593.5px;
+      }
+      .pictrueBox1 {
+        line-height: 100px;
+        width: 100px;
+        height: 100px;
+        background: url("../../assets/按钮.png") no-repeat;
+         background-size: 600px 1750px;
+        background-position: -61px -1589px;
       }
     }
     .btn {

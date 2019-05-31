@@ -28,7 +28,7 @@
 import { mapGetters } from "vuex";
 import { login } from "@/api/login";
 import { Toast } from "mint-ui";
-
+import { getImg } from "@/api/teacher/classroom";
 export default {
   name: "login",
   data() {
@@ -77,20 +77,28 @@ export default {
     },
     async submitLogin() {
       if (this.flag) {
-        this.flag = false;   
+        this.flag = false;
         if (this.boolean) {
           localStorage.setItem("account", this.account);
           localStorage.setItem("password", this.password);
         }
         try {
           let userInfo = await login(this.account, this.password);
+
+          if (userInfo.portrait != null) {
+            let a = await getImg(userInfo.portrait);
+          }
+
           if (this.$store.state.userroute) {
             this.$router.push({
               path: this.$store.state.userroute
             });
           } else {
+            if (userInfo.portrait != null) {
+              let a = await getImg(userInfo.portrait);
+            }
             if (userInfo) {
-              this.flag=true;
+              this.flag = true;
               this.$router.push({
                 path: "/teacherIndex",
                 name: "teacherIndex"
@@ -98,7 +106,7 @@ export default {
             }
           }
         } catch (e) {
-           this.flag=true;
+          this.flag = true;
           Toast({
             message: e,
             position: "middle",
@@ -198,7 +206,7 @@ export default {
       box-shadow: 0 2px 6px 3px #62d8ef,
         0 2px 23px 8px rgba(103, 217, 255, 0.89);
     }
-     .logincolor {
+    .logincolor {
       background: #999 !important;
     }
   }

@@ -14,6 +14,7 @@ export function getList() {
         //headers: {'accessToken': localStorage.getItem('token')}
     });
 }
+//修改密码
 export function updatePwd(userId,oldPwd,newPwd) {
     return axios({
         method: 'POST',
@@ -24,6 +25,40 @@ export function updatePwd(userId,oldPwd,newPwd) {
         },
         //headers: {'accessToken': localStorage.getItem('token')}
     });
+}
+//修改头像
+export function updateImg(content) {
+    let contentType = 'image/jpeg';
+    let name = 'test.jpg';
+    return axios({
+        method: 'POST',
+        url: `${service}portrait/sendByString`,
+        data: {
+            content,
+            name,
+            contentType
+        },
+        // headers: {'accessToken': localStorage.getItem('token')}
+    });
+}
+//获取头像
+export async function getImg(portrait) {
+    let res = await axios({
+        method: 'post',
+        url: `${service}portrait/getByString`,
+        data: {
+            sub: portrait
+        },
+        // headers: {'accessToken': localStorage.getItem('token')}
+    });
+    if (res.data.code === '0010') {
+        var imgString = res.data.data.content;
+        localStorage.setItem("HeadPortrait", imgString);
+        return imgString ? imgString : "";
+    } else {
+        throw res.data.msg;
+    }
+
 }
 //历史课程列表
 export function getHistory(pageNum) {
