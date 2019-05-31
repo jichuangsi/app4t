@@ -40,6 +40,9 @@
     },
     "cordova-plugin-proguard": {
       "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
     }
   },
   "dependent_plugins": {
