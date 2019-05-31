@@ -175,6 +175,7 @@
                 }, false);
                 document.addEventListener("online", function(){
                     clearInterval(_this.networkTips);
+                    _this.networkTips = null;
                     Toast({
                         message: '网络恢复，请重新刷新当前页面！',
                         position: 'middle',
