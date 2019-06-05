@@ -114,7 +114,6 @@ export function postSubjectPicSubmission() {
     url: `${apiUrl}postSubjectPicSubmission`,
   });
 }
-
 //作业主观题批改图片提交
 export function query() {
   return axios({
@@ -122,6 +121,14 @@ export function query() {
     url: `${apiUrl}query`,
   });
 }
+
+//作业统计分数/HOMEWORKSERVICE/teacher/settleHomework/{homeworkId}
+export function settleHomework(homeworkId) {
+    return axios({
+      method: 'put',
+      url: `${apiUrl}/settleHomework/${homeworkId}`,
+    });
+  }
 
 //学生查询接口
 export function queryStudents(homeworkId, studentName) {

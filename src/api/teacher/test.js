@@ -123,6 +123,14 @@ export function query() {
   });
 }
 
+//作业统计分数
+export function settleTest(testId) {
+    return axios({
+      method: 'put',
+      url: `${apiUrl}/settleTest/${testId}`,
+    });
+  }
+
 //学生查询接口
 export function queryStudents(testId, studentName) {
   return axios({

@@ -15,9 +15,11 @@
           </div>
           <!--<router-link tag="div" to="/TObjective" class="correction" v-if="item.completedTime==1">批改</router-link>
           <router-link tag="div" to="/TObjective" class="view" v-if="item.completedTime==2">查看</router-link>-->
-          <div class="correction" v-if="item.completedTime>0" @click.stop.passive="goTestDetail(item.studentId, item.studentName)">可批改</div>
-          <div class="notSubmitted" v-if="item.completedTime===0">未提交</div>
+          <div class="correction" v-if="item.completedTime>0&&!Fraction" @click.stop.passive="goTestDetail(item.studentId, item.studentName)">可批改</div>
+          <div class="notSubmitted" v-if="item.completedTime===0&&!Fraction">未提交</div>
+          <div class="notSubmitted red" v-if="Fraction">{{item.totalScore}}</div>
         </div>
+        <div class="Settlement fr" :class="{'Setstop':!Settlementstatus}" @click="Settlement">结算分数</div>
       </div>
     </scroll-content>
     <loading v-if="loading"/>
@@ -32,7 +34,7 @@
   import Loading from '../../../components/public/Loading'
   import {mapGetters} from 'vuex'
   import store from '@/store'
-  import {gettest} from "@/api/teacher/test"
+  import {gettest,settleTest} from "@/api/teacher/test"
   import {Toast} from 'mint-ui';
 
   export default {
@@ -43,6 +45,8 @@
     },
     data() {
       return {
+          Settlementstatus:true,
+          Fraction:false,
           inputValue: '',
           loading: true,                                   //页面加载状态
           pageShow: false,                                 //页面内容加载状态
@@ -125,6 +129,21 @@
                 _this.$refs.myscrollfull.endSuccess();
             }, 1000);
         },
+        Settlement(){
+          if(this.Settlementstatus){
+            this.Settlementstatus = false
+            settleTest(this.testId).then(res=>{
+              console.log(res)
+              this.Settlementstatus = true
+              if(res.data.code == '0010') {
+                 Toast('结算成功')
+                 store.commit('SET_TESTSTUDENTS', res.data.data);
+                 this.inputValue === ''
+                 this.Fraction = true
+              }
+            })
+          }
+        }
       }
     }
 </script>
@@ -211,8 +230,21 @@
           .notSubmitted {
             color: rgba(162, 162, 162, 1);
           }
+          .red {
+            color: crimson;
+          }
         }
       }
     }
+  }
+  .Settlement {
+    padding: 10px 15px;
+    background-color: #0094ff;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+  }
+  .Setstop {
+    background-color: #999;
   }
 </style>
