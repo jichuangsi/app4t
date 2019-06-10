@@ -12,7 +12,7 @@
           >
             <div class="centertext">左右滑动切换题目</div>
             <div class="questions_warp">
-              <div class="topic_title">{{item.questionTypeInCN}}</div>
+              <div class="topic_title">{{item.questionTypeInCN}}<span v-if="item.questionPoint">({{item.questionPoint}}分)</span></div>
               <div class="topic" v-html="item.questionContent">{{item.questionContent}}</div>
               <div
                 class="select"

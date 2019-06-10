@@ -1,6 +1,6 @@
 <template>
     <div class="teacherTopic" @click="goTopic(topic.quesetionType,topic.questionId,topic.title)">
-        <div class="title">{{topic.title}} <span v-if="topic.questionTypeInCN">({{topic.questionTypeInCN}})</span></div>
+        <div class="title">{{topic.title}} <span v-if="topic.questionTypeInCN">({{topic.questionTypeInCN}})</span><span v-if="topic.questionPoint">({{topic.questionPoint}})</span></div>
         <div class="topic" v-html="topic.questionContent">{{topic.questionContent}}</div>
         <!--<div class="remind" v-if="topic.questionPic" @click.stop="picimg(topic.questionPic)">
             （点开查看图片）

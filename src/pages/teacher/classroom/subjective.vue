@@ -128,6 +128,7 @@
                 let r1 = await getQuestion(self.topicId);
                 self.studentList = r1.data.data;
                 self.supplementStudentList(self.studentList.answerForStudent);
+                console.log(self.studentList)
                 let r2 = await getCourseStatistics(self.courseId);
                 self.studentCount = r2.data.data.studentCount;
                 //获取当前人数的初始值 平均分 正确率

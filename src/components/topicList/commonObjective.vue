@@ -1,6 +1,6 @@
 <template>
     <div class="topic_warp">
-        <div class="title">客观题-{{index+1}} <span v-if="objective.questionTypeInCN">({{objective.questionTypeInCN}})</span></div>
+        <div class="title">客观题-{{index+1}} <span v-if="objective.questionTypeInCN">({{objective.questionTypeInCN}})</span><span v-if="objective.questionPoint">({{objective.questionPoint}}分)</span></div>
         <div class="topic" v-html="objective.questionContent">
             {{objective.questionContent}}
         </div>

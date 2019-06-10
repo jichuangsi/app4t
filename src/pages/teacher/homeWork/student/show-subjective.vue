@@ -10,7 +10,7 @@
                             <div class="subjective">
                                 <div class="centertext">左右滑动切换题目</div>
                                 <div class="topic_warp" :id="'qc'+item.questionId">
-                                    <div class="title">主观题-{{index+1}} <span v-if="item.questionTypeInCN">({{item.questionTypeInCN}})</span></div>
+                                    <div class="title">主观题-{{index+1}} <span v-if="item.questionTypeInCN">({{item.questionTypeInCN}})</span><span v-if="item.questionPoint">({{item.questionPoint}}分)</span></div>
                                     <div class="topic" :id="'tp'+item.questionId" v-html="item.questionContent">
                                         {{item.questionContent}}
                                     </div>
