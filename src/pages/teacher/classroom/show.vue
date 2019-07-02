@@ -26,6 +26,7 @@
                         <div class="btn fr sendbtn" v-if="sendshow||item.publishFlag=='1'">已发布</div>
                     </div>
                 </div>
+                <div class="dataclick" @click="dataclick" v-if="false">查看信息</div>
                 <!-- <div class="img" @click="zsbtn"><img src="../../../assets/zsbtn.png" alt=""></div> -->
                 <div class="right started" @click.stop.passive="updateState"
                      v-if="classMsg.courseStatus === 'NOTSTART'">
@@ -65,7 +66,6 @@
         </div>
         <div class="Responderbox" v-if="qdshow">
             <div class="qdbox">
-                <div class="none" @click="qdshow = false">x</div>
                 <div class="text" v-if="ddshow">是否发布抢答</div>
                 <div class="cancel" @click="cancelshow?qdshow = false:qdshow=true"  v-if="ddshow">取消</div>
                 <div class="confirm" @click="qdconfirm" v-if="ddshow">确认</div>
@@ -75,14 +75,17 @@
                         </div>
                     </div>
                         loading...
+                <div class="cancel" @click="qdshow=false">取消</div>
+                <div class="confirm" @click="qdshow=false">确认</div>
                 </div>
             </div>
         </div>
         <div class="studentname" v-if="qdname">
             <div class="studentbox">
-                <div class="none" @click="qdname = false">x</div>
                 <div class="studentimg"></div>
                 <div class="student_name">{{confirmtext}}</div>
+                <div class="cancel" @click="qdname=!qdname">取消</div>
+                <div class="confirm" @click="qdname=!qdname">确认</div>
             </div>
         </div>
     </div>
@@ -120,6 +123,7 @@
         },
         data() {
             return {
+                timer:'',
                 ddshow:true,
                 qdname:false,
                 confirmbtn:true,
@@ -179,6 +183,7 @@
             /*this.connectCS();
             this.connectQS();
             this.connectQP();*/
+            this.setTime()
             this.start();
             this.initialize();
 
@@ -215,6 +220,26 @@
 
         },
         methods: {
+            setTime(){
+                let self = this
+                this.timer = setInterval(() => {
+                try {
+                self.stompClient.send("test");
+                } catch (err) {
+                console.log("断线了: " + err);
+                self.connect();
+                }
+                }, 20000);
+            },
+            dataclick(){
+                this.$router.push({
+                    path: '@/pages/teacher/classroom/ClassStatistics',
+                    name: 'ClassStatistics',
+                    query: {
+                        courseId:this.courseId,
+                    }
+                });
+            },
             send(val) {
                 console.log(this.classMsg.courseId,val.name,val.sub)
                     MessageBox.confirm('是否共享此附件').then(action => {
@@ -665,7 +690,6 @@
                     userId: 'curUserId',
                     accessToken: this.token
                 };
-
                 //创建连接并在连接成功后订阅班级为“2018001”班级的信息
                 let _this = this;
                 this.stompClient.connect(headers, function (frame) {
@@ -692,6 +716,14 @@
                         console.log(response)
                         _this.classAnswerSubmit(response);
                     }, subHeader);*/
+                    
+                },
+                (error)=> { 
+                        // 连接失败时（服务器响应 ERROR 帧）的回调方法 
+                    setTimeout(function(){
+                        console.log('连接失败【' + error + '】')
+                        _this.connect()
+                    },5000)
                 });
             },
 
@@ -845,6 +877,9 @@
                     });
                 }
             }
+        },
+        destroyed: function () {
+            clearInterval(this.timer)
         }
     }
 </script>
@@ -1173,23 +1208,22 @@
             z-index: 2007;
             .qdbox {
                 width: 600px;
-                height: 200px;
-                background-color: #fff;
+                height: 295px;
+                background: url('../../../assets/tc.png') no-repeat;
+                background-position: -2px 0px;
+                background-color:transparent;
                 position: absolute;
                 left: 50%;
-                top: 40%;
+                top: 50%;
                 transform: translate(-50%,-50%);
             }
-            .none {
-                font-size: 30px;
-                float: right;
-                padding:5px 15px;
-            }
             .text {
-                font-size: 24px;
-                text-align: center;
+                font-size: 28px;
+                text-align: left;
                 font-weight: 700;
-                margin: 50px 0;
+                margin: 100px 0;
+                text-indent: 20px;
+                color: #333;
             }
             .cancel {
                 position: absolute;
@@ -1200,7 +1234,7 @@
                 line-height: 50px;
                 text-align: center;
                 font-size: 22px;
-                border: 1px solid #999;
+                color: #333;
             }
             .confirm {
                 position: absolute;
@@ -1211,33 +1245,40 @@
                 line-height: 50px;
                 text-align: center;
                 font-size: 22px;
-                border: 1px solid #999;
+                color: #333;
             }
             .loading {
-                width: 100px;
-                height: 100px;
                 line-height: 100px;
                 text-align: center;
-                margin: 30px auto;
+                margin: 80px auto;
                 position: relative;
-                .loading_box {
-                    width: 10px;
-                    height: 40px;
-                    background-color: #fff;
-                    position: absolute;
-                    top: 10px;
-                    right: -5px;
-                }
-                .loading_quan {
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    top: 0px;
-                    right: 0px;
-                    border-radius: 50%;
-                    border: 3px solid #666;
-                    animation: all 2s linear infinite;
-                }
+                background-color: transparent;
+                font-weight: 700;
+                font-size: 28px;
+                color: #333;
+                
+            .cancel {
+                position: absolute;
+                left: 0px;
+                bottom: -114px;
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 22px;
+                color: #333;
+            }
+            .confirm {
+                position: absolute;
+                right: 0px;
+                bottom: -114px;
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 22px;
+                color: #333;
+            }
             }
         }
 
@@ -1249,42 +1290,66 @@
             left: 0px;
             background-color: rgba(0, 0, 0, 0.3);
             z-index: 2007;
-            .none {
-                font-size: 30px;
-                float: right;
-                padding:5px 15px;
-            }
             .studentbox {
-                width: 400px;
-                height: 200px;
-                background-color: #fff;
+                width: 600px;
+                height: 295px;
+                background: url('../../../assets/tc.png') no-repeat;
+                background-position: -2px 0px;
+                background-color:transparent;
                 position: absolute;
                 left: 50%;
-                top: 40%;
+                top: 50%;
                 transform: translate(-50%,-50%);
                 .studentimg {
                     width: 82px;
                     height: 82px;
-                    margin-bottom: 10px;
                     background:  url("../../../assets/按钮.png") no-repeat;
                     background-position: -135px -2807px;
                     margin: 30px auto;
+                    margin-top: 40px;
                 }
                 .student_name {
                     font-size: 24px;
                     text-align: center;
                 }
+                  
+            .cancel {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 22px;
+                color: #333;
+            }
+            .confirm {
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                font-size: 22px;
+                color: #333;
+            }
             }
         }
         .mint-toast {
             z-index: 9999 !important;
         }
-            @keyframes all {
-                0% {
-                    transform: rotate(0deg)
-                }
-                100% {
-                    transform: rotate(720deg)
-                }
+            .dataclick {
+                padding: 10px 15px;
+                background-color: #0094ff;
+                border-radius: 30px;
+                color: #fff;
+                font-size: 16px;
+                float: right;
+                box-shadow: 3px 3px 1px #888888,inset -2px -2px 8px #065EAF;
+            }
+            .dataclick:active{
+                box-shadow: 3px 3px 1px #888888,inset 2px 2px 8px #065EAF;
             }
 </style>
