@@ -18,7 +18,7 @@ import "@/assets/jSignature.js";
 import '@/assets/style/fugai.css'
 
 /* eslint-disable no-unused-vars */
-// import vConsole from './utils/log'
+//import vConsole from './utils/log'
 import Print from 'vue-print-nb'
 Vue.use(Print) //注册打印功能
 Vue.use(VueAwesomeSwiper);

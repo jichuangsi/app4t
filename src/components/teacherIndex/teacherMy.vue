@@ -1,6 +1,6 @@
 <template>
   <div class="teacherMy">
-    <div class="top">
+    <div class="top" ref='slide' @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd'>
       <div class="fl">版本：{{this.appVersion}}</div>
       <h2>个人中心</h2>
       <div class="fr">
@@ -64,6 +64,10 @@
       </div>
     </div>
     <loading v-if="loading"/>
+    <div class="brightness" v-if="brightnessShow">
+      <i class="iconfont icon-icon-"></i>
+      <span>{{brightnessNumber}}</span>
+    </div>
   </div>
 </template>
 <!--我的-->
@@ -78,18 +82,137 @@ export default {
   },
   data() {
     return {
+      brightnessShow:false,
+      brightnessNumber:'',
       loading: true,
       pageShow: false,
       username: "韩梅梅",
       usertext: "学如逆水行舟，不进则退。",
       userimg: "",
-      appVersion: ""
+      appVersion: "",
+      startX: 0, //开始触摸的位置
+      startY: 0, //滑动时的位置
+      endX: 0, //结束触摸的位置
+      disX: 0, //移动距离
+      lastX: 0, //上一次X坐标
+      lastY: 0, //上一次Y坐标
+      //translateX: 'translateX(0px)'
     };
   },
   activated() {
     this.getTeacherMy();
   },
   methods: {
+      touchStart: function (ev) {
+          ev = ev || event;
+          // console.log(ev.targetTouches);
+          // console.log(ev.changedTouches);
+          if (ev.touches.length == 1) { //tounches类数组，等于1时表示此时有只有一只手指在触摸屏幕
+              this.startX = this.lastX = ev.touches[0].clientX; // 记录开始位置
+              //this.startY = this.lastY = ev.touches[0].clientX;
+          }
+      },
+      touchMove: function (ev) {
+          ev = ev || event;
+          //let slideWidth = this.$refs.slide.offsetWidth; //$refs 减少获取dom节点的消耗
+          // console.log(ev.targetTouches);
+          // console.log(ev.changedTouches);
+          if (ev.touches.length == 1) {
+              // 实时的滑动的距离-起始位置=实时移动的位置
+              //this.disX = this.lastX - this.startX;
+              // 计算两次移动距离Y>X就不启动滑动动画,防止误滑
+              let disX = ev.touches[0].clientX - this.lastX
+              //var disY = ev.touches[0].clientY - this.lastY
+              // console.log(disX, disY);
+              /*if (Math.abs(disX) > Math.abs(disY)) {
+                  this.translateX = 'translateX(' + this.disX + 'px)';
+              }*/
+
+              if (Math.abs(disX) > 0) {
+                  console.log("disX:" + disX);
+                  if (disX < 0) {
+                      console.log('左滑');
+                      //this.$emit('change', 'left')
+                  } else {
+                      console.log('右滑');
+                      //this.$emit('change', 'right')
+                  }
+                  this.brightnessShow = true
+                  let brightness = cordova.plugins.brightness;
+                  let self = this;
+                  brightness.getBrightness(function (r) {
+                      console.log("get brightness success");
+                      let res = parseFloat(r);
+                      console.log("success res:" + res);
+                      if(res===-1.0) res = 0.5;
+                      let adjust = res + Math.round(disX)/1000;
+                      console.log("adjust:" + adjust);
+                      if(adjust<0) adjust = 0;
+                      if(adjust>1) adjust = 1;
+                      self.brightnessNumber = Math.round(adjust*100)+'%'
+                      console.log("brightnessNumber:" +self.brightnessNumber)
+                      brightness.setBrightness(adjust, function () {
+                          console.log("set brightness success");
+                      }, function () {
+                          console.error("set brightness fail");
+                      });
+                  }, function (res) {
+                      console.error("get brightness fail");
+                  });
+              }
+              // 记录一次坐标值
+              this.lastX = ev.touches[0].clientX;
+              //this.lastY = ev.touches[0].clientY;
+          }
+      },
+      touchEnd: function (ev) {
+          ev = ev || event;
+          let self = this
+          let slideWidth = this.$refs.slide.offsetWidth;//$refs 减少获取dom节点的消耗
+          console.log("slideWidth:" + slideWidth);
+          if (ev.changedTouches.length == 1) {
+              let endX = ev.changedTouches[0].clientX;
+              console.log("endX:" + endX);
+              this.disX = endX - this.startX;
+              console.log("disX:" + this.disX);
+              setTimeout(function(){
+                  self.brightnessShow = false
+              },1000)
+              // console.log(this.disX, 'this.disX')
+              // console.log((slideWidth / 2), 'slideWidth/2');
+              //this.translateX = 'translateX(0px)';
+              // 只有滑动大于一半距离才触发
+              /*if (Math.abs(this.disX) > 0) {
+                  console.log("disX:" + this.disX);
+                  if (this.disX < 0) {
+                      console.log('左滑');
+                      //this.$emit('change', 'left')
+                  } else {
+                      console.log('右滑');
+                      //this.$emit('change', 'right')
+                  }
+                  let brightness = cordova.plugins.brightness;
+                  let self = this;
+                  brightness.getBrightness(function (r) {
+                      console.log("get brightness success");
+                      let res = parseFloat(r);
+                      console.log("success res:" + res);
+                      if(res===-1.0) res = 0.5;
+                      let adjust = res + Math.round(self.disX)/1000;
+                      console.log("adjust:" + adjust);
+                      if(adjust<0) adjust = 0;
+                      if(adjust>1) adjust = 1;
+                      brightness.setBrightness(adjust, function () {
+                          console.log("set brightness success");
+                      }, function () {
+                          console.error("set brightness fail");
+                      });
+                  }, function (res) {
+                      console.error("get brightness fail");
+                  });
+              }*/
+          }
+      },
     getTeacherMy() {
       this.pageShow = true;
       this.loading = false;
@@ -233,6 +356,28 @@ export default {
         }
       }
     }
+  }
+}
+.brightness {
+  position: fixed;
+  width: 150px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: #333333;
+  padding: 5px 10px;
+  border-radius:10px;
+  display: flex;
+  i {
+    color: #fff;
+    font-size: 38px;
+  }
+  span {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    line-height: 38px;
+    color: #fff;
   }
 }
 </style>

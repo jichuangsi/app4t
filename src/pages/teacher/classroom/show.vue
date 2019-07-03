@@ -183,7 +183,7 @@
             /*this.connectCS();
             this.connectQS();
             this.connectQP();*/
-            this.setTime()
+            //this.setTime()
             this.start();
             this.initialize();
 
@@ -680,7 +680,7 @@
                 //地址+端点路径，构建websocket链接地址
                 let socket = new SockJS(this.wsUrl + '/websocket/course');
                 this.stompClient = Stomp.over(socket);//一些老的浏览器不支持WebSocket的脚本或者使用别的名字。默认下，stomp.js会使用浏览器原生的WebSocket class去创建WebSocket。利用Stomp.over(ws)这个方法可以使用其他类型的WebSockets。这个方法得到一个满足WebSocket定义的对象
-                this.stompClient.heartbeat.outgoing = 400000;  // client will send heartbeats every 40000ms
+                this.stompClient.heartbeat.outgoing = 0;  // client will send heartbeats every 40000ms
                 this.stompClient.heartbeat.incoming = 0;      // client does not want to receive heartbeats from the server
                 //连接时的请求头部信息
                 let headers = {
@@ -716,10 +716,10 @@
                         console.log(response)
                         _this.classAnswerSubmit(response);
                     }, subHeader);*/
-                    
+
                 },
-                (error)=> { 
-                        // 连接失败时（服务器响应 ERROR 帧）的回调方法 
+                (error)=> {
+                        // 连接失败时（服务器响应 ERROR 帧）的回调方法
                     setTimeout(function(){
                         console.log('连接失败【' + error + '】')
                         _this.connect()
@@ -878,7 +878,21 @@
                 }
             }
         },
+        beforeDestroy() {
+            //取消订阅
+            this.stompClient.unsubscribe('/queue/course/teacher/course/'+this.courseId);
+            this.stompClient.disconnect(function disconnectCallback(){
+                console.log("连接断开：/queue/course/teacher/course/....")
+            },{
+                login: "mylogin",
+                passcode: "mypasscode",
+                // additional header
+                userId: "curUserId",
+                accessToken: this.token
+            });
+        },
         destroyed: function () {
+            console.log('离开了')
             clearInterval(this.timer)
         }
     }
@@ -1256,7 +1270,7 @@
                 font-weight: 700;
                 font-size: 28px;
                 color: #333;
-                
+
             .cancel {
                 position: absolute;
                 left: 0px;
@@ -1312,7 +1326,7 @@
                     font-size: 24px;
                     text-align: center;
                 }
-                  
+
             .cancel {
                 position: absolute;
                 left: 0px;
