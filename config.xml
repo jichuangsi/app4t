@@ -53,6 +53,7 @@
     <plugin name="cordova-plugin-app-version" spec="https://github.com/whiteoctober/cordova-plugin-app-version.git" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-proguard" spec="^2.0.0" />
-    <engine name="android" spec="^7.1.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <plugin name="cordova-plugin-brightness" spec="^0.2.0" />
+    <engine name="android" spec="^7.1.2" />
 </widget>
