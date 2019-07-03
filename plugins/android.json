@@ -43,6 +43,9 @@
     },
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.jichuangsi.school.teacher"
+    },
+    "cordova-plugin-brightness": {
+      "PACKAGE_NAME": "com.jichuangsi.school.teacher"
     }
   },
   "dependent_plugins": {
