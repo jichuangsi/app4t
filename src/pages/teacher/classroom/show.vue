@@ -166,7 +166,8 @@
                 subscription: null,
                 //用户token
                 token: localStorage.getItem('token'),
-                ready: false
+                ready: false,
+                lockReconnect: false
             }
         },
         computed: {
@@ -720,10 +721,17 @@
                 },
                 (error)=> {
                         // 连接失败时（服务器响应 ERROR 帧）的回调方法
-                    setTimeout(function(){
+                    /*setTimeout(function(){
                         console.log('连接失败【' + error + '】')
                         _this.connect()
-                    },5000)
+                    },5000)*/
+                    console.log("课堂详情ws连接失败");
+                    if (_this.lockReconnect) return;
+                    _this.lockReconnect = true;
+                    setTimeout(function(){
+                        _this.connect();
+                        _this.lockReconnect = false;
+                    }, 10000)
                 });
             },
 
